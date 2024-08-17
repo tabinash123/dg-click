@@ -13,8 +13,6 @@ const FeatureBarContainer = styled.div`
   align-items: stretch;
   padding: 1.5rem;
   background-color: #f8f8f8;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   
   @media (max-width: 1024px) {
     flex-wrap: wrap;

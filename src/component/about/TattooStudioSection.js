@@ -1,214 +1,211 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Users, Globe, Palette, Clock, Shield, PhoneCall } from 'lucide-react';
+import styled, { keyframes } from 'styled-components';
 
-const breakpoints = {
-  mobile: '480px',
-  tablet: '768px',
-  desktop: '1024px',
-};
-
-const SectionContainer = styled.section`
-  background-color: #111;
-  color: #d4af37;
-  padding: 60px 20px;
-  font-family: 'Fira Sans', sans-serif;
-
-  @media (min-width: ${breakpoints.tablet}) {
-    padding: 80px 40px;
-  }
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-const ContentWrapper = styled.div`
+const float = keyframes`
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+`;
+
+const rotate = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+`;
+
+const ProcessSection = styled.section`
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: ${breakpoints.tablet}) {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 40px;
-  }
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  background-color: #f9f9f9;
+  overflow: hidden;
 `;
 
-const LeftColumn = styled.div`
-  margin-bottom: 40px;
-
-  @media (min-width: ${breakpoints.tablet}) {
-    flex: 1;
-    margin-bottom: 0;
-  }
-`;
-
-const RightColumn = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-
-  @media (min-width: ${breakpoints.mobile}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: ${breakpoints.desktop}) {
-    flex: 2;
-    grid-template-columns: repeat(3, 1fr);
-  }
+const ProcessLabel = styled.div`
+  background-color: #FFE6E6;
+  color: #FF4A4A;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 25px;
+  display: inline-block;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 10px rgba(255, 74, 74, 0.2);
+  animation: ${fadeIn} 0.5s ease-out;
 `;
 
 const Title = styled.h2`
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  position: relative;
+  font-size: 42px;
+  margin-bottom: 25px;
+  color: #333;
+  animation: ${fadeIn} 0.5s ease-out 0.2s both;
+`;
 
+const TitleHighlight = styled.span`
+  color: #FF8A00;
+  position: relative;
   &::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -5px;
     left: 0;
-    width: 60px;
+    width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #d4af37, #f2d472);
+    background-color: #FF8A00;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
   }
-
-  @media (min-width: ${breakpoints.tablet}) {
-    font-size: 2.5rem;
-  }
-`;
-
-const Description = styled.p`
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  color: #cccccc;
-
-  @media (min-width: ${breakpoints.tablet}) {
-    font-size: 1.1rem;
+  &:hover::after {
+    transform: scaleX(1);
   }
 `;
 
-const Button = styled.button`
-  background: linear-gradient(45deg, #d4af37, #f2d472);
-  border: none;
-  padding: 12px 25px;
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 1rem;
-  color: #111;
-  cursor: pointer;
+const Subtitle = styled.p`
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto 50px;
+  line-height: 1.8;
+  font-size: 16px;
+  animation: ${fadeIn} 0.5s ease-out 0.4s both;
+`;
+
+const StepContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: nowrap;
+  
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+`;
+
+const StepCard = styled.div`
+  background: linear-gradient(135deg, #FF8A00, #FF4A4A);
+  color: white;
+  border-radius: 10px;
+  padding: 20px 15px;
+  width: calc(25% - 12px);
+  box-shadow: 0 5px 15px rgba(255, 138, 0, 0.2);
   transition: all 0.3s ease;
-  width: 100%;
+  animation: ${fadeIn} 0.5s ease-out 0.6s both;
 
   &:hover {
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 138, 0, 0.3);
   }
 
-  @media (min-width: ${breakpoints.mobile}) {
-    width: auto;
+  @media (max-width: 768px) {
+    width: calc(50% - 10px);
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
   }
 `;
 
-const FeatureItem = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;
-
-const IconWrapper = styled.div`
-  background: linear-gradient(45deg, #d4af37, #f2d472);
-  border-radius: 50%;
-  padding: 10px;
-  margin-right: 15px;
-  flex-shrink: 0;
-`;
-
-const FeatureContent = styled.div``;
-
-const FeatureTitle = styled.h3`
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 1.1rem;
+const StepNumber = styled.div`
+  font-size: 20px;
+  font-weight: bold;
   margin-bottom: 10px;
-
-  @media (min-width: ${breakpoints.tablet}) {
-    font-size: 1.2rem;
-  }
+  opacity: 0.8;
 `;
 
-const FeatureDescription = styled.p`
-  font-size: 0.9rem;
+const StepTitle = styled.h3`
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+
+const StepDescription = styled.p`
+  font-size: 14px;
   line-height: 1.4;
-    color: #cccccc;
-
+  opacity: 0.9;
 `;
 
-const WhyChooseUsSection = () => {
+const Dot = styled.div`
+  width: 12px;
+  height: 12px;
+  background-color: #FF8A00;
+  border-radius: 50%;
+  position: absolute;
+  animation: ${float} 3s ease-in-out infinite;
+`;
+
+const Square = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: #FF4A4A;
+  position: absolute;
+  animation: ${rotate} 10s linear infinite;
+`;
+
+const Circle = styled.div`
+  width: 30px;
+  height: 30px;
+  border: 3px solid #FF8A00;
+  border-radius: 50%;
+  position: absolute;
+  animation: ${pulse} 3s ease-in-out infinite;
+`;
+
+const Triangle = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 17px solid #FF4A4A;
+  position: absolute;
+  animation: ${float} 4s ease-in-out infinite;
+`;
+
+const WorkProcessComponent = () => {
   return (
-    <SectionContainer>
-      <ContentWrapper>
-        <LeftColumn>
-          <Title>Why Choose Us?</Title>
-          <Description>
-            Teyung's Tattoo Studio is a premier destination for those seeking exceptional artistry and a transformative tattoo experience. Our commitment to excellence and creativity sets us apart in the world of body art.
-          </Description>
-        </LeftColumn>
-        <RightColumn>
-          <FeatureItem>
-            <IconWrapper>
-              <Users size={24} color="#111" />
-            </IconWrapper>
-            <FeatureContent>
-              <FeatureTitle>Master Artists</FeatureTitle>
-              <FeatureDescription>Our team of expert tattoo artists brings years of experience and a passion for pushing creative boundaries.</FeatureDescription>
-            </FeatureContent>
-          </FeatureItem>
-          <FeatureItem>
-            <IconWrapper>
-              <Globe size={24} color="#111" />
-            </IconWrapper>
-            <FeatureContent>
-              <FeatureTitle>Global Inspiration</FeatureTitle>
-              <FeatureDescription>We draw inspiration from diverse cultural traditions and contemporary art movements worldwide.</FeatureDescription>
-            </FeatureContent>
-          </FeatureItem>
-          <FeatureItem>
-            <IconWrapper>
-              <Palette size={24} color="#111" />
-            </IconWrapper>
-            <FeatureContent>
-              <FeatureTitle>Custom Designs</FeatureTitle>
-              <FeatureDescription>Every tattoo is a unique piece of art, tailored to reflect your personal story and vision.</FeatureDescription>
-            </FeatureContent>
-          </FeatureItem>
-          <FeatureItem>
-            <IconWrapper>
-              <Clock size={24} color="#111" />
-            </IconWrapper>
-            <FeatureContent>
-              <FeatureTitle>Timely Excellence</FeatureTitle>
-              <FeatureDescription>We respect your time, ensuring punctual sessions without compromising on quality or attention to detail.</FeatureDescription>
-            </FeatureContent>
-          </FeatureItem>
-          <FeatureItem>
-            <IconWrapper>
-              <Shield size={24} color="#111" />
-            </IconWrapper>
-            <FeatureContent>
-              <FeatureTitle>Safety First</FeatureTitle>
-              <FeatureDescription>Our studio adheres to the highest standards of hygiene and safety, using only premium, sterilized equipment.</FeatureDescription>
-            </FeatureContent>
-          </FeatureItem>
-          <FeatureItem>
-            <IconWrapper>
-              <PhoneCall size={24} color="#111" />
-            </IconWrapper>
-            <FeatureContent>
-              <FeatureTitle>Lifetime Support</FeatureTitle>
-              <FeatureDescription>We offer ongoing care advice and touch-up services to ensure your tattoo remains vibrant for years to come.</FeatureDescription>
-            </FeatureContent>
-          </FeatureItem>
-        </RightColumn>
-      </ContentWrapper>
-    </SectionContainer>
+    <ProcessSection>
+      <ProcessLabel>OUR WORK PROCESS</ProcessLabel>
+      <Title>How Dose We <TitleHighlight>Works</TitleHighlight></Title>
+      <Subtitle>Professionally pursue economically sound services resource sucking potentialities morph with premier catalysts for change awesome services you.</Subtitle>
+      
+      <StepContainer>
+        {[
+          { number: '01', title: 'Imagine Design', description: 'Professionally economically service resource of suckings service your business.' },
+          { number: '02', title: 'Collect Information', description: 'Professionally economically service resource of suckings service your business.' },
+          { number: '03', title: 'Select Your Design', description: 'Professionally economically service resource of suckings service your business.' },
+          { number: '04', title: 'Print Out Result', description: 'Professionally economically service resource of suckings service your business.' },
+        ].map((step, index) => (
+          <StepCard key={index} style={{animationDelay: `${0.6 + index * 0.2}s`}}>
+            <StepNumber>STEP {step.number}</StepNumber>
+            <StepTitle>{step.title}</StepTitle>
+            <StepDescription>{step.description}</StepDescription>
+          </StepCard>
+        ))}
+      </StepContainer>
+
+      {/* Decorative elements */}
+      <Dot style={{ top: '20px', left: '20px', animationDelay: '0s' }} />
+      <Dot style={{ top: '20px', right: '20px', animationDelay: '1s' }} />
+      <Dot style={{ bottom: '20px', left: '50%', animationDelay: '2s' }} />
+      <Square style={{ top: '10%', right: '5%' }} />
+      <Square style={{ bottom: '15%', left: '7%' }} />
+      <Circle style={{ top: '15%', left: '10%' }} />
+      <Circle style={{ bottom: '10%', right: '8%' }} />
+      <Triangle style={{ top: '40%', left: '3%' }} />
+      <Triangle style={{ bottom: '30%', right: '3%' }} />
+      <Dot style={{ top: '50%', left: '2%', animationDelay: '1.5s' }} />
+      <Dot style={{ bottom: '40%', right: '2%', animationDelay: '2.5s' }} />
+    </ProcessSection>
   );
 };
 
-export default WhyChooseUsSection;
+export default WorkProcessComponent;
