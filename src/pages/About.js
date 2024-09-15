@@ -1,24 +1,21 @@
-import React from 'react'
-import WhoWeAre from './../component/about/WhoWeAre';
-import TattooStudioSection from '../component/about/TattooStudioSection';
-import LatestWorks from '../component/about/LatestWorks';
-import OurStaff from '../component/hompage/OurStaff';
-import UserTestimonials from '../component/hompage/UserTestimonials';
-import CustomProductsBanner from '../component/about/Banner';
-import Map from '../component/hompage/Map';
+// AboutUs.js
+import React from 'react';
+import ContactSection from '../component/about/ContactSection';
+import Introduction from '../component/about/Introduction';
+import MissionVision from '../component/about/MissionVision';
+import WhyChooseUs from '../component/about/WhyChooseUs';
+import WorkProcessComponent from '../component/about/WorkProcessComponent';
 
-const About = () => {
+const AboutUs = () => {
   return (
-      <div>
-      <WhoWeAre />
-      <CustomProductsBanner />
-      <TattooStudioSection />
-      <LatestWorks />
-      <Map />
-      {/* <UserTestimonials /> */}
-
+    <div>
+      <Introduction />
+      <MissionVision />
+      <WhyChooseUs />
+      <WorkProcessComponent />
+      <ContactSection />
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default AboutUs;

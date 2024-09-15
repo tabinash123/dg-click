@@ -1,26 +1,34 @@
-import React from 'react'
-import Hero from './../component/hompage/Hero';
-import AboutUs from '../component/hompage/AboutUs';
-import Services from '../component/hompage/Services';
-import OurStaff from '../component/hompage/OurStaff';
-import Gallery from '../component/hompage/Gallery';
-import Video from '../component/hompage/Video';
-import Map from '../component/hompage/Map';
-import UserTestimonials from '../component/hompage/UserTestimonials';
+// Homepage.js
+import React from 'react';
+import CTAComponent from './../component/hompage/CTAComponent';
+import DealOfTheDay from './../component/hompage/DealOfTheDay';
+import FAQComponent from './../component/hompage/FAQComponent';
+import FeatureBar from './../component/hompage/FeatureBar';
+// import GetInTouch from './../component/hompage/GetInTouch';
+import HeroSection from './../component/hompage/HeroSection';
+import IntroductionSection from './../component/hompage/IntroductionSection';
+import ProductHighLight from '../component/hompage/ProductHighLight';
+import Services from './../component/hompage/Services';
+import TestimonialComponent from './../component/hompage/TestimonialComponent';
+import ProductShowcase from '../component/hompage/ProductShowcase';
+import TrendingProducts from '../component/hompage/TrendingProducts';
 
-const Hompage = () => {
+const Homepage = () => {
   return (
-      <div>
-          <Hero />
-      <Map />
-          <AboutUs />
-          <Services />
-          <OurStaff />
-      <Video />
-      <Gallery />
-      <UserTestimonials />
+    <div>
+      <HeroSection />
+      <FeatureBar />
+      {/* <DealOfTheDay /> */}
+      <Services />
+      <TrendingProducts />
+      <ProductHighLight />
+      <TestimonialComponent />
+      {/* <ProductShowcase /> */}
+      <IntroductionSection />
+      {/* <FAQComponent /> */}
+      {/* <GetInTouch /> */}
     </div>
-  )
-}
+  );
+};
 
-export default Hompage
+export default Homepage;

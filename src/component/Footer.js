@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { Phone, MapPin, Mail } from 'lucide-react';
 
 const fadeIn = keyframes`
@@ -21,6 +21,11 @@ const FooterContent = styled.div`
   justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
+  padding: 0 20px;
+
+  @media (max-width: 1024px) {
+    justify-content: flex-start;
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -30,6 +35,14 @@ const FooterContent = styled.div`
 const Column = styled.div`
   flex: 1;
   min-width: 200px;
+
+  @media (max-width: 1024px) {
+    flex-basis: calc(50% - 1rem);
+  }
+
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+  }
 `;
 
 const Logo = styled.div`
@@ -177,6 +190,7 @@ const Copyright = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: 0 20px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -229,22 +243,22 @@ const Footer = () => {
       <FooterContent>
         <Column>
           <Logo>
-            <img src="/api/placeholder/120/40" alt="Printex Logo" />
+            <img src="/api/placeholder/120/40" alt="DG Click Logo" />
           </Logo>
           <CompanyInfo>
-            We are many variations of passages available but the majority have suffered alteration in some form by injected humour words believable.
+            DG CLICK@ CHABAHIL PVT. LTD is your full digital lab & studio, offering a wide range of high-quality printing and customization services.
           </CompanyInfo>
           <ContactInfo>
             <Phone size={18} aria-hidden="true" />
-            <a href="tel:+21236547898" aria-label="Phone number">+2 123 654 7898</a>
+            <a href="tel:+9779841444134" aria-label="Phone number">+977 9841444134</a>
           </ContactInfo>
           <ContactInfo>
             <MapPin size={18} aria-hidden="true" />
-            <address>25/B Milford Road, New York</address>
+            <address>Kathmandu, Chabahil-7</address>
           </ContactInfo>
           <ContactInfo>
             <Mail size={18} aria-hidden="true" />
-            <a href="mailto:info@example.com" aria-label="Email address">info@example.com</a>
+            <a href="mailto:dgclickchabahil@gmail.com" aria-label="Email address">dgclickchabahil@gmail.com</a>
           </ContactInfo>
         </Column>
         
@@ -256,25 +270,25 @@ const Footer = () => {
             <LinkItem><a href="#terms">Terms Of Service</a></LinkItem>
             <LinkItem><a href="#privacy">Privacy policy</a></LinkItem>
             <LinkItem><a href="#services">Our Services</a></LinkItem>
-            <LinkItem><a href="#blog">Latest Blog</a></LinkItem>
+            <LinkItem><a href="#contact">Contact Us</a></LinkItem>
           </LinkList>
         </Column>
         
         <Column>
           <ColumnTitle>Our Services</ColumnTitle>
           <LinkList>
-            <LinkItem><a href="#offset">Offset Printing</a></LinkItem>
-            <LinkItem><a href="#business-card">Business Card</a></LinkItem>
-            <LinkItem><a href="#design">Design & Branding</a></LinkItem>
-            <LinkItem><a href="#3d-printing">3D Design & Printing</a></LinkItem>
-            <LinkItem><a href="#mug-printing">Mug Printing</a></LinkItem>
+            <LinkItem><a href="#cup-printing">Cup Printing</a></LinkItem>
+            <LinkItem><a href="#plate-printing">Plate Printing</a></LinkItem>
+            <LinkItem><a href="#cap-printing">Cap Printing</a></LinkItem>
             <LinkItem><a href="#tshirt-printing">T-Shirt Printing</a></LinkItem>
+            <LinkItem><a href="#cd-dvd-printing">CD/DVD Printing</a></LinkItem>
+            <LinkItem><a href="#pvc-card-printing">PVC Card Printing</a></LinkItem>
           </LinkList>
         </Column>
         
         <Column>
           <ColumnTitle>Newsletter</ColumnTitle>
-          <CompanyInfo>Subscribe Our Newsletter To Get Latest Update And News</CompanyInfo>
+          <CompanyInfo>Subscribe to Our Newsletter for Latest Updates and Offers</CompanyInfo>
           <NewsletterForm onSubmit={handleSubmit}>
             <EmailInput 
               type="email" 
@@ -293,12 +307,12 @@ const Footer = () => {
       </FooterContent>
       
       <Copyright>
-        <span>© Copyright 2024 PRINTEX All Rights Reserved.</span>
+        <span>© Copyright 2024 DG CLICK@ CHABAHIL PVT. LTD All Rights Reserved.</span>
         <SocialIcons>
           <a href="#facebook" aria-label="Facebook"><i className="fab fa-facebook-f" aria-hidden="true"></i></a>
           <a href="#twitter" aria-label="Twitter"><i className="fab fa-twitter" aria-hidden="true"></i></a>
+          <a href="#instagram" aria-label="Instagram"><i className="fab fa-instagram" aria-hidden="true"></i></a>
           <a href="#linkedin" aria-label="LinkedIn"><i className="fab fa-linkedin-in" aria-hidden="true"></i></a>
-          <a href="#youtube" aria-label="YouTube"><i className="fab fa-youtube" aria-hidden="true"></i></a>
         </SocialIcons>
       </Copyright>
     </FooterContainer>

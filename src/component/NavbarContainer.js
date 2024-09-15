@@ -304,6 +304,7 @@ const Header = () => {
         <Nav>
           <NavLink href="/" active>Home</NavLink>
           <NavLink href="/about">About</NavLink>
+          <NavLink href="/shop">Shop</NavLink>
           <NavLink href="/contact">Contact</NavLink>
           <SearchIcon size={20} aria-label="Search" tabIndex={0} />
           <GetQuoteButton>
