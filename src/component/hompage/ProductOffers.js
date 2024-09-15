@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import gift from '../../assets/productOffer/gift.jpg'
+import cup from '../../assets/productOffer/cup.jpg'
+import idcard from '../../assets/productOffer/idcard.jpg'
 const OffersContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -121,21 +124,21 @@ const productData = [
     id: 1,
     title: "Give The Gift Of Choice",
     bgColor: "#F9F5F0",
-    imageUrl: "/api/placeholder/200/200",
+    imageUrl: gift,
     alt: "Gift box"
   },
   {
     id: 2,
     title: "Paper Cups Coffee",
     bgColor: "#F0F7FC",
-    imageUrl: "/api/placeholder/200/200",
+    imageUrl: cup,
     alt: "Coffee cup"
   },
   {
     id: 3,
-    title: "Cardboard Package Box",
+    title: "Id card Printing",
     bgColor: "#F9F5F0",
-    imageUrl: "/api/placeholder/200/200",
+    imageUrl: idcard,
     alt: "Cardboard boxes"
   }
 ];
@@ -156,7 +159,7 @@ const ProductOffers = () => {
       <OffersContainer>
         {productData.map((product) => (
           <OfferCard key={product.id} bgColor={product.bgColor}>
-            <OfferText>Flat 25% off</OfferText>
+            {/* <OfferText>Flat 25% off</OfferText> */}
             <OfferTitle>{product.title}</OfferTitle>
             <ShopNowButton onClick={() => handleShopNow(product)}>Shop Now</ShopNowButton>
             <ProductImage src={product.imageUrl} alt={product.alt} />

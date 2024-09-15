@@ -133,9 +133,9 @@ const products = [
   { id: 2, name: 'Promo Trucker Hat', oldPrice: 270.50, newPrice: 230.50, discount: 70, query: 'trucker hat', rating: 4, category: 'Bags & Caps' },
   { id: 3, name: 'Paper Cups Coffee', oldPrice: 270.50, newPrice: 230.50, discount: 80, query: 'paper coffee cup', rating: 4, category: 'Mug & Paper Cups' },
   { id: 4, name: 'Business card', oldPrice: 270.50, newPrice: 230.50, discount: 85, query: 'business card', rating: 4, category: 'Business Card' },
-  { id: 2, name: 'Promo Trucker Hat', oldPrice: 270.50, newPrice: 230.50, discount: 70, query: 'trucker hat', rating: 4, category: 'Bags & Caps' },
-  { id: 3, name: 'Paper Cups Coffee', oldPrice: 270.50, newPrice: 230.50, discount: 80, query: 'paper coffee cup', rating: 4, category: 'Mug & Paper Cups' },
-  { id: 4, name: 'Business card', oldPrice: 270.50, newPrice: 230.50, discount: 85, query: 'business card', rating: 4, category: 'Business Card' },
+  // { id: 2, name: 'Promo Trucker Hat', oldPrice: 270.50, newPrice: 230.50, discount: 70, query: 'trucker hat', rating: 4, category: 'Bags & Caps' },
+  // { id: 3, name: 'Paper Cups Coffee', oldPrice: 270.50, newPrice: 230.50, discount: 80, query: 'paper coffee cup', rating: 4, category: 'Mug & Paper Cups' },
+  // { id: 4, name: 'Business card', oldPrice: 270.50, newPrice: 230.50, discount: 85, query: 'business card', rating: 4, category: 'Business Card' },
 ];
 
 const FeaturedProducts = () => {

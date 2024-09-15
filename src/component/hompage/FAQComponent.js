@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
-  background-color: #FFF5EE;
+  // background-color: #FFF5EE;
   position: relative;
 
   @media (min-width: 768px) {
@@ -105,13 +105,12 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 250px;
+  height: 300px;
   object-fit: cover;
-  border-radius: 10px;
 
   @media (min-width: 768px) {
-    width: 350px;
-    height: 350px;
+    width: 400px;
+    height: 400px;
   }
 
   @media (min-width: 1024px) {
@@ -181,9 +180,9 @@ const FAQComponent = () => {
       </FAQSection>
       <ImageSection>
         <Image src={img1} alt="DG CLICK Digital Lab & Studio" />
-        <Dots>
+        {/* <Dots>
           {[...Array(9)].map((_, i) => <Dot key={i} />)}
-        </Dots>
+        </Dots> */}
       </ImageSection>
     </Container>
   );

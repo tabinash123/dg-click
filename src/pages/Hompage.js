@@ -9,9 +9,9 @@ import HeroSection from './../component/hompage/HeroSection';
 import IntroductionSection from './../component/hompage/IntroductionSection';
 import ProductHighLight from '../component/hompage/ProductHighLight';
 import Services from './../component/hompage/Services';
-import TestimonialComponent from './../component/hompage/TestimonialComponent';
+import Features from '../component/hompage/Features';
 import ProductShowcase from '../component/hompage/ProductShowcase';
-import TrendingProducts from '../component/hompage/TrendingProducts';
+import ProductOffers from '../component/hompage/ProductOffers';
 import PrintingShopGallery from '../component/hompage/PrintingShopGallery';
 import ProductBanner from '../component/hompage/ProductBanner';
 
@@ -20,15 +20,16 @@ const Homepage = () => {
     <div>
       <HeroSection />
       <FeatureBar />
+      <ProductOffers />
       <IntroductionSection />
-      <TestimonialComponent />
-      <TrendingProducts />
+      <Features />
       <Services />
       <ProductHighLight />
       <ProductBanner />
       {/* <ProductShowcase /> */}
       {/* <FAQComponent /> */}
       <PrintingShopGallery />
+      <FAQComponent />
     </div>
   );
 };
