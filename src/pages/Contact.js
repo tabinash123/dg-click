@@ -1,270 +1,229 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { Phone, Clock, Mail, MapPin, Send } from 'lucide-react';
-
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
+import styled from 'styled-components';
+import { Send, Phone, Mail, MapPin } from 'lucide-react';
 
 const PageContainer = styled.div`
-  font-family: 'Arial', sans-serif;
   max-width: 1200px;
-  margin: 50px auto;
-  padding: 2rem;
-  animation: ${fadeIn} 0.6s ease-out;
+  margin: 0 auto;
+  padding: 60px 20px;
+  font-family: 'Arial', sans-serif;
 `;
 
-const MainSection = styled.div`
+const Header = styled.header`
+  text-align: center;
+  margin-bottom: 40px;
+`;
+
+const Title = styled.h1`
+  color: #0a3d2a;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const Subtitle = styled.p`
+  color: #666;
+  font-size: 18px;
+`;
+
+const ContentWrapper = styled.div`
   display: flex;
-  border-radius: 15px;
-  overflow: hidden;
-  margin-bottom: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
 `;
 
-const ImageSection = styled.div`
+const ContactInfo = styled.div`
   flex: 1;
-  background-image: url('/api/placeholder/600/400');
-  background-size: cover;
-  background-position: center;
-  min-height: 400px;
+  min-width: 300px;
 `;
 
-const FormSection = styled.div`
-  flex: 1;
-  padding: 3rem;
-  background-color: #FF1493;
-  color: white;
+const InfoTitle = styled.h2`
+  color: #0a3d2a;
+  font-size: 24px;
+  margin-bottom: 20px;
 `;
 
-const Title = styled.h2`
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  position: relative;
+const InfoItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  color: #333;
+`;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 50px;
-    height: 3px;
-    background-color: white;
-  }
+const IconWrapper = styled.span`
+  margin-right: 10px;
+  color: #ff6347;
+`;
+
+const MapPlaceholder = styled.div`
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: #666;
 `;
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
+  flex: 1;
+  min-width: 300px;
 `;
 
-const InputGroup = styled.div`
-  position: relative;
-  margin-bottom: 1.5rem;
+const FormGroup = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 5px;
+  color: #0a3d2a;
+  font-weight: bold;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #1E0933;
-  }
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
   resize: vertical;
-  min-height: 120px;
-  transition: all 0.3s ease;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #1E0933;
-  }
+  min-height: 150px;
 `;
 
 const SubmitButton = styled.button`
-  background-color: #1E0933;
+  background-color: #ff6347;
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 12px 20px;
+  font-size: 18px;
   font-weight: bold;
-  font-size: 1rem;
-  align-self: flex-start;
-  transition: all 0.3s ease;
+  border-radius: 4px;
+  cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #2E1A43;
-    transform: translateY(-2px);
+    background-color: #e5573e;
   }
 
   svg {
-    margin-left: 0.5rem;
+    margin-left: 10px;
   }
 `;
 
-const InfoSection = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-`;
-
-const InfoCard = styled.div`
-  background-color: #1E0933;
-  color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const IconWrapper = styled.div`
-  margin-right: 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 0.75rem;
-  border-radius: 50%;
-`;
-
-const InfoContent = styled.div`
-  font-size: 0.9rem;
-
-  > div:first-child {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-`;
-
-const ContactPage = () => {
+const EnhancedContactUsPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to a server
     console.log('Form submitted:', formData);
-    // Reset form after submission
     setFormData({ name: '', email: '', subject: '', message: '' });
+    alert('Thank you for your message. We will get back to you soon!');
   };
 
   return (
     <PageContainer>
-      <MainSection>
-        <ImageSection />
-        <FormSection>
-          <Title>Get In Touch</Title>
-          <Form onSubmit={handleSubmit}>
-            <InputGroup>
-              <Input 
-                type="text" 
-                name="name"
-                placeholder="Name" 
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
-            <InputGroup>
-              <Input 
-                type="email" 
-                name="email"
-                placeholder="Email" 
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
-            <InputGroup>
-              <Input 
-                type="text" 
-                name="subject"
-                placeholder="Subject" 
-                value={formData.subject}
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
-            <InputGroup>
-              <TextArea 
-                name="message"
-                placeholder="Message" 
-                value={formData.message}
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
-            <SubmitButton type="submit">
-              SUBMIT <Send size={18} />
-            </SubmitButton>
-          </Form>
-        </FormSection>
-      </MainSection>
-      <InfoSection>
-        <InfoCard>
-          <IconWrapper><Phone size={24} /></IconWrapper>
-          <InfoContent>
-            <div>Contact</div>
-            <div>+111-222-333</div>
-            <div>+123-456-789</div>
-          </InfoContent>
-        </InfoCard>
-        <InfoCard>
-          <IconWrapper><Clock size={24} /></IconWrapper>
-          <InfoContent>
-            <div>Opening Hours</div>
-            <div>Mon - Fri : 10am - 6pm</div>
-            <div>Sat - Sun : 12am - 4pm</div>
-          </InfoContent>
-        </InfoCard>
-        <InfoCard>
-          <IconWrapper><Mail size={24} /></IconWrapper>
-          <InfoContent>
-            <div>Email</div>
-            <div>abc@gmail.com</div>
-            <div>xyz@gmail.com</div>
-          </InfoContent>
-        </InfoCard>
-        <InfoCard>
-          <IconWrapper><MapPin size={24} /></IconWrapper>
-          <InfoContent>
-            <div>Address</div>
-            <div>Karachi, Pakistan</div>
-          </InfoContent>
-        </InfoCard>
-      </InfoSection>
+      <Header>
+        <Title>Contact Us</Title>
+        <Subtitle>We'd love to hear from you. Here's how you can reach us...</Subtitle>
+      </Header>
+      <ContentWrapper>
+        <ContactInfo>
+          <InfoTitle>Contact Information</InfoTitle>
+          <InfoItem>
+            <IconWrapper><Phone size={20} /></IconWrapper>
+            +1 (123) 456-7890
+          </InfoItem>
+          <InfoItem>
+            <IconWrapper><Mail size={20} /></IconWrapper>
+            contact@example.com
+          </InfoItem>
+          <InfoItem>
+            <IconWrapper><MapPin size={20} /></IconWrapper>
+            123 Business St, City, State 12345
+          </InfoItem>
+          <MapPlaceholder>
+            Map placeholder - integrate your preferred map service here
+          </MapPlaceholder>
+        </ContactInfo>
+        <Form onSubmit={handleSubmit}>
+          <FormGroup>
+            <Label htmlFor="name">Name</Label>
+            <Input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="subject">Subject</Label>
+            <Input
+              type="text"
+              id="subject"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="message">Message</Label>
+            <TextArea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            />
+          </FormGroup>
+          <SubmitButton type="submit">
+            Send Message
+            <Send size={20} />
+          </SubmitButton>
+        </Form>
+      </ContentWrapper>
     </PageContainer>
   );
 };
 
-export default ContactPage;
+export default EnhancedContactUsPage;

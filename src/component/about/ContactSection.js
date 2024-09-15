@@ -1,96 +1,86 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Phone, Mail } from 'lucide-react';
-
-const BannerSection = styled.section`
-  background: linear-gradient(135deg, #FDE2E0 25%, #E6E9F0 25%, #E6E9F0 50%, #FDE2E0 50%, #FDE2E0 75%, #E6E9F0 75%);
-  background-size: 100% 100%;
-  padding: 60px 20px;
-  text-align: center;
-`;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 30px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
 `;
 
 const Title = styled.h2`
-  font-size: 36px;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  color: #0a3d2a;
+  margin-bottom: 1rem;
+  font-weight: bold;
 `;
 
-const Underline = styled.div`
-  width: 60px;
-  height: 4px;
-  background-color: #FF6347;
-  margin: 0 auto 20px;
+const Description = styled.p`
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
-const Subtitle = styled.p`
-  font-size: 16px;
-  color: #555;
-  max-width: 800px;
-  margin: 0 auto 30px;
-  line-height: 1.6;
-`;
-
-const ButtonContainer = styled.div`
+const Form = styled.form`
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+`;
+
+const Input = styled.input`
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex-grow: 1;
+  width: 100%;
 `;
 
 const Button = styled.button`
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-`;
-
-const CallButton = styled(Button)`
-  background-color: #FF6347;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #ff4500;
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
 `;
 
-const EmailButton = styled(Button)`
-  background-color: white;
-  color: #333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
+const NewsletterSubscription = () => {
+  const [email, setEmail] = useState('');
 
-const ContactSection = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Subscribing email:', email);
+    setEmail('');
+  };
+
   return (
-    <BannerSection>
-      <Container>
-        <Title>Bring Your Ideas to Life with DG CLICK</Title>
-        <Underline />
-        <Subtitle>
-          Looking for high-quality digital printing solutions? From personal items to business materials, we offer a wide range of printing services to meet your needs. Contact us now to discuss your project or request a quote!
-        </Subtitle>
-        <ButtonContainer>
-          <CallButton>
-            <Phone size={18} style={{ marginRight: '8px' }} />
-            Call Us Now
-          </CallButton>
-          <EmailButton>
-            <Mail size={18} style={{ marginRight: '8px' }} />
-            Email Us
-          </EmailButton>
-        </ButtonContainer>
-      </Container>
-    </BannerSection>
+    <Container>
+      <Title>Subcribe To Our Newsletter</Title>
+      <Description>
+        Professional printing services can provide you with high-quality prints that will look
+        great and last a long time. We have the equipment and expertise.
+      </Description>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="email"
+          placeholder="Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Button type="submit">Subscribe Now</Button>
+      </Form>
+    </Container>
   );
 };
 
-export default ContactSection;
+export default NewsletterSubscription;
