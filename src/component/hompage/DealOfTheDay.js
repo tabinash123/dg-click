@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { ChevronLeft, ChevronRight, ShoppingCart, Printer } from 'lucide-react';
 
 const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
-
+"Asd"
 // Styled Components
 
 const DealSection = styled.section`
