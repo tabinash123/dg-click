@@ -12,21 +12,23 @@ import Services from './../component/hompage/Services';
 import TestimonialComponent from './../component/hompage/TestimonialComponent';
 import ProductShowcase from '../component/hompage/ProductShowcase';
 import TrendingProducts from '../component/hompage/TrendingProducts';
+import PrintingShopGallery from '../component/hompage/PrintingShopGallery';
+import ProductBanner from '../component/hompage/ProductBanner';
 
 const Homepage = () => {
   return (
     <div>
       <HeroSection />
       <FeatureBar />
-      {/* <DealOfTheDay /> */}
-      <Services />
-      <TrendingProducts />
-      <ProductHighLight />
-      <TestimonialComponent />
-      {/* <ProductShowcase /> */}
       <IntroductionSection />
+      <TestimonialComponent />
+      <TrendingProducts />
+      <Services />
+      <ProductHighLight />
+      <ProductBanner />
+      {/* <ProductShowcase /> */}
       {/* <FAQComponent /> */}
-      {/* <GetInTouch /> */}
+      <PrintingShopGallery />
     </div>
   );
 };

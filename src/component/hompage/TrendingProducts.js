@@ -1,284 +1,180 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-import { ChevronLeft, ChevronRight, ShoppingCart, Printer } from 'lucide-react';
 
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
-
-// Styled Components
-
-const TrendingSection = styled.section`
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-top: 40px;
-  position: relative;
-  padding: 20px;
-`;
-
-const Header = styled.div`
+const OffersContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const Title = styled.h2`
-  font-size: 28px;
-  font-weight: bold;
-  margin: 0;
-`;
-
-const ViewAllLink = styled.a`
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  &:hover {
-    text-decoration: underline;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
-const Product = styled.div`
-  text-align: center;
+const OfferCard = styled.div`
+  flex: 1;
+  background-color: ${props => props.bgColor};
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  transition: box-shadow 0.3s ease;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const OfferText = styled.p`
+  font-size: 14px;
+  font-weight: 600;
+  color: #FF4D00;
+  margin: 0 0 8px 0;
+`;
+
+const OfferTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  color: #1A1A1A;
+  margin: 0 0 24px 0;
+  max-width: 60%;
+`;
+
+const ShopNowButton = styled.button`
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1A1A;
+  cursor: pointer;
+  align-self: flex-start;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #1A1A1A;
+    color: white;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #FF4D00;
   }
 `;
 
 const ProductImage = styled.img`
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  max-width: 40%;
+  max-height: 80%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+
+  ${OfferCard}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  margin-bottom: 10px;
-  border-radius: 8px;
-`;
-
-const ProductName = styled.h3`
-  font-size: 16px;
-  margin-bottom: 5px;
-`;
-
-const ProductPrice = styled.div`
-  font-size: 14px;
-  margin-bottom: 10px;
-`;
-
-const DiscountedPrice = styled.span`
-  color: #e74c3c;
-  font-weight: bold;
-  margin-right: 5px;
-`;
-
-const ActionsContainer = styled.div`
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  z-index: 1000;
 `;
 
-const IconButton = styled.button`
+const ModalContent = styled.div`
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+`;
+
+const CloseButton = styled.button`
   background: none;
   border: none;
+  font-size: 24px;
   cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-`;
-
-const OrderButton = styled.button`
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 4px;
-
-  &:hover {
-    background-color: #c0392b;
-  }
-`;
-
-const ArrowButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  ${props => props.direction === 'left' ? 'left: -20px;' : 'right: -20px;'}
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-
-  @media (max-width: 768px) {
-    ${props => props.direction === 'left' ? 'left: 0;' : 'right: 0;'}
-  }
-`;
-
-const StyledSlider = styled(Slider)`
-  .slick-list {
-    margin: 0 -10px;
-  }
-  .slick-slide > div {
-    padding: 0 10px;
-  }
-  .slick-track {
-    margin-left: 0;
-  }
-`;
-
-const ProductType = styled.div`
   position: absolute;
   top: 10px;
-  left: 10px;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  right: 10px;
 `;
 
-// TrendingProducts Component
+const productData = [
+  {
+    id: 1,
+    title: "Give The Gift Of Choice",
+    bgColor: "#F9F5F0",
+    imageUrl: "/api/placeholder/200/200",
+    alt: "Gift box"
+  },
+  {
+    id: 2,
+    title: "Paper Cups Coffee",
+    bgColor: "#F0F7FC",
+    imageUrl: "/api/placeholder/200/200",
+    alt: "Coffee cup"
+  },
+  {
+    id: 3,
+    title: "Cardboard Package Box",
+    bgColor: "#F9F5F0",
+    imageUrl: "/api/placeholder/200/200",
+    alt: "Cardboard boxes"
+  }
+];
 
-const TrendingProducts = () => {
-  const [trendingProducts, setTrendingProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const ProductOffers = () => {
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const productTypes = ['Brochure', 'Business Card', 'Flyer', 'Poster', 'Sticker', 'Banner'];
-
-  useEffect(() => {
-    const fetchTrendingProducts = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.pexels.com/v1/search?query=trending&per_page=6',
-          {
-            headers: {
-              Authorization: PEXELS_API_KEY,
-            },
-          }
-        );
-        const fetchedProducts = response.data.photos.map(photo => ({
-          name: photo.photographer,
-          price: Math.floor(Math.random() * 100) + 10, // Mock price
-          image: photo.src.medium,
-          type: productTypes[Math.floor(Math.random() * productTypes.length)],
-        }));
-        setTrendingProducts(fetchedProducts);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchTrendingProducts();
-  }, []);
-
-  const CustomArrow = ({ direction, onClick }) => (
-    <ArrowButton direction={direction} onClick={onClick}>
-      {direction === 'left' ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
-    </ArrowButton>
-  );
-
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    prevArrow: <CustomArrow direction="left" />,
-    nextArrow: <CustomArrow direction="right" />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-        }
-      }
-    ]
+  const handleShopNow = (product) => {
+    setSelectedProduct(product);
   };
 
-  const handleAddToCart = (product) => {
-    console.log('Added to cart:', product);
-    // Implement your add to cart logic here
+  const closeModal = () => {
+    setSelectedProduct(null);
   };
-
-  const handleOrder = (product) => {
-    console.log('Ordered:', product);
-    // Implement your order logic here
-  };
-
-  if (loading) return <div>Loading...</div>;
 
   return (
-    <TrendingSection>
-      <Header>
-        <Title>Trending Products</Title>
-        <ViewAllLink href="#">View All Products →</ViewAllLink>
-      </Header>
-      <StyledSlider {...settings}>
-        {trendingProducts.map((product, index) => (
-          <Product key={index}>
-            <ProductType>
-              <Printer size={14} />
-              {product.type}
-            </ProductType>
-            <ProductImage src={product.image} alt={product.name} />
-            <ProductName>{product.name}</ProductName>
-            <ProductPrice>
-              <DiscountedPrice>${product.price.toFixed(2)}</DiscountedPrice>
-            </ProductPrice>
-            <ActionsContainer>
-              <IconButton title="Add to Cart" onClick={() => handleAddToCart(product)}>
-                <ShoppingCart size={20} />
-              </IconButton>
-              <OrderButton onClick={() => handleOrder(product)}>
-                Order Now
-              </OrderButton>
-            </ActionsContainer>
-          </Product>
+    <>
+      <OffersContainer>
+        {productData.map((product) => (
+          <OfferCard key={product.id} bgColor={product.bgColor}>
+            <OfferText>Flat 25% off</OfferText>
+            <OfferTitle>{product.title}</OfferTitle>
+            <ShopNowButton onClick={() => handleShopNow(product)}>Shop Now</ShopNowButton>
+            <ProductImage src={product.imageUrl} alt={product.alt} />
+          </OfferCard>
         ))}
-      </StyledSlider>
-    </TrendingSection>
+      </OffersContainer>
+      {selectedProduct && (
+        <Modal onClick={closeModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <CloseButton onClick={closeModal}>&times;</CloseButton>
+            <h2>{selectedProduct.title}</h2>
+            <p>You selected: {selectedProduct.title}</p>
+            <p>Enjoy your 25% discount!</p>
+          </ModalContent>
+        </Modal>
+      )}
+    </>
   );
 };
 
-export default TrendingProducts;
+export default ProductOffers;

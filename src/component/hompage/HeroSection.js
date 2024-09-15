@@ -19,7 +19,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1200px;
-  margin: 50px auto;
+  margin: 0px auto;
+  margin-top:50px;
   padding: 40px;
   font-family: 'Arial', sans-serif;
   background-color: #ffffff;

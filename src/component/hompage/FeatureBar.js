@@ -12,7 +12,7 @@ const FeatureBarContainer = styled.div`
   justify-content: space-between;
   align-items: stretch;
   padding: 1.5rem;
-  background-color: #f8f8f8;
+  // background-color: #f8f8f8;
   
   @media (max-width: 1024px) {
     // flex-wrap: wrap;
@@ -53,7 +53,7 @@ const IconWrapper = styled.div`
   justify-content: center;
   width: 50px;
   height: 50px;
-  background-color: #e0e0e0;
+  // background-color: #e0e0e0;
   border-radius: 50%;
   transition: all 0.3s ease;
 

@@ -1,153 +1,169 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Printer, Settings, Package,  } from 'lucide-react';
+import axios from 'axios';
 
-const Container = styled.div`
+const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
+
+const Section = styled.section`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
 `;
 
-const LeftColumn = styled.div`
+const IllustrationContainer = styled.div`
   flex: 1;
-  padding-right: 20px;
+  max-width: 50%;
+  height: 400px; // Fixed height
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const RightColumn = styled.div`
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+`;
+
+const ContentContainer = styled.div`
   flex: 1;
-  padding-left: 20px;
+  max-width: 50%;
+  padding-left: 40px;
 `;
 
-const Title = styled.h1`
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
+const Subtitle = styled.p`
+  color: #FF4D4D;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
 `;
 
-const Paragraph = styled.p`
-  font-size: 14px;
-  color: #666;
+const Title = styled.h2`
+  color: #0A2540;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+`;
+
+const Description = styled.p`
+  color: #4A5568;
+  font-size: 16px;
   line-height: 1.6;
-`;
-
-const FeatureList = styled.div`
-  margin-top: 20px;
-`;
-
-const FeatureItem = styled.div`
-  display: flex;
-  align-items: flex-start;
   margin-bottom: 20px;
 `;
 
-const IconWrapper = styled.div`
-  margin-right: 15px;
-  color: #ff0000;
-  width: 24px;
-  height: 24px;
+const FeatureList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+`;
+
+const FeatureItem = styled.li`
+  color: #4A5568;
+  font-size: 16px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
-`;
 
-const FeatureContent = styled.div``;
-
-const FeatureTitle = styled.h3`
-  font-size: 18px;
-  color: #333;
-  margin: 0 0 5px 0;
-`;
-
-const FeatureDescription = styled.p`
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-`;
-
-const CustomIcon = styled.div`
-  width: 24px;
-  height: 24px;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  &::before {
-    content: '₹';
+  &:before {
+    content: '✓';
+    color: #FF4D4D;
+    margin-right: 10px;
     font-weight: bold;
   }
 `;
 
-const ARCPrintLanding = () => (
-  <Container>
-    <LeftColumn>
-      <Title>Welcome to ARC Print – India's leading Custom Printing Company</Title>
-      <Paragraph>
-        Since its inception, ARC Print has been constantly serving all small, medium and large 
-        entrepreneurs and individuals to create their own identities with custom printing solutions 
-        and professional marketing. Our online printing solutions offer a wide assortment of 
-        customizable products including office stationeries, corporate branding materials, visiting 
-        cards, water bottles and many more to meet the diverse needs of businesses across all 
-        industrial verticals. In short, this is a one-stop shop to find all sorts of marketing collateral 
-        products and custom printed gifting items.
-      </Paragraph>
-    </LeftColumn>
-    <RightColumn>
-      <Title>Key Features That Set Us Apart</Title>
-      <FeatureList>
-        <FeatureItem>
-          <IconWrapper>
-            <CustomIcon />
-          </IconWrapper>
-          <FeatureContent>
-            <FeatureTitle>Unmatched Quality At An Unbeatable Price</FeatureTitle>
-            <FeatureDescription>
-              At ARC Print, we are committed to provide high-quality printing products at 
-              affordable prices no matter how big or small the requirement is.
-            </FeatureDescription>
-          </FeatureContent>
-        </FeatureItem>
-        <FeatureItem>
-          <IconWrapper>
-            <Settings size={24} />
-          </IconWrapper>
-          <FeatureContent>
-            <FeatureTitle>Effortless Customization</FeatureTitle>
-            <FeatureDescription>
-              We make it easy for you to customize your products in just a few clicks. Just upload 
-              your design, text and logo online and get it printed on your products.
-            </FeatureDescription>
-          </FeatureContent>
-        </FeatureItem>
-        <FeatureItem>
-          <IconWrapper>
-            <Package size={24} />
-          </IconWrapper>
-          <FeatureContent>
-            <FeatureTitle>Free Shipping</FeatureTitle>
-            <FeatureDescription>
-              No matter where your location is, we provide free shipping to our customers across 
-              all regions of India.
-            </FeatureDescription>
-          </FeatureContent>
-        </FeatureItem>
-        <FeatureItem>
-          <IconWrapper>
-            <Package size={24} />
-          </IconWrapper>
-          <FeatureContent>
-            <FeatureTitle>Dedicated customer support</FeatureTitle>
-            <FeatureDescription>
-              We have an expert team of customer support professionals who are always ready to 
-              attend all your queries round the clock.
-            </FeatureDescription>
-          </FeatureContent>
-        </FeatureItem>
-      </FeatureList>
-    </RightColumn>
-  </Container>
-);
+const ReadMoreButton = styled.button`
+  background-color: #FF4D4D;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
 
-export default ARCPrintLanding;
+  &:hover {
+    background-color: #E63939;
+  }
+
+  &:after {
+    content: '→';
+    margin-left: 10px;
+  }
+`;
+
+const LoadingPlaceholder = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color: #666;
+  font-size: 16px;
+`;
+
+const AboutUsSection = () => {
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await axios.get(
+          'https://api.pexels.com/v1/search?query=office+worker&per_page=1',
+          {
+            headers: { Authorization: PEXELS_API_KEY },
+          }
+        );
+        setImageUrl(response.data.photos[0].src.large);
+      } catch (error) {
+        console.error('Error fetching image:', error);
+        setImageUrl('/api/placeholder/600/400'); // Fallback to placeholder if API fails
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
+  return (
+    <Section>
+      <IllustrationContainer>
+        {loading ? (
+          <LoadingPlaceholder>Loading image...</LoadingPlaceholder>
+        ) : (
+          <Image src={imageUrl} alt="Woman working at computer" />
+        )}
+      </IllustrationContainer>
+      <ContentContainer>
+        <Subtitle>About Us</Subtitle>
+        <Title>From Structure To Conveyance</Title>
+        <Description>
+          Libero aliquam eiget rhoncus elit quis mattis tos neque ullco qua praesent
+          interdum orc torristique aenean at dictumst velit fames molestie tristique
+          magna sociosqu ine rhoncuis in cubilia magno senectus sociis tortor enim.
+        </Description>
+        <FeatureList>
+          <FeatureItem>Magna cubilia sapien vivamus vestibulum iner consectetuer.</FeatureItem>
+          <FeatureItem>Urna faucibus netus Inceptos qu hac sem iaculis lectus.</FeatureItem>
+        </FeatureList>
+        <ReadMoreButton>READ MORE</ReadMoreButton>
+      </ContentContainer>
+    </Section>
+  );
+};
+
+export default AboutUsSection;
