@@ -1,352 +1,348 @@
 import React, { useState, useEffect } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { Search, Menu, X, ChevronRight, Phone, Mail, MapPin } from 'lucide-react';
-
-const slideIn = keyframes`
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-`;
+import styled, { keyframes } from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
+import { Phone, Mail, Facebook, Twitter, Linkedin, ChevronDown, Globe, Menu, X } from 'lucide-react';
 
 const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
 `;
 
-const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: ${props => props.scrolled ? 'rgba(255, 255, 255, 0.95)' : '#ffffff'};
-  box-shadow: ${props => props.scrolled ? '0 4px 6px rgba(0,0,0,0.1)' : '0 2px 4px rgba(0,0,0,0.1)'};
+const slideDown = keyframes`
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+`;
+
+const HeaderWrapper = styled.header`
+  font-family: 'Poppins', sans-serif;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  background-color: white;
   transition: all 0.3s ease;
-
-  @media (max-width: 1024px) {
-    padding: 1rem;
-  }
-`;
-
-const Logo = styled.div`
-  img {
-    height: 40px;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-
-  @media (max-width: 1024px) {
-    display: none;
-  }
-`;
-
-const NavLink = styled.a`
-  color: #333;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  font-weight: ${props => props.active ? 'bold' : 'normal'};
-  transition: all 0.3s ease;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: #ff4500;
-    transition: all 0.3s ease;
-  }
-
-  &:hover, &:focus {
-    color: #ff4500;
-
-    &::after {
-      width: 100%;
-      left: 0;
-    }
-  }
-`;
-
-const SearchIcon = styled(Search)`
-  margin-left: 1rem;
-  cursor: pointer;
-  color: #333;
-  transition: color 0.3s ease, transform 0.3s ease;
-
-  &:hover, &:focus {
-    color: #ff4500;
-    transform: scale(1.1);
-  }
-`;
-
-const GetQuoteButton = styled.button`
-  background-color: #ff4500;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin-left: 1rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  overflow: hidden;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-  }
-
-  &:hover, &:focus {
-    background-color: #e63900;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(230, 57, 0, 0.3);
-
-    &::before {
-      width: 300px;
-      height: 300px;
-    }
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  @media (max-width: 1024px) {
-    display: none;
-  }
-`;
-
-const MenuIcon = styled.div`
-  display: none;
-  cursor: pointer;
-  
-  @media (max-width: 1024px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: #e0e0e0;
-      transform: scale(1.05);
-    }
-  }
-`;
-
-const Drawer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 80%;
-  max-width: 400px;
-  background-color: #ffffff;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  z-index: 1001;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  
-  ${props => props.isOpen && css`
-    transform: translateX(0);
-    animation: ${slideIn} 0.3s ease-in-out;
+  ${props => props.scrolled && `
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   `}
 `;
 
-const DrawerOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
 
-  ${props => props.isOpen && css`
-    opacity: 1;
-    pointer-events: auto;
-    animation: ${fadeIn} 0.3s ease-in-out;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  ${props => props.scrolled && `
+    padding: 5px 5%;
+    @media (max-width: 768px) {
+      display: none;
+    }
   `}
-`;
-
-const DrawerHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-`;
-
-const DrawerCloseButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #ff4500;
-    transform: rotate(90deg);
-  }
-`;
-
-const DrawerNav = styled.nav`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-`;
-
-const DrawerLink = styled(NavLink)`
-  padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s ease;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background-color: #f9f9f9;
-    padding-left: 1.5rem;
-  }
-`;
-
-const DrawerGetQuoteButton = styled(GetQuoteButton)`
-  display: flex;
-  margin: 1rem;
-`;
-
-const DrawerFooter = styled.div`
-  margin-top: auto;
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border-top: 1px solid #e0e0e0;
 `;
 
 const ContactInfo = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-size: 0.9rem;
+  gap: 20px;
 
-  svg {
-    margin-right: 0.5rem;
-    color: #ff4500;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const ContactItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #333;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ff6347;
+  }
+`;
+
+const SocialIcons = styled.div`
+  display: flex;
+  gap: 15px;
+`;
+
+const Icon = styled.a`
+  color: #333;
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    color: #0056b3;
+    transform: translateY(-2px);
+  }
+`;
+
+const MainHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  background-color: white;
+  transition: all 0.3s ease;
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  ${props => props.scrolled && `
+    padding: 10px 5%;
+  `}
+`;
+
+const Logo = styled(Link)`
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const LogoIcon = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: #ff6347;
+  margin-right: 10px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  transition: transform 0.3s ease;
+
+  ${Logo}:hover & {
+    transform: rotate(180deg);
+  }
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 25px;
+
+  @media (max-width: 1024px) {
+    display: ${props => props.isOpen ? 'flex' : 'none'};
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    animation: ${slideDown} 0.3s ease;
+  }
+`;
+
+const NavItem = styled(Link)`
+  text-decoration: none;
+  color: ${props => props.active ? '#ff6347' : '#333'};
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+
+  &:hover {
+    color: #ff6347;
+    transform: translateY(-2px);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #ff6347;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  ${props => props.active && `
+    &::after {
+      transform: scaleX(1);
+    }
+  `}
+`;
+
+const RightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const LanguageSelector = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+const LanguageDropdown = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 5px 0;
+  display: ${props => props.isOpen ? 'block' : 'none'};
+  z-index: 10;
+  animation: ${fadeIn} 0.3s ease;
+`;
+
+const LanguageOption = styled.div`
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+const QuoteButton = styled(Link)`
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #ff5335;
+    transform: translateY(-2px);
+  }
+`;
+
+const MenuToggle = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333;
+
+  @media (max-width: 1024px) {
+    display: block;
   }
 `;
 
 const Header = () => {
+  const location = useLocation();
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('ENG');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleLanguageDropdown = () => {
+    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+  };
+
+  const handleLanguageSelect = (lang) => {
+    setSelectedLanguage(lang);
+    setIsLanguageDropdownOpen(false);
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
-
-    document.addEventListener('scroll', handleScroll);
-
-    return () => {
-      document.removeEventListener('scroll', handleScroll);
-    };
-  }, [scrolled]);
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Pages', path: '/pages' },
+    { name: 'Services', path: '/services' },
+    { name: 'Project', path: '/project' },
+    { name: 'Article', path: '/article' },
+    { name: 'Contact', path: '/contact' },
+  ];
 
   return (
-    <>
-      <HeaderContainer scrolled={scrolled}>
-        <Logo>
-          <img src="/api/placeholder/120/40" alt="Printex Logo" />
+    <HeaderWrapper scrolled={scrolled}>
+      <TopBar scrolled={scrolled}>
+        <ContactInfo>
+          <ContactItem>
+            <Phone size={16} color="#ff6347" />
+            <span>+2 (202) 588-6500</span>
+          </ContactItem>
+          <ContactItem>
+            <Mail size={16} />
+            <span>info@pixento24.com</span>
+          </ContactItem>
+        </ContactInfo>
+        <SocialIcons>
+          <Icon href="#"><Facebook size={18} /></Icon>
+          <Icon href="#"><Twitter size={18} /></Icon>
+          <Icon href="#"><Linkedin size={18} /></Icon>
+        </SocialIcons>
+      </TopBar>
+      <MainHeader scrolled={scrolled}>
+        <Logo to="/">
+          <LogoIcon />
+          PIXEN
         </Logo>
-        <Nav>
-          <NavLink href="/" active>Home</NavLink>
-          <NavLink href="/about">About</NavLink>
-          <NavLink href="/shop">Shop</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
-          <SearchIcon size={20} aria-label="Search" tabIndex={0} />
-          <GetQuoteButton>
-            Get Quote <span>→</span>
-          </GetQuoteButton>
+        <MenuToggle onClick={toggleMenu}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </MenuToggle>
+        <Nav isOpen={isMenuOpen}>
+          {navItems.map((item) => (
+            <NavItem 
+              key={item.name} 
+              to={item.path} 
+              active={location.pathname === item.path}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {item.name}
+            </NavItem>
+          ))}
         </Nav>
-        <MenuIcon onClick={toggleMenu} aria-label="Open menu">
-          <Menu size={24} />
-        </MenuIcon>
-      </HeaderContainer>
-
-      <DrawerOverlay isOpen={isMenuOpen} onClick={toggleMenu} />
-      <Drawer isOpen={isMenuOpen}>
-        <DrawerHeader>
-          <Logo>
-            <img src="/api/placeholder/120/40" alt="Printex Logo" />
-          </Logo>
-          <DrawerCloseButton onClick={toggleMenu} aria-label="Close menu">
-            <X size={24} />
-          </DrawerCloseButton>
-        </DrawerHeader>
-        <DrawerNav>
-          <DrawerLink href="/" active>Home <ChevronRight size={20} /></DrawerLink>
-          <DrawerLink href="/about">About <ChevronRight size={20} /></DrawerLink>
-          <DrawerLink href="/contact">Contact <ChevronRight size={20} /></DrawerLink>
-        </DrawerNav>
-        <DrawerGetQuoteButton>
-          Get Quote <span>→</span>
-        </DrawerGetQuoteButton>
-        <DrawerFooter>
-          <ContactInfo>
-            <Phone size={16} /> +1 (123) 456-7890
-          </ContactInfo>
-          <ContactInfo>
-            <Mail size={16} /> info@printex.com
-          </ContactInfo>
-          <ContactInfo>
-            <MapPin size={16} /> 123 Printing St, Design City, 12345
-          </ContactInfo>
-        </DrawerFooter>
-      </Drawer>
-    </>
+        <RightSection>
+         
+          <QuoteButton to="/quote">GET A QUOTE</QuoteButton>
+        </RightSection>
+      </MainHeader>
+    </HeaderWrapper>
   );
 };
 

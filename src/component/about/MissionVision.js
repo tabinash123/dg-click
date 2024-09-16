@@ -1,133 +1,175 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Target, Eye } from 'lucide-react';
+import { Eye, Target, Lightbulb } from 'lucide-react';
+import axios from 'axios';
 
-const Section = styled.section`
-  background-color: #f8f9fa;
-  padding: 2rem 1rem;
-  font-family: 'Arial', sans-serif;
+const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  gap: 2rem;
 
   @media (min-width: 768px) {
-    padding: 3rem 2rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding: 4rem 2rem;
+    flex-direction: row;
   }
 `;
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+const ImageSection = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const ContentSection = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h2`
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #333;
-
-  @media (min-width: 768px) {
-    font-size: 2.25rem;
-    margin-bottom: 2.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-  }
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 1.5rem;
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
+const TabsContainer = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
 `;
 
-const Card = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-
-  @media (min-width: 768px) {
-    padding: 2rem;
-  }
-`;
-
-const CardTitle = styled.h3`
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+const TabButton = styled.button`
   display: flex;
   align-items: center;
-  color: #FF5722;
-
-  @media (min-width: 768px) {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-  }
+  margin-right: 1rem;
+  padding-bottom: 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: ${props => props.active ? '#1e3a8a' : '#4b5563'};
+  border-bottom: ${props => props.active ? '2px solid #1e3a8a' : 'none'};
+  font-weight: ${props => props.active ? 'bold' : 'normal'};
 `;
 
-const IconWrapper = styled.div`
-  margin-right: 0.75rem;
-
-  @media (min-width: 768px) {
-    margin-right: 1rem;
-  }
+const ContentList = styled.ul`
+  list-style-type: disc;
+  padding-left: 1.25rem;
 `;
 
-const CardContent = styled.p`
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: #555;
-
-  @media (min-width: 768px) {
-    font-size: 1rem;
-  }
+const ListItem = styled.li`
+  color: #4b5563;
+  margin-bottom: 0.5rem;
 `;
 
-const MissionVision = () => {
+const VisionMissionPhilosophy = () => {
+  const [activeTab, setActiveTab] = useState('VISION');
+  const [imageUrl, setImageUrl] = useState('');
+
+  const tabs = [
+    { key: 'VISION', icon: Eye },
+    { key: 'MISSION', icon: Target },
+    { key: 'PHILOSOPHY', icon: Lightbulb }
+  ];
+
+  const content = {
+    VISION: [
+      "To be a globally recognized leader in consumer products and services.",
+      "To inspire and improve the lives of people through innovative solutions.",
+      "To set new standards of excellence in every industry we operate in."
+    ],
+    MISSION: [
+      "Understand consumer insights and meet their needs with safe, effective and world-class products.",
+      "Integrate our dealers, distributors, retailers, suppliers and JV partners into the Chaudhary Group Family.",
+      "Recruit, develop, motivate and retain the best talent within the country, recruit if needed from abroad and provide them a challenging and demanding environment.",
+      "Foster a strong emotive feeling of oneness and ownership with the Chaudhary Group."
+    ],
+    PHILOSOPHY: [
+      "Customer-centric approach in all our endeavors.",
+      "Commitment to quality and continuous improvement.",
+      "Ethical business practices and corporate social responsibility.",
+      "Empowerment of employees and fostering a culture of innovation."
+    ]
+  };
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await axios.get('https://api.pexels.com/v1/search', {
+          params: {
+            query: 'business team',
+            per_page: 1,
+            size: 'medium'
+          },
+          headers: {
+            Authorization: PEXELS_API_KEY
+          }
+        });
+        setImageUrl(response.data.photos[0].src.medium);
+      } catch (error) {
+        console.error('Error fetching image:', error);
+        setImageUrl('/api/placeholder/400/300'); // Fallback to placeholder if API call fails
+      }
+    };
+
+    fetchImage();
+  }, []);
+
+  const handleTabClick = (tabKey) => {
+    setActiveTab(tabKey);
+  };
+
   return (
-    <Section>
-      <Container>
-        <Title>Our Mission & Vision</Title>
-        <Grid>
-          <Card>
-            <CardTitle>
-              <IconWrapper>
-                <Target size={24} />
-              </IconWrapper>
-              Our Mission
-            </CardTitle>
-            <CardContent>
-              At DG CLICK@ CHABAHIL PVT. LTD., our mission is to provide high-quality digital printing solutions that bring our customers' ideas to life. We are committed to delivering exceptional service, innovative designs, and timely results that exceed expectations.
-            </CardContent>
-          </Card>
-          <Card>
-            <CardTitle>
-              <IconWrapper>
-                <Eye size={24} />
-              </IconWrapper>
-              Our Vision
-            </CardTitle>
-            <CardContent>
-              We aspire to be the leading digital printing studio in Kathmandu, known for our cutting-edge technology, creative expertise, and unwavering commitment to customer satisfaction. Our vision is to continually expand our services, embrace new technologies, and set the standard for excellence in the digital printing industry.
-            </CardContent>
-          </Card>
-        </Grid>
-      </Container>
-    </Section>
+    <Container>
+      <ImageSection>
+        <ImageContainer>
+          <Image src={imageUrl} alt="Company leaders" />
+        </ImageContainer>
+      </ImageSection>
+      <ContentSection>
+        <Title>
+          Vision
+          Mission
+          Philosophy
+        </Title>
+        <TabsContainer>
+          {tabs.map((tab) => (
+            <TabButton
+              key={tab.key}
+              active={activeTab === tab.key}
+              onClick={() => handleTabClick(tab.key)}
+            >
+              <tab.icon size={20} />
+              <span style={{ marginLeft: '4px' }}>{tab.key}</span>
+            </TabButton>
+          ))}
+        </TabsContainer>
+        <ContentList>
+          {content[activeTab].map((item, index) => (
+            <ListItem key={index}>{item}</ListItem>
+          ))}
+        </ContentList>
+      </ContentSection>
+    </Container>
   );
 };
 
-export default MissionVision;
+export default VisionMissionPhilosophy;

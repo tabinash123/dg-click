@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import axios from 'axios';
+
+const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
+
+// ... (all styled components remain the same)
 
 const TestimonialContainer = styled.div`
   max-width: 1200px;
@@ -74,7 +79,7 @@ const Avatar = styled.div`
     width: 70px;
     height: 70px;
     opacity: 1;
-    border: 3px solid #ff6347;
+    // border: 3px solid #ff6347;
   }
 `;
 
@@ -102,29 +107,57 @@ const NextButton = styled(NavigationButton)`
   right: 0;
 `;
 
-const TestimonialFunctionalCarousel = () => {
-  const testimonials = [
+const Testimoni = () => {
+  const [testimonials, setTestimonials] = useState([
     {
       text: "You could even ask influencers to write a blog post for their own website that reviews your product or services, plus the tips they learned through working with you. This gets your business in front of even more readers and prospective target clients.",
       name: "Glean Philips",
       position: "Product Manager",
-      avatar: "/api/placeholder/70/70"
+      avatar: ""
     },
     {
       text: "The printing quality exceeded our expectations. The team was professional and delivered on time. Highly recommended for all your printing needs!",
       name: "Sarah Johnson",
       position: "Marketing Director",
-      avatar: "/api/placeholder/70/70"
+      avatar: ""
     },
     {
       text: "Outstanding service! They helped us design and print materials for our company rebrand. The results were fantastic and our clients love the new look.",
       name: "Michael Chen",
       position: "CEO",
-      avatar: "/api/placeholder/70/70"
+      avatar: ""
     }
-  ];
+  ]);
 
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchAvatars = async () => {
+      try {
+        const response = await axios.get('https://api.pexels.com/v1/search', {
+          params: {
+            query: 'business portrait',
+            per_page: testimonials.length,
+            size: 'small'
+          },
+          headers: {
+            Authorization: PEXELS_API_KEY
+          }
+        });
+
+        const updatedTestimonials = testimonials.map((testimonial, index) => ({
+          ...testimonial,
+          avatar: response.data.photos[index].src.small
+        }));
+
+        setTestimonials(updatedTestimonials);
+      } catch (error) {
+        console.error('Error fetching avatars:', error);
+      }
+    };
+
+    fetchAvatars();
+  }, []);
 
   const handlePrev = () => {
     setActiveIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
@@ -140,13 +173,13 @@ const TestimonialFunctionalCarousel = () => {
       <LargeTitle>What Our Client Says</LargeTitle>
       <TestimonialContent>
         <AvatarContainer>
-          {testimonials.map((_, index) => (
+          {testimonials.map((testimonial, index) => (
             <Avatar 
               key={index} 
               className={index === activeIndex ? 'active' : ''}
             >
               <AvatarImage 
-                src={`/api/placeholder/${index === activeIndex ? '70' : '50'}/${index === activeIndex ? '70' : '50'}`} 
+                src={testimonial.avatar || `/api/placeholder/${index === activeIndex ? '70' : '50'}/${index === activeIndex ? '70' : '50'}`} 
                 alt={`Client ${index + 1}`} 
               />
             </Avatar>
@@ -166,4 +199,4 @@ const TestimonialFunctionalCarousel = () => {
   );
 };
 
-export default TestimonialFunctionalCarousel;
+export default Testimoni;

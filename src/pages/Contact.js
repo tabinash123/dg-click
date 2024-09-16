@@ -1,45 +1,51 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Send, Phone, Mail, MapPin } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Globe, Send, Facebook, Instagram } from 'lucide-react';
 
-const PageContainer = styled.div`
+// ... (previous styled components remain the same)
+
+const ContactSection = styled.section`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 80px 20px;
   font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
 `;
 
-const Header = styled.header`
-  text-align: center;
-  margin-bottom: 40px;
-`;
-
-const Title = styled.h1`
+const Title = styled.h2`
+  font-size: 42px;
   color: #0a3d2a;
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const Subtitle = styled.p`
-  color: #666;
   font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 50px;
 `;
 
-const ContentWrapper = styled.div`
+const ContactWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
   justify-content: space-between;
+  gap: 40px;
+  background-color: white;
+  border-radius: 10px;
+  // box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
 `;
 
 const ContactInfo = styled.div`
   flex: 1;
   min-width: 300px;
+  padding: 40px;
+  // background-color: #0a3d2a;
+  color: black;
 `;
 
-const InfoTitle = styled.h2`
-  color: #0a3d2a;
+const InfoTitle = styled.h3`
   font-size: 24px;
   margin-bottom: 20px;
 `;
@@ -47,90 +53,134 @@ const InfoTitle = styled.h2`
 const InfoItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  color: #333;
-`;
-
-const IconWrapper = styled.span`
-  margin-right: 10px;
-  color: #ff6347;
-`;
-
-const MapPlaceholder = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  color: #666;
-`;
-
-const Form = styled.form`
-  flex: 1;
-  min-width: 300px;
-`;
-
-const FormGroup = styled.div`
   margin-bottom: 20px;
 `;
 
-const Label = styled.label`
-  display: block;
-  margin-bottom: 5px;
+const InfoText = styled.p`
+  margin-left: 15px;
+  font-size: 16px;
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+`;
+
+const SocialIcon = styled.a`
+  color: white;
+  &:hover {
+    color: #ffd700;
+  }
+`;
+
+const ContactForm = styled.form`
+  flex: 1;
+  min-width: 300px;
+  padding: 40px;
+`;
+
+const FormTitle = styled.h3`
+  font-size: 24px;
   color: #0a3d2a;
-  font-weight: bold;
+  margin-bottom: 20px;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  height: 150px;
   font-size: 16px;
-  resize: vertical;
-  min-height: 150px;
 `;
 
 const SubmitButton = styled.button`
-  background-color: #ff6347;
+  background-color: #0a3d2a;
   color: white;
   border: none;
-  padding: 12px 20px;
-  font-size: 18px;
-  font-weight: bold;
+  padding: 12px 24px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 18px;
   display: flex;
   align-items: center;
-  justify-content: center;
   transition: background-color 0.3s ease;
-
+  
   &:hover {
-    background-color: #e5573e;
-  }
-
-  svg {
-    margin-left: 10px;
+    background-color: #0c4d34;
   }
 `;
 
-const EnhancedContactUsPage = () => {
+const Map = styled.div`
+  width: 100%;
+  height: 400px;
+  margin-top: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+`;
+
+const BusinessHours = styled.div`
+  margin-top: 30px;
+`;
+
+const HoursTitle = styled.h4`
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+
+const HoursText = styled.p`
+  font-size: 14px;
+  margin-bottom: 5px;
+`;
+
+const ErrorMessage = styled.p`
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: -15px;
+  margin-bottom: 15px;
+`;
+
+const SuccessMessage = styled.div`
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+`;
+
+const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: '',
   });
+
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const validateForm = () => {
+    let formErrors = {};
+    if (!formData.name.trim()) formErrors.name = "Name is required";
+    if (!formData.email.trim()) formErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) formErrors.email = "Email is invalid";
+    if (!formData.subject.trim()) formErrors.subject = "Subject is required";
+    if (!formData.message.trim()) formErrors.message = "Message is required";
+    return formErrors;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -138,92 +188,127 @@ const EnhancedContactUsPage = () => {
       ...prevState,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prevErrors => ({ ...prevErrors, [name]: null }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    alert('Thank you for your message. We will get back to you soon!');
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length === 0) {
+      console.log('Form submitted:', formData);
+      setSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000); // Hide success message after 5 seconds
+    } else {
+      setErrors(formErrors);
+    }
   };
 
   return (
-    <PageContainer>
-      <Header>
-        <Title>Contact Us</Title>
-        <Subtitle>We'd love to hear from you. Here's how you can reach us...</Subtitle>
-      </Header>
-      <ContentWrapper>
+    <ContactSection>
+      <Title>Get in Touch</Title>
+      <Subtitle>We're here to help and answer any question you might have. We look forward to hearing from you!</Subtitle>
+      <ContactWrapper>
         <ContactInfo>
           <InfoTitle>Contact Information</InfoTitle>
           <InfoItem>
-            <IconWrapper><Phone size={20} /></IconWrapper>
-            +1 (123) 456-7890
+            <MapPin size={24} />
+            <InfoText>123 Printing Avenue, Inkville, PR 12345</InfoText>
           </InfoItem>
           <InfoItem>
-            <IconWrapper><Mail size={20} /></IconWrapper>
-            contact@example.com
+            <Phone size={24} />
+            <InfoText>+1 (555) 123-4567</InfoText>
           </InfoItem>
           <InfoItem>
-            <IconWrapper><MapPin size={20} /></IconWrapper>
-            123 Business St, City, State 12345
+            <Mail size={24} />
+            <InfoText>contact@printmaster.com</InfoText>
           </InfoItem>
-          <MapPlaceholder>
-            Map placeholder - integrate your preferred map service here
-          </MapPlaceholder>
+          <InfoItem>
+            <Globe size={24} />
+            <InfoText>www.printmaster.com</InfoText>
+          </InfoItem>
+          <BusinessHours>
+            <HoursTitle>Business Hours</HoursTitle>
+            <HoursText>Monday - Friday: 9:00 AM - 6:00 PM</HoursText>
+            <HoursText>Saturday: 10:00 AM - 4:00 PM</HoursText>
+            <HoursText>Sunday: Closed</HoursText>
+          </BusinessHours>
+          <SocialLinks>
+            <SocialIcon href="#" aria-label="Facebook"><Facebook size={24} /></SocialIcon>
+            <SocialIcon href="#" aria-label="Instagram"><Instagram size={24} /></SocialIcon>
+          </SocialLinks>
         </ContactInfo>
-        <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="subject">Subject</Label>
-            <Input
-              type="text"
-              id="subject"
-              name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="message">Message</Label>
-            <TextArea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-            />
-          </FormGroup>
+        <ContactForm onSubmit={handleSubmit}>
+          <FormTitle>Send Us a Message</FormTitle>
+          {submitted && <SuccessMessage>Thank you for your message. We'll get back to you soon!</SuccessMessage>}
+          <Input 
+            type="text" 
+            name="name" 
+            placeholder="Your Name" 
+            value={formData.name} 
+            onChange={handleChange} 
+            required 
+            aria-invalid={errors.name ? "true" : "false"}
+          />
+          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+          <Input 
+            type="email" 
+            name="email" 
+            placeholder="Your Email" 
+            value={formData.email} 
+            onChange={handleChange} 
+            required 
+            aria-invalid={errors.email ? "true" : "false"}
+          />
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+          <Input 
+            type="tel" 
+            name="phone" 
+            placeholder="Your Phone (optional)" 
+            value={formData.phone} 
+            onChange={handleChange} 
+          />
+          <Input 
+            type="text" 
+            name="subject" 
+            placeholder="Subject" 
+            value={formData.subject} 
+            onChange={handleChange} 
+            required 
+            aria-invalid={errors.subject ? "true" : "false"}
+          />
+          {errors.subject && <ErrorMessage>{errors.subject}</ErrorMessage>}
+          <TextArea 
+            name="message" 
+            placeholder="Your Message" 
+            value={formData.message} 
+            onChange={handleChange} 
+            required 
+            aria-invalid={errors.message ? "true" : "false"}
+          />
+          {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
           <SubmitButton type="submit">
             Send Message
-            <Send size={20} />
+            <Send size={18} style={{ marginLeft: '10px' }} />
           </SubmitButton>
-        </Form>
-      </ContentWrapper>
-    </PageContainer>
+        </ContactForm>
+      </ContactWrapper>
+      <Map>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2412734716447!2d-73.98823368459442!3d40.74844097932847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1630619200000!5m2!1sen!2sus" 
+          width="100%" 
+          height="100%" 
+          style={{border:0}} 
+          allowFullScreen="" 
+          loading="lazy"
+          title="Google Map"
+        ></iframe>
+      </Map>
+    </ContactSection>
   );
 };
 
-export default EnhancedContactUsPage;
+export default ContactUs;

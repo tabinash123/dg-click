@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
 
 // Import local images
 import calenderPrinting from '../../assets/services/calenderPrinting.jpg';
@@ -35,12 +32,18 @@ const Title = styled.h2`
   margin: 0;
 `;
 
+const ServicesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+`;
+
 const ServiceCard = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
   transition: transform 0.3s ease;
-  padding: 0 10px;
 
   &:hover {
     transform: translateY(-5px);
@@ -49,7 +52,7 @@ const ServiceCard = styled.div`
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 300px;
+  height: 200px;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -62,42 +65,30 @@ const ServiceImage = styled.img`
 `;
 
 const ServiceName = styled.p`
-  font-size: 19px;
+  font-size: 18px;
   text-align: center;
   color: #333;
   font-weight: 600;
   margin: 0;
 `;
 
-const ArrowButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const ExploreButton = styled(Link)`
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #1e0e4b;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  z-index: 1;
-  ${props => props.direction === 'left' ? 'left: -20px;' : 'right: -20px;'}
   transition: background-color 0.3s ease;
+  text-decoration: none;
 
   &:hover {
-    background-color: #f0f0f0;
-  }
-`;
-
-const StyledSlider = styled(Slider)`
-  .slick-slide > div {
-    margin: 0 10px;
-  }
-
-  .slick-list {
-    margin: 0 -10px;
+    background-color: #2a1368;
   }
 `;
 
@@ -113,42 +104,12 @@ const services = [
 ];
 
 const PrintingServices = () => {
-  const CustomArrow = ({ direction, onClick }) => (
-    <ArrowButton direction={direction} onClick={onClick}>
-      {direction === 'left' ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
-    </ArrowButton>
-  );
-
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    prevArrow: <CustomArrow direction="left" />,
-    nextArrow: <CustomArrow direction="right" />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-        }
-      }
-    ]
-  };
-
   return (
     <Section>
       <Header>
         <Title>Our Printing Services</Title>
       </Header>
-      <StyledSlider {...settings}>
+      <ServicesGrid>
         {services.map((service, index) => (
           <ServiceCard key={index}>
             <ImageWrapper>
@@ -157,7 +118,8 @@ const PrintingServices = () => {
             <ServiceName>{service.name}</ServiceName>
           </ServiceCard>
         ))}
-      </StyledSlider>
+      </ServicesGrid>
+      <ExploreButton to="/shop">Explore More</ExploreButton>
     </Section>
   );
 };

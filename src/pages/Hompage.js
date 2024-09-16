@@ -20,10 +20,10 @@ const Homepage = () => {
     <div>
       <HeroSection />
       <FeatureBar />
-      <ProductOffers />
       <IntroductionSection />
       <Features />
       <Services />
+      <ProductOffers />
       <ProductHighLight />
       <ProductBanner />
       {/* <ProductShowcase /> */}
