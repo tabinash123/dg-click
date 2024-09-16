@@ -1,163 +1,158 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ArrowRight } from 'lucide-react';
-import ima from '../../assets/services/5.jpg'
+import styled, { keyframes } from 'styled-components';
+import { Pen, FileText, CheckSquare, Printer } from 'lucide-react';
 
-const OuterContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #1a1a1a;
-  padding: 20px;
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-const Container = styled.div`
-  display: flex;
-  background-color: #1a1a1a;
-  color: white;
-  max-width: 1200px;
-  width: 100%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    max-width: 768px;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 100%;
-  }
+const Section = styled.section`
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
 `;
 
-const Section = styled.div`
-  flex: 1;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-
-  @media (max-width: 768px) {
-    padding: 30px;
-  }
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 30px;
 `;
 
-const VisitSection = styled(Section)`
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #f44336;
-  }
-`;
-
-const PricingSection = styled(Section)`
-  background-color: #f44336;
-`;
-
-const ImageSection = styled.div`
-  flex: 1;
-  background-image: url(${ima});
-  background-size: cover;
-  background-position: center;
-  min-height: 300px;
-
-  @media (max-width: 1024px) {
-    order: -1;
-  }
+const Subtitle = styled.p`
+  color: #ff6347;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 `;
 
 const Title = styled.h2`
-  font-size: 36px;
-  margin-bottom: 20px;
-  font-weight: bold;
+  color: #00008b;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  display: inline-block;
 
-  @media (max-width: 768px) {
-    font-size: 28px;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #ff6347;
   }
 `;
 
-const DayTime = styled.div`
-  margin-bottom: 10px;
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const Day = styled.span`
-  font-weight: bold;
-`;
-
-const Time = styled.span`
-  color: #a0a0a0;
-  margin-left: 10px;
-`;
-
-const AppointmentButton = styled.button`
-  background: none;
-  border: none;
-  color: white;
-  font-size: 14px;
+const Item = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
-  padding: 0;
-  font-weight: bold;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  animation: ${fadeIn} 0.5s ease-out forwards;
+  opacity: 0;
+  animation-delay: ${props => props.delay}s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
 `;
 
-const PriceList = styled.div`
+const IconWrapper = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+
+  ${Item}:hover & {
+    transform: scale(1.1);
+  }
 `;
 
-const PriceItem = styled.div`
-  margin-bottom: 10px;
+const Content = styled.div`
+  flex: 1;
 `;
 
-const Service = styled.span`
-  font-weight: bold;
+const ItemTitle = styled.h3`
+  color: #00008b;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 5px 0;
 `;
 
-const Price = styled.span`
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  display: block;
+const ItemDescription = styled.p`
+  color: #666;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
 `;
 
-const VisitUsComponent = () => {
+const StepNumber = styled.span`
+  font-size: 36px;
+  font-weight: 700;
+  color: #f0f0f0;
+  position: absolute;
+  top: -15px;
+  right: 10px;
+  z-index: 0;
+`;
+
+const HowItWorks = () => {
+  const items = [
+    { icon: Pen, title: "Booking Online", color: "#ff6347" },
+    { icon: FileText, title: "Received Work", color: "#ffd700" },
+    { icon: CheckSquare, title: "Satisfied Design", color: "#00008b" },
+    { icon: Printer, title: "Start Printing", color: "#ff6347" }
+  ];
+
   return (
-    <OuterContainer>
-      <Container>
-        <VisitSection>
-          <div>
-            <Title>VISIT US</Title>
-            <DayTime><Day>Monday-Friday</Day> <Time>10AM - 8PM</Time></DayTime>
-            <DayTime><Day>Saturday</Day> <Time>10AM - 6PM</Time></DayTime>
-            <DayTime><Day>Sunday</Day> <Time>CLOSED</Time></DayTime>
-            <p style={{ color: '#a0a0a0', fontSize: '14px', marginTop: '20px' }}>
-              We will be glad to see you anytime at our salon.
-            </p>
-          </div>
-          <AppointmentButton>
-            MAKE AN APPOINTMENT <ArrowRight size={16} style={{ marginLeft: '10px' }} />
-          </AppointmentButton>
-        </VisitSection>
-        
-        <ImageSection />
-        
-        <PricingSection>
-          <Title>PRICING</Title>
-          <PriceList>
-            <PriceItem><Service>Tattooing</Service> <Price>FROM $90.00</Price></PriceItem>
-            <PriceItem><Service>Piercing</Service> <Price>FROM $45.00</Price></PriceItem>
-            <PriceItem><Service>Permanent Make-Up</Service> <Price>FROM $60.00</Price></PriceItem>
-            <PriceItem><Service>Tattoo Cover Up</Service> <Price>FROM $35.00</Price></PriceItem>
-            <PriceItem><Service>Laser Removal</Service> <Price>FROM $50.00</Price></PriceItem>
-          </PriceList>
-        </PricingSection>
-      </Container>
-    </OuterContainer>
+    <Section>
+      <Header>
+        <Subtitle>Working Process</Subtitle>
+        <Title>HOW IT WORKS</Title>
+      </Header>
+      <Grid>
+        {items.map((item, index) => (
+          <Item key={index} delay={index * 0.1}>
+            <IconWrapper style={{ backgroundColor: item.color }}>
+              <item.icon size={24} color="white" />
+            </IconWrapper>
+            <Content>
+              <ItemTitle>{item.title}</ItemTitle>
+              <ItemDescription>
+                God They moving an firmament seed over herb gathering multis ply morning fruitful
+              </ItemDescription>
+            </Content>
+            <StepNumber>{index + 1}</StepNumber>
+          </Item>
+        ))}
+      </Grid>
+    </Section>
   );
 };
 
-export default VisitUsComponent;
+export default HowItWorks;

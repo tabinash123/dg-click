@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Hompage';
 import About from './pages/About';
 import Contact from './pages/Contact';
-// import Services from './pages/Services';
+import Services from './pages/Services';
 import Shop from './pages/Shop';
+import Project from './pages/Project';
 
 const App = () => {
   return (
@@ -18,6 +19,9 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/project" element={<Project />} />
+        <Route path="/services" element={<Services />} />
+        
       </Routes>
       <Footer />
     </Router>

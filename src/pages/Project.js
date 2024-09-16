@@ -6,10 +6,9 @@ import { X } from 'lucide-react';
 const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
 
 const GallerySection = styled.section`
-  padding: 2rem;
-  background-color: transparent;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
 `;
 
 const Subtitle = styled.h3`
@@ -17,7 +16,6 @@ const Subtitle = styled.h3`
   color: #ff4500;
   text-align: center;
   margin-bottom: 0.5rem;
-  font-weight: normal;
 `;
 
 const Title = styled.h2`
@@ -28,32 +26,27 @@ const Title = styled.h2`
   font-weight: bold;
 `;
 
-const ProjectGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
+const MasonryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+  grid-auto-flow: dense;
 `;
 
 const ProjectCard = styled.div`
-  flex: 0 0 33.333%;
-  height: 200px;
-  overflow: hidden;
-  cursor: pointer;
   position: relative;
-  
-  &:hover::after {
-    content: 'View Project';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:nth-child(3n) {
+    grid-row: span 2;
   }
 `;
 
@@ -61,11 +54,6 @@ const ProjectImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
-
-  ${ProjectCard}:hover & {
-    transform: scale(1.1);
-  }
 `;
 
 const Modal = styled.div`
@@ -117,7 +105,7 @@ const ErrorMessage = styled.p`
   color: #ff0000;
 `;
 
-const PrintingPressGallery = () => {
+const SimpleMasonryGallery = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -130,7 +118,7 @@ const PrintingPressGallery = () => {
         const response = await axios.get('https://api.pexels.com/v1/search', {
           params: {
             query: 'printing press,design,typography',
-            per_page: 12,
+            per_page: 20,
             orientation: 'landscape'
           },
           headers: {
@@ -176,16 +164,25 @@ const PrintingPressGallery = () => {
     <GallerySection>
       <Subtitle>Case studies</Subtitle>
       <Title>Explore our Recent Projects</Title>
-      <ProjectGrid>
+      <MasonryGrid>
         {projects.map((project) => (
           <ProjectCard key={project.id} onClick={() => handleImageClick(project)}>
             <ProjectImage src={project.image} alt={project.alt} />
           </ProjectCard>
         ))}
-      </ProjectGrid>
-      
+      </MasonryGrid>
+      {selectedImage && (
+        <Modal onClick={handleCloseModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <CloseButton onClick={handleCloseModal}>
+              <X size={24} />
+            </CloseButton>
+            <ModalImage src={selectedImage.image} alt={selectedImage.alt} />
+          </ModalContent>
+        </Modal>
+      )}
     </GallerySection>
   );
 };
 
-export default PrintingPressGallery;
+export default SimpleMasonryGallery;

@@ -1,129 +1,193 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Syringe, Scissors, PenTool, Droplet, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
-const Container = styled.div`
-  background-color: #1a1a1a;
-  color: white;
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+// Import local images (unchanged)
+import calenderPrinting from '../../assets/services/calenderPrinting.jpg';
+import capPrinting from '../../assets/services/capPrinting.jpg';
+import cdPrinting from '../../assets/services/cdPrinting.jpg';
+import cupPrinting from '../../assets/services/cupPrinting.jpg';
+import photoFramePrinting from '../../assets/services/photoFramePrinting.jpg';
+import platePrinting from '../../assets/services/platePrinting.jpg';
+import pvcCardPrinting from '../../assets/services/pvcCardPrinting.jpg';
+import tilePrinting from '../../assets/services/tilePrinting.jpg';
+
+const Section = styled.section`
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 15px;
+  font-family: 'Poppins', sans-serif;
+`;
+
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 30px;
 `;
 
 const Title = styled.h2`
-  font-size: 36px;
-  margin-bottom: 40px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1e0e4b;
+  margin: 0;
   position: relative;
-  padding-left: 15px;
+  display: inline-block;
 
-  &:before {
+  &:after {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    background-color: #f44336;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 2px;
+    background-color: #1e0e4b;
   }
 `;
 
 const ServicesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  max-width: 1200px;
-  width: 100%;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  gap: 20px;
+  margin-bottom: 40px;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const ServiceItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #222;
-  border: 1px solid #333;
-  padding: 20px;
-  border-radius: 5px;
+const ServiceCardContainer = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 20px;
+`;
+
+const ServiceCard = styled.div`
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
   }
 `;
 
-const IconWrapper = styled.div`
-  color: #f44336;
-  margin-bottom: 15px;
+const ServiceImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
-const ServiceTitle = styled.h3`
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
+const OverlappingDiv = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+
+  ${ServiceCardContainer}:hover & {
+    bottom: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
 `;
 
-const ServiceDescription = styled.p`
-  color: #a0a0a0;
+const ServiceName = styled.p`
   font-size: 14px;
-  line-height: 1.5;
+  color: #1e0e4b;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  text-align: center;
 `;
 
-const WhatWeDoComponent = () => {
-  const services = [
-    {
-      icon: <Syringe size={24} />,
-      title: 'Tattooing',
-      description: 'For a premium result, at our tattoo salon we combine modern techniques with traditional ones.',
-    },
-    {
-      icon: <Scissors size={24} />,
-      title: 'Piercing',
-      description: 'Want some extra holes in your body? Our piercing masters will make some for you.',
-    },
-    {
-      icon: <PenTool size={24} />,
-      title: 'Permanent Make-up',
-      description: 'Permanent makeup is a cosmetic technique which employs tattoos as a means of producing designs.',
-    },
-    {
-      icon: <Droplet size={24} />,
-      title: 'Tattoo Cover Up',
-      description: "Got some old tattoos that you don't find pretty? Our talented artists will cover them up for you.",
-    },
-    {
-      icon: <PenTool size={24} />,
-      title: 'Tattoo Design',
-      description: 'Nothing can beat the challenge of creating a design that initially is only in your imagination.',
-    },
-    {
-      icon: <Zap size={24} />,
-      title: 'Laser Removal',
-      description: 'Laser Tattoo Removal offers an effective solution to your unwanted tattoos as a simple outpatient procedure.',
-    },
-  ];
+const LearnMoreButton = styled.button`
+  background-color: #1e0e4b;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin: 0 auto;
+  font-size: 12px;
 
+  &:hover {
+    background-color: #2a1368;
+  }
+`;
+
+const ExploreButton = styled(Link)`
+  display: block;
+  width: fit-content;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1e0e4b;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(30, 14, 75, 0.3);
+
+  &:hover {
+    background-color: #2a1368;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 14, 75, 0.4);
+  }
+`;
+
+const services = [
+  { name: "Calendar Printing", image: calenderPrinting },
+  { name: "Cap Printing", image: capPrinting },
+  { name: "CD/DVD Printing", image: cdPrinting },
+  { name: "Cup Printing", image: cupPrinting },
+  { name: "Photo Frame Printing", image: photoFramePrinting },
+  { name: "Plate Printing", image: platePrinting },
+  { name: "PVC Card Printing", image: pvcCardPrinting },
+  { name: "Tile Printing", image: tilePrinting },
+];
+
+const PrintingServices = () => {
   return (
-    <Container>
-      <Title>WHAT WE DO</Title>
+    <Section>
+      <Header>
+        <Title>Our Printing Services</Title>
+      </Header>
       <ServicesGrid>
         {services.map((service, index) => (
-          <ServiceItem key={index}>
-            <IconWrapper>{service.icon}</IconWrapper>
-            <ServiceTitle>{service.title}</ServiceTitle>
-            <ServiceDescription>{service.description}</ServiceDescription>
-          </ServiceItem>
+          <ServiceCardContainer key={index}>
+            <ServiceCard>
+              <ServiceImage src={service.image} alt={`${service.name} service`} />
+            </ServiceCard>
+            <OverlappingDiv>
+              <ServiceName>{service.name}</ServiceName>
+              <LearnMoreButton>
+                Learn More <ArrowRight size={12} />
+              </LearnMoreButton>
+            </OverlappingDiv>
+          </ServiceCardContainer>
         ))}
       </ServicesGrid>
-    </Container>
+    </Section>
   );
 };
 
-export default WhatWeDoComponent;
+export default PrintingServices;

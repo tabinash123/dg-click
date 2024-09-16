@@ -1,271 +1,206 @@
 import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { Star, Box, Package, Play, Loader } from 'lucide-react';
-import axios from 'axios';
+import styled from 'styled-components';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import hero1 from '../../assets/hero/hero1.png';
+import hero2 from '../../assets/hero/hero2.png';
+import hero3 from '../../assets/hero/hero3.png';
 
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
-
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
+const HeroContainer = styled.div`
+  position: relative;
+  width: 100%;  // Subtracting 60px to account for 30px margin on each side
+  height: 500px;
+  overflow: hidden;
+ // Adding 30px margin on left and right
 `;
 
-const slideIn = keyframes`
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 1200px;
-  margin: 0px auto;
-  margin-top:50px;
-  padding: 40px;
-  font-family: 'Arial', sans-serif;
-  background-color: #ffffff;
-  // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
-`;
-
-const LeftSection = styled.div`
-  flex: 1;
-  padding-right: 20px;
-  animation: ${fadeIn} 0.5s ease-out;
-
-  @media (min-width: 768px) {
-    padding-right: 40px;
-  }
-`;
-
-const RightSection = styled.div`
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 15px;
-  margin-top: 20px;
-
-  @media (min-width: 768px) {
-    margin-top: 0;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 36px;
-  color: #003366;
-  margin-bottom: 20px;
-  line-height: 1.2;
-  animation: ${slideIn} 0.5s ease-out;
-
-  @media (min-width: 768px) {
-    font-size: 48px;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 30px;
-  line-height: 1.5;
-  animation: ${slideIn} 0.5s ease-out 0.2s backwards;
-`;
-
-const FeatureList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-  animation: ${slideIn} 0.5s ease-out 0.4s backwards;
-`;
-
-const Feature = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #003366;
-  background-color: #f0f4f8;
-  padding: 8px 12px;
-  border-radius: 20px;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const FeatureIcon = styled.span`
-  margin-right: 8px;
-  color: #003366;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  animation: ${slideIn} 0.5s ease-out 0.6s backwards;
-`;
-
-const SignupButton = styled.button`
-  background-color: #ff6600;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 18px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 20px;
-  margin-bottom: 10px;
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #e55c00;
-    transform: translateY(-2px);
-  }
-`;
-
-const HowItWorks = styled.a`
-  display: flex;
-  align-items: center;
-  color: #666;
-  text-decoration: none;
-  font-size: 16px;
-  transition: color 0.2s ease-in-out;
-
-  &:hover {
-    color: #003366;
-  }
-`;
-
-const ProductImage = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${props => props.src});
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  animation: ${fadeIn} 0.5s ease-out;
-
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const TShirtImage = styled(ProductImage)`
-  grid-column: 2;
-  grid-row: 1 / span 2;
-`;
-
-const LoadingOverlay = styled.div`
+const HeroSlide = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  opacity: ${props => props.active ? 1 : 0};
+  transition: opacity 0.5s ease-in-out;
+`;
+
+const HeroImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+`;
+
+const ContentWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+`;
+
+const Headline = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
+`;
+
+const Subheadline = styled.p`
+  font-size: 1rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+`;
+
+const CTAButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const NavButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  ${props => props.left ? 'left: 10px;' : 'right: 10px;'}
 `;
 
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+const IndicatorWrapper = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
 `;
 
-const LoadingSpinner = styled(Loader)`
-  animation: ${spin} 1s linear infinite;
+const Indicator = styled.button`
+  width: 10px;
+  height: 10px;
+  border-radius: 80%;
+  background-color: ${props => props.active ? 'white' : 'rgba(255, 255, 255, 0.5)'};
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 `;
 
-const PrintOnDemandBanner = () => {
-  const [images, setImages] = useState({
-    mug: '',
-    tshirt: '',
-    toteBag: '',
-    capAndPhone: ''
-  });
-  const [loading, setLoading] = useState(true);
+const heroContent = [
+  {
+    image: hero1,
+    alt: 'Hero Image 1',
+    headline: 'Welcome to Our Amazing Product',
+    subheadline: 'Revolutionize your workflow with cutting-edge technology',
+    ctaText: 'Get Started'
+  },
+  {
+    image: hero2,
+    alt: 'Hero Image 2',
+    headline: 'Boost Your Productivity',
+    subheadline: 'Streamline your tasks and achieve more in less time',
+    ctaText: 'Learn More'
+  },
+  {
+    image: hero3,
+    alt: 'Hero Image 3',
+    headline: 'Join Our Community',
+    subheadline: 'Connect with like-minded professionals and grow together',
+    ctaText: 'Sign Up Now'
+  },
+];
+
+const HeroSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % heroContent.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + heroContent.length) % heroContent.length);
+  };
 
   useEffect(() => {
-    const fetchImages = async () => {
-      const queries = ['coffee mug', 'white t-shirt', 'tote bag', 'cap and smartphone'];
-      const imagePromises = queries.map(query =>
-        axios.get(`https://api.pexels.com/v1/search?query=${query}&per_page=1`, {
-          headers: { Authorization: PEXELS_API_KEY }
-        })
-      );
-
-      try {
-        const responses = await Promise.all(imagePromises);
-        const newImages = {
-          mug: responses[0].data.photos[0].src.medium,
-          tshirt: responses[1].data.photos[0].src.medium,
-          toteBag: responses[2].data.photos[0].src.medium,
-          capAndPhone: responses[3].data.photos[0].src.medium
-        };
-        setImages(newImages);
-      } catch (error) {
-        console.error('Error fetching images:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchImages();
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <Container>
-      {loading && (
-        <LoadingOverlay>
-          <LoadingSpinner size={48} />
-        </LoadingOverlay>
-      )}
-      <LeftSection>
-        <Title>Start Print on Demand Dropshipping Store!</Title>
-        <Subtitle>
-          Print on demand (POD) is a printing and order fulfilment method where 
-          products are printed after an order is received.
-        </Subtitle>
-        <FeatureList>
-          <Feature>
-            <FeatureIcon><Star size={16} /></FeatureIcon>
-            Premium Products
-          </Feature>
-          <Feature>
-            <FeatureIcon><Box size={16} /></FeatureIcon>
-            Custom Branding
-          </Feature>
-          <Feature>
-            <FeatureIcon><Package size={16} /></FeatureIcon>
-            10 Million+ Delivered
-          </Feature>
-        </FeatureList>
-        <ButtonContainer>
-          <SignupButton>Signup</SignupButton>
-          <HowItWorks href="#">
-            <Play size={20} style={{ marginRight: '8px' }} />
-            How it works?
-          </HowItWorks>
-        </ButtonContainer>
-      </LeftSection>
-      <RightSection>
-        <ProductImage src={images.mug} />
-        <TShirtImage src={images.tshirt} />
-        <ProductImage src={images.toteBag} />
-        <ProductImage src={images.capAndPhone} />
-      </RightSection>
-    </Container>
+    <HeroContainer>
+      {heroContent.map((content, index) => (
+        <HeroSlide key={index} active={index === currentIndex}>
+          <HeroImage src={content.image} alt={content.alt} />
+          <Overlay />
+          <ContentWrapper>
+            <Headline>{content.headline}</Headline>
+            <Subheadline>{content.subheadline}</Subheadline>
+            <CTAButton>{content.ctaText}</CTAButton>
+          </ContentWrapper>
+        </HeroSlide>
+      ))}
+      
+      {/* <NavButton left onClick={prevSlide}>
+        <ChevronLeft size={20} />
+      </NavButton> */}
+      
+      {/* <NavButton onClick={nextSlide}>
+        <ChevronRight size={20} />
+      </NavButton> */}
+      
+      <IndicatorWrapper>
+        {heroContent.map((_, index) => (
+          <Indicator
+            key={index}
+            active={index === currentIndex}
+            onClick={() => setCurrentIndex(index)}
+          />
+        ))}
+      </IndicatorWrapper>
+    </HeroContainer>
   );
 };
 
-export default PrintOnDemandBanner;
+export default HeroSection;
