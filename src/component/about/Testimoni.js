@@ -16,17 +16,21 @@ const TestimonialContainer = styled.div`
 `;
 
 const SmallTitle = styled.h3`
-  color: #ff6347;
-  font-size: 18px;
-  margin-bottom: 10px;
-  font-weight: normal;
+  color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+
 `;
 
 const LargeTitle = styled.h2`
-  color: #0a3d2a;
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 40px;
+   color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.2;
+
 `;
 
 const TestimonialContent = styled.div`
@@ -35,11 +39,11 @@ const TestimonialContent = styled.div`
 `;
 
 const TestimonialText = styled.p`
-  font-size: 18px;
-  line-height: 1.6;
-  color: #666;
-  max-width: 800px;
-  margin: 0 auto 30px;
+  color: #4A5568;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+
 `;
 
 const ClientInfo = styled.div`

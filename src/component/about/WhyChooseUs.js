@@ -1,21 +1,16 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Printer, Image as ImageIcon, Award, Clock, Palette, Shield } from 'lucide-react';
 import img1 from '../../assets/whyus.jpg'
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
 
 const Section = styled.section`
   display: flex;
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 30px 15px;
   font-family: 'Arial', sans-serif;
   background-color: #f9f9f9;
-  animation: ${fadeIn} 0.6s ease-out;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -25,16 +20,11 @@ const Section = styled.section`
 
 const ContentArea = styled.div`
   flex: 1;
-  padding-right: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 20px;
 
   @media (min-width: 768px) {
-    padding-right: 2rem;
+    padding-right: 20px;
     margin-bottom: 0;
-  }
-
-  @media (min-width: 1024px) {
-    padding-right: 3rem;
   }
 `;
 
@@ -44,93 +34,52 @@ const ImageArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  @media (min-width: 768px) {
-    justify-content: flex-end;
-  }
 `;
 
 const SubTitle = styled.h3`
-  color: #FF6B52;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
+  color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-
-  @media (min-width: 768px) {
-    font-size: 1.2rem;
-  }
 `;
 
 const Title = styled.h2`
-  color: #0E4721;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  max-width: 100%;
+  color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
   line-height: 1.2;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background-color: #FF6B52;
-  }
-
-  @media (min-width: 768px) {
-    font-size: 2.4rem;
-    max-width: 90%;
-  }
-
-  @media (min-width: 1024px) {
-    font-size: 2.8rem;
-  }
 `;
 
 const Description = styled.p`
-  color: #555;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-  line-height: 1.6;
+  color: #4A5568;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
 `;
 
 const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 20px;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-
-  @media (min-width: 480px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 `;
 
 const FeatureItem = styled.li`
   display: flex;
   align-items: center;
-  color: #333;
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateX(5px);
-  }
-
-  @media (min-width: 768px) {
-    font-size: 1rem;
-  }
+  color: #4A5568;
+  font-size: 14px;
 `;
 
 const StyledIcon = styled.div`
-  color: #FF6B52;
-  margin-right: 0.75rem;
-  background-color: rgba(255, 107, 82, 0.1);
-  padding: 8px;
+  color: #FF4D4D;
+  margin-right: 8px;
+  background-color: rgba(255, 77, 77, 0.1);
+  padding: 6px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -138,74 +87,43 @@ const StyledIcon = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #FF6B52;
+  background-color: #FF4D4D;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 0.9rem;
+  padding: 10px 20px;
+  font-size: 14px;
   cursor: pointer;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-  box-shadow: 0 4px 15px rgba(255, 107, 82, 0.3);
-  width: 100%;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #e55a41;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 82, 0.4);
-  }
-
-  @media (min-width: 768px) {
-    width: auto;
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    background-color: #E63939;
   }
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 300px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-
-
+  border-radius: 8px;
 
   @media (min-width: 768px) {
-    width: 90%;
-    height: 400px;
-  }
-
-  @media (min-width: 1024px) {
-    height: 450px;
+    height: 350px;
   }
 `;
 
 const ExperienceBadge = styled.div`
   position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background-color: #1A6334;
+  bottom: 10px;
+  right: 10px;
+  background-color: #0A2540;
   color: white;
-  padding: 0.8rem;
-  border-radius: 12px;
+  padding: 8px;
+  border-radius: 8px;
   font-weight: bold;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(26, 99, 52, 0.3);
-  transition: transform 0.3s ease;
-  font-size: 0.9rem;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-
-  @media (min-width: 768px) {
-    padding: 1rem;
-    font-size: 1rem;
-  }
+  font-size: 12px;
 `;
 
 const WhyChooseUs = () => {
@@ -215,7 +133,7 @@ const WhyChooseUs = () => {
         <SubTitle>Why Choose Us</SubTitle>
         <Title>Why People Choose DG CLICK</Title>
         <Description>
-          At DG CLICk, we offer a comprehensive range of high-quality digital printing solutions. Our state-of-the-art equipment and experienced team ensure exceptional results for all your printing needs, from personal items to business materials.
+          We offer comprehensive, high-quality digital printing solutions with state-of-the-art equipment and an experienced team for all your printing needs.
         </Description>
         <FeatureList>
           {[
@@ -228,18 +146,18 @@ const WhyChooseUs = () => {
           ].map((feature, index) => (
             <FeatureItem key={index}>
               <StyledIcon>
-                <feature.icon size={18} />
+                <feature.icon size={14} />
               </StyledIcon>
               {feature.text}
             </FeatureItem>
           ))}
         </FeatureList>
+        <Button>Learn More</Button>
       </ContentArea>
       <ImageArea>
         <Image src={img1} alt="DG CLICK@ CHABAHIL printing services" />
         <ExperienceBadge>
-          Full<br />Digital
-          <div style={{ fontSize: '0.8rem', fontWeight: 'normal', marginTop: '5px' }}>Lab & Studio<br />Services</div>
+          Full Digital<br />Lab & Studio<br />Services
         </ExperienceBadge>
       </ImageArea>
     </Section>

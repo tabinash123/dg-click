@@ -7,10 +7,12 @@ import WhyChooseUs from '../component/about/WhyChooseUs';
 import Testimoni from '../component/about/Testimoni';
 import Features from '../component/about/Features';
 import Service from '../component/about/Service';
+import HeroSection from '../component/hompage/HeroSection';
 
 const AboutUs = () => {
   return (
     <div>
+      <HeroSection />
       <Introduction />
       <Service />
       <MissionVision />

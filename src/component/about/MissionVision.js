@@ -10,8 +10,9 @@ const Container = styled.div`
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  gap: 2rem;
+  padding: 40px 20px;
+  gap: 40px;
+  font-family: 'Arial', sans-serif;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -46,38 +47,50 @@ const ContentSection = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1e3a8a;
-  margin-bottom: 1.5rem;
+ le:
+    color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.2;
+
 `;
 
 const TabsContainer = styled.div`
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 `;
 
 const TabButton = styled.button`
   display: flex;
   align-items: center;
-  margin-right: 1rem;
-  padding-bottom: 0.5rem;
+  margin-right: 20px;
+  padding-bottom: 10px;
   border: none;
   background: none;
   cursor: pointer;
-  color: ${props => props.active ? '#1e3a8a' : '#4b5563'};
-  border-bottom: ${props => props.active ? '2px solid #1e3a8a' : 'none'};
-  font-weight: ${props => props.active ? 'bold' : 'normal'};
+  color: ${props => props.active ? '#FF4D4D' : '#4A5568'};
+  border-bottom: ${props => props.active ? '2px solid #FF4D4D' : 'none'};
+  font-weight: ${props => props.active ? '600' : 'normal'};
+  font-size: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+
 `;
 
 const ContentList = styled.ul`
   list-style-type: disc;
-  padding-left: 1.25rem;
+  padding-left: 20px;
 `;
 
 const ListItem = styled.li`
-  color: #4b5563;
-  margin-bottom: 0.5rem;
+   color: #4A5568;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+
 `;
 
 const VisionMissionPhilosophy = () => {

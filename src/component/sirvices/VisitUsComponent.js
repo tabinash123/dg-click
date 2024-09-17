@@ -20,33 +20,25 @@ const Header = styled.div`
   margin-bottom: 30px;
 `;
 
-const Subtitle = styled.p`
-  color: #ff6347;
+const Subtitle = styled.h3`
+  color: #FF4D4D;
   font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 5px;
+  font-weight: 600;
+  margin-bottom: 10px;
+
   text-transform: uppercase;
   letter-spacing: 1px;
 `;
 
 const Title = styled.h2`
-  color: #00008b;
+    color: #0A2540;
   font-size: 28px;
   font-weight: 700;
-  margin: 0;
+
+  margin-bottom:12px;
   position: relative;
   display: inline-block;
 
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: #ff6347;
-  }
 `;
 
 const Grid = styled.div`
@@ -98,9 +90,10 @@ const Content = styled.div`
 `;
 
 const ItemTitle = styled.h3`
-  color: #00008b;
-  font-size: 18px;
+   color: #0A2540;
+  font-size: 16px;
   font-weight: 600;
+
   margin: 0 0 5px 0;
 `;
 

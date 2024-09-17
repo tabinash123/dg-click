@@ -3,21 +3,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
-// Import local images (unchanged)
-import calenderPrinting from '../../assets/services/calenderPrinting.jpg';
-import capPrinting from '../../assets/services/capPrinting.jpg';
-import cdPrinting from '../../assets/services/cdPrinting.jpg';
-import cupPrinting from '../../assets/services/cupPrinting.jpg';
-import photoFramePrinting from '../../assets/services/photoFramePrinting.jpg';
-import platePrinting from '../../assets/services/platePrinting.jpg';
-import pvcCardPrinting from '../../assets/services/pvcCardPrinting.jpg';
-import tilePrinting from '../../assets/services/tilePrinting.jpg';
+// Import local images (you may need to update these imports)
+import canvasPrinting from '../../assets/gallary/canvas2.jpg';
+import capPrinting from '../../assets/gallary/cap2.jpg';
+import framePrinting from '../../assets/gallary/frame3.jpg';
+import idCardPrinting from '../../assets/gallary/id.jpg';
+import trophyPrinting from '../../assets/gallary/trophy4.jpg';
+import tshirtPrinting from '../../assets/gallary/tshirt3.jpg';
 
 const Section = styled.section`
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 15px;
-  font-family: 'Poppins', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
 `;
 
 const Header = styled.div`
@@ -26,23 +24,21 @@ const Header = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 28px;
-  font-weight: 600;
-  color: #1e0e4b;
-  margin: 0;
-  position: relative;
-  display: inline-block;
+  color: #0A2540;
+ font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-align: center;
+  margin: 0 0 30px 0;
+`;
 
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40%;
-    height: 2px;
-    background-color: #1e0e4b;
-  }
+const Subtitle = styled.h3`
+  color: #FF4D4D;
+ font-size: 14px;
+  font-weight: 600;
+
+  text-align: center;
+  margin: 0 0 10px 0;
 `;
 
 const ServicesGrid = styled.div`
@@ -90,10 +86,10 @@ const OverlappingDiv = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 85%;
+  width: 75%;
   background-color: white;
   border-radius: 8px;
-  padding: 8px;
+  padding: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
 
@@ -105,70 +101,26 @@ const OverlappingDiv = styled.div`
 
 const ServiceName = styled.p`
   font-size: 14px;
-  color: #1e0e4b;
+  color: #0A2540;
   font-weight: 600;
   margin: 0 0 5px 0;
   text-align: center;
 `;
 
-const LearnMoreButton = styled.button`
-  background-color: #1e0e4b;
-  color: #ffffff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  margin: 0 auto;
-  font-size: 12px;
-
-  &:hover {
-    background-color: #2a1368;
-  }
-`;
-
-const ExploreButton = styled(Link)`
-  display: block;
-  width: fit-content;
-  margin: 20px auto 0;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: #1e0e4b;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(30, 14, 75, 0.3);
-
-  &:hover {
-    background-color: #2a1368;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(30, 14, 75, 0.4);
-  }
-`;
-
 const services = [
-  { name: "Calendar Printing", image: calenderPrinting },
+  { name: "Canvas Printing", image: canvasPrinting },
   { name: "Cap Printing", image: capPrinting },
-  { name: "CD/DVD Printing", image: cdPrinting },
-  { name: "Cup Printing", image: cupPrinting },
-  { name: "Photo Frame Printing", image: photoFramePrinting },
-  { name: "Plate Printing", image: platePrinting },
-  { name: "PVC Card Printing", image: pvcCardPrinting },
-  { name: "Tile Printing", image: tilePrinting },
+  { name: "Frame Printing", image: framePrinting },
+  { name: "ID Card Printing", image: idCardPrinting },
+  { name: "Trophy Printing", image: trophyPrinting },
+  { name: "T-Shirt Printing", image: tshirtPrinting },
 ];
 
 const PrintingServices = () => {
   return (
     <Section>
       <Header>
+        <Subtitle>Explore our wide range of high-quality printing solutions</Subtitle>
         <Title>Our Printing Services</Title>
       </Header>
       <ServicesGrid>
@@ -179,9 +131,6 @@ const PrintingServices = () => {
             </ServiceCard>
             <OverlappingDiv>
               <ServiceName>{service.name}</ServiceName>
-              <LearnMoreButton>
-                Learn More <ArrowRight size={12} />
-              </LearnMoreButton>
             </OverlappingDiv>
           </ServiceCardContainer>
         ))}

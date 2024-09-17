@@ -1,8 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
+import canvas2 from '../../assets/gallary/canvas2.jpg';
+import canvas3 from '../../assets/gallary/canvas3.jpg';
+import canvas4 from '../../assets/gallary/canvas4.jpg';
+import canvas5 from '../../assets/gallary/canvas5.jpg';
+import cap1 from '../../assets/gallary/cap1.jpg';
+import cap2 from '../../assets/gallary/cap2.jpg';
+import cap3 from '../../assets/gallary/cap3 (2).jpg';
+import cap4 from '../../assets/gallary/cap4.jpg';
+import frame3 from '../../assets/gallary/frame3.jpg';
+import frame4 from '../../assets/gallary/frame4.jpg';
+import frame5 from '../../assets/gallary/frame5.jpg';
+import id from '../../assets/gallary/id.jpg';
+import id2 from '../../assets/gallary/id2.jpg';
+import id4 from '../../assets/gallary/id4.jpg';
+import trophy3 from '../../assets/gallary/trophy3.jpg';
+import trophy4 from '../../assets/gallary/trophy4.jpg';
+import tshirt1 from '../../assets/gallary/tshirt1.jpg';
+import tshirt3 from '../../assets/gallary/tshirt3.jpg';
+import tshirt4 from '../../assets/gallary/tshirt4.jpg';
 
 const Section = styled.section`
   max-width: 1200px;
@@ -12,19 +28,20 @@ const Section = styled.section`
 `;
 
 const Subtitle = styled.h3`
-  color: #FF6B35;
-  font-size: 18px;
+  color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
   text-align: center;
-  margin: 0;
-  font-weight: normal;
+  margin: 0 0 10px 0;
 `;
 
 const Title = styled.h2`
-  color: #004225;
-  font-size: 40px;
-  font-weight: bold;
+  color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
   text-align: center;
-  margin: 10px 0 30px;
+  margin: 0 0 30px 0;
 `;
 
 const CategoryFilter = styled.div`
@@ -36,8 +53,8 @@ const CategoryFilter = styled.div`
 const FilterButton = styled.button`
   background: none;
   border: none;
-  font-size: 16px;
-  color: ${props => props.active ? '#FF6B35' : '#333'};
+  font-size: 14px;
+  color: ${props => props.active ? '#FF4D4D' : '#4A5568'};
   margin: 0 15px;
   cursor: pointer;
   padding: 5px 0;
@@ -50,7 +67,7 @@ const FilterButton = styled.button`
     bottom: -2px;
     width: 100%;
     height: 2px;
-    background-color: #FF6B35;
+    background-color: #FF4D4D;
     transform: scaleX(${props => props.active ? 1 : 0});
     transition: transform 0.3s ease;
   }
@@ -63,7 +80,6 @@ const ProductGrid = styled.div`
 `;
 
 const ProductCard = styled.div`
-  // background-color: #f5f5f5;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
@@ -86,11 +102,11 @@ const DiscountTag = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #004225;
+  background-color: #0A2540;
   color: white;
   padding: 2px 8px;
   border-radius: 3px;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 14px;
 `;
 
@@ -100,13 +116,9 @@ const ProductInfo = styled.div`
 
 const ProductName = styled.h4`
   margin: 10px 0;
-  font-size: 18px;
-  color: #333;
-`;
-
-const Stars = styled.div`
-  color: #FFD700;
-  font-size: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0A2540;
 `;
 
 const Price = styled.div`
@@ -115,57 +127,27 @@ const Price = styled.div`
   margin-top: 10px;
 `;
 
-const OldPrice = styled.span`
-  text-decoration: line-through;
-  color: #999;
-  margin-right: 10px;
+const NewPrice = styled.span`
+  font-weight: 600;
+  color: #FF4D4D;
   font-size: 14px;
 `;
 
-const NewPrice = styled.span`
-  font-weight: bold;
-  color: #FF6B35;
-  font-size: 18px;
-`;
-
 const products = [
-  { id: 1, name: 'Eco Shopping Bag', oldPrice: 270.50, newPrice: 230.50, discount: 60, query: 'eco shopping bag', rating: 4, category: 'Bags & Caps' },
-  { id: 2, name: 'Promo Trucker Hat', oldPrice: 270.50, newPrice: 230.50, discount: 70, query: 'trucker hat', rating: 4, category: 'Bags & Caps' },
-  { id: 3, name: 'Paper Cups Coffee', oldPrice: 270.50, newPrice: 230.50, discount: 80, query: 'paper coffee cup', rating: 4, category: 'Mug & Paper Cups' },
-  { id: 4, name: 'Business card', oldPrice: 270.50, newPrice: 230.50, discount: 85, query: 'business card', rating: 4, category: 'Business Card' },
-  // { id: 2, name: 'Promo Trucker Hat', oldPrice: 270.50, newPrice: 230.50, discount: 70, query: 'trucker hat', rating: 4, category: 'Bags & Caps' },
-  // { id: 3, name: 'Paper Cups Coffee', oldPrice: 270.50, newPrice: 230.50, discount: 80, query: 'paper coffee cup', rating: 4, category: 'Mug & Paper Cups' },
-  // { id: 4, name: 'Business card', oldPrice: 270.50, newPrice: 230.50, discount: 85, query: 'business card', rating: 4, category: 'Business Card' },
+  { id: 1, name: 'Canvas Print', oldPrice: 270.50, newPrice: 230.50, discount: 60, image: canvas2, category: 'Canvas' },
+  { id: 2, name: 'Promo Cap', oldPrice: 270.50, newPrice: 230.50, discount: 70, image: cap1, category: 'Caps' },
+  { id: 3, name: 'Photo Frame', oldPrice: 270.50, newPrice: 230.50, discount: 80, image: frame3, category: 'Frames' },
+  { id: 4, name: 'ID Card', oldPrice: 270.50, newPrice: 230.50, discount: 85, image: id, category: 'ID Cards' },
+  { id: 5, name: 'Trophy', oldPrice: 270.50, newPrice: 230.50, discount: 75, image: trophy3, category: 'Trophies' },
+  { id: 6, name: 'T-Shirt Print', oldPrice: 270.50, newPrice: 230.50, discount: 65, image: tshirt1, category: 'T-Shirts' },
+  { id: 7, name: 'Canvas Art', oldPrice: 270.50, newPrice: 230.50, discount: 60, image: canvas3, category: 'Canvas' },
+  { id: 8, name: 'Stylish Cap', oldPrice: 270.50, newPrice: 230.50, discount: 70, image: cap2, category: 'Caps' },
 ];
 
 const FeaturedProducts = () => {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [productImages, setProductImages] = useState({});
 
-  const categories = ['All', 'Business Card', 'Mug & Paper Cups', 'Branding', 'Bags & Caps'];
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      const imagePromises = products.map(product =>
-        axios.get(`https://api.pexels.com/v1/search?query=${product.query}&per_page=1`, {
-          headers: { Authorization: PEXELS_API_KEY }
-        })
-      );
-
-      try {
-        const responses = await Promise.all(imagePromises);
-        const images = responses.reduce((acc, response, index) => {
-          acc[products[index].id] = response.data.photos[0].src.medium;
-          return acc;
-        }, {});
-        setProductImages(images);
-      } catch (error) {
-        console.error('Error fetching images:', error);
-      }
-    };
-
-    fetchImages();
-  }, []);
+  const categories = ['All', 'Canvas', 'Caps', 'Frames', 'ID Cards', 'Trophies', 'T-Shirts'];
 
   const filteredProducts = activeCategory === 'All' 
     ? products 
@@ -190,14 +172,11 @@ const FeaturedProducts = () => {
         {filteredProducts.map(product => (
           <ProductCard key={product.id}>
             <ProductImageWrapper>
-              <ProductImage src={productImages[product.id] || '/api/placeholder/300/200'} alt={product.name} />
-              <DiscountTag>-{product.discount}%</DiscountTag>
+              <ProductImage src={product.image} alt={product.name} />
             </ProductImageWrapper>
             <ProductInfo>
-              <Stars>{'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}</Stars>
               <ProductName>{product.name}</ProductName>
               <Price>
-                {/* <OldPrice>${product.oldPrice.toFixed(2)}</OldPrice> */}
                 <NewPrice>${product.newPrice.toFixed(2)}</NewPrice>
               </Price>
             </ProductInfo>

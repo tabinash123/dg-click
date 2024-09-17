@@ -1,183 +1,101 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import gift from '../../assets/productOffer/gift.png';
+import cup from '../../assets/productOffer/cup.png';
+import box from '../../assets/productOffer/box.png';
 
-import gift from '../../assets/productOffer/gift.jpg'
-import cup from '../../assets/productOffer/cup.jpg'
-import idcard from '../../assets/productOffer/idcard.jpg'
-const OffersContainer = styled.div`
+const CardContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
   gap: 20px;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 `;
 
-const OfferCard = styled.div`
-  flex: 1;
-  background-color: ${props => props.bgColor};
+const Card = styled.div`
+  background-color: ${({ $bgColor }) => $bgColor};
   border-radius: 12px;
   padding: 24px;
+  width: calc(33.33% - 14px);
   display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const OfferText = styled.p`
-  font-size: 14px;
+const ContentWrapper = styled.div`
+  flex: 1;
+`;
+
+const DiscountText = styled.p`
+  color: #ff6347;
+  font-size: 13px;
   font-weight: 600;
-  color: #FF4D00;
   margin: 0 0 8px 0;
 `;
 
-const OfferTitle = styled.h2`
-  font-size: 24px;
+const Title = styled.h2`
+  color: #1e1e1e;
+  font-size: 20px;
   font-weight: bold;
-  color: #1A1A1A;
-  margin: 0 0 24px 0;
-  max-width: 60%;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
 `;
 
 const ShopNowButton = styled.button`
-  background-color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1A1A1A;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  color: #1e1e1e;
   cursor: pointer;
-  align-self: flex-start;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-    background-color: #1A1A1A;
-    color: white;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #FF4D00;
+    background-color: #ff6347;
+    color: #fff;
   }
 `;
 
 const ProductImage = styled.img`
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-  max-width: 40%;
-  max-height: 80%;
+  width: 120px;
+  height: auto;
   object-fit: contain;
-  transition: transform 0.3s ease;
-
-  ${OfferCard}:hover & {
-    transform: scale(1.05);
-  }
+  margin-left: 20px;
 `;
 
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-
-const ModalContent = styled.div`
-  background-color: white;
-  padding: 24px;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-`;
-
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-`;
-
-const productData = [
-  {
-    id: 1,
-    title: "Give The Gift Of Choice",
-    bgColor: "#F9F5F0",
-    imageUrl: gift,
-    alt: "Gift box"
-  },
-  {
-    id: 2,
-    title: "Paper Cups Coffee",
-    bgColor: "#F0F7FC",
-    imageUrl: cup,
-    alt: "Coffee cup"
-  },
-  {
-    id: 3,
-    title: "Id card Printing",
-    bgColor: "#F9F5F0",
-    imageUrl: idcard,
-    alt: "Cardboard boxes"
-  }
-];
-
-const ProductOffers = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const handleShopNow = (product) => {
-    setSelectedProduct(product);
-  };
-
-  const closeModal = () => {
-    setSelectedProduct(null);
-  };
+const ProductOfferCards = () => {
+  const cardData = [
+    {
+      title: 'Give The Gift Of Choice',
+      image: gift,
+      bgColor: '#FFF8E6'
+    },
+    {
+      title: 'Paper Cups Coffee',
+      image: cup,
+      bgColor: '#F0F5F9'
+    },
+    {
+      title: 'Cardboard Package Box',
+      image: box,
+      bgColor: '#FFF8E6'
+    }
+  ];
 
   return (
-    <>
-      <OffersContainer>
-        {productData.map((product) => (
-          <OfferCard key={product.id} bgColor={product.bgColor}>
-            {/* <OfferText>Flat 25% off</OfferText> */}
-            <OfferTitle>{product.title}</OfferTitle>
-            <ShopNowButton onClick={() => handleShopNow(product)}>Shop Now</ShopNowButton>
-            <ProductImage src={product.imageUrl} alt={product.alt} />
-          </OfferCard>
-        ))}
-      </OffersContainer>
-      {selectedProduct && (
-        <Modal onClick={closeModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <CloseButton onClick={closeModal}>&times;</CloseButton>
-            <h2>{selectedProduct.title}</h2>
-            <p>You selected: {selectedProduct.title}</p>
-            <p>Enjoy your 25% discount!</p>
-          </ModalContent>
-        </Modal>
-      )}
-    </>
+    <CardContainer>
+      {cardData.map((card, index) => (
+        <Card key={index} $bgColor={card.bgColor}>
+          <ContentWrapper>
+            <DiscountText>Flat 25% off</DiscountText>
+            <Title>{card.title}</Title>
+            <ShopNowButton>Shop Now</ShopNowButton>
+          </ContentWrapper>
+          <ProductImage src={card.image} alt={card.title} />
+        </Card>
+      ))}
+    </CardContainer>
   );
 };
 
-export default ProductOffers;
+export default ProductOfferCards;

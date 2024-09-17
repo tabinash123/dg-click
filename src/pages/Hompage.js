@@ -25,7 +25,7 @@ const Homepage = () => {
       <Services />
       <ProductOffers />
       <ProductHighLight />
-      <ProductBanner />
+      {/* <ProductBanner /> */}
       {/* <ProductShowcase /> */}
       {/* <FAQComponent /> */}
       <PrintingShopGallery />

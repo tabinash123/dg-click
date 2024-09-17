@@ -16,31 +16,36 @@ const ContentSection = styled.div`
 `;
 
 const CustomDesignText = styled.p`
-  color: #FF6B35;
-  font-size: 16px;
+  color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
+
   margin: 0 0 10px 0;
 `;
 
 const DesignTitle = styled.h1`
-  color: #004225;
-  font-size: 48px;
-  font-weight: bold;
-  margin: 0 0 20px 0;
+   color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
   line-height: 1.2;
+
 `;
 
 const DescriptionText = styled.p`
-  color: #333;
-  font-size: 18px;
-  margin: 0 0 30px 0;
+   color: #4A5568;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+
 `;
 
 const StartDesigningButton = styled.button`
   background-color: #FF6B35;
   color: white;
   border: none;
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 10px 20px;
+  font-size: 13px;
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
@@ -66,7 +71,7 @@ const IconWrapper = styled.div`
 
 const FeatureText = styled.p`
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   color: #333;
 `;
 

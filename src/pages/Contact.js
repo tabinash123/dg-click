@@ -13,15 +13,19 @@ const ContactSection = styled.section`
 `;
 
 const Title = styled.h2`
-  font-size: 42px;
-  color: #0a3d2a;
+     color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  
   text-align: center;
   margin-bottom: 20px;
 `;
 
 const Subtitle = styled.p`
-  font-size: 18px;
-  color: #666;
+  color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
+
   text-align: center;
   margin-bottom: 50px;
 `;
@@ -46,8 +50,10 @@ const ContactInfo = styled.div`
 `;
 
 const InfoTitle = styled.h3`
-  font-size: 24px;
+  color: #4A5568;
   margin-bottom: 20px;
+  font-size: 16px;
+
 `;
 
 const InfoItem = styled.div`
@@ -58,7 +64,7 @@ const InfoItem = styled.div`
 
 const InfoText = styled.p`
   margin-left: 15px;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const SocialLinks = styled.div`
@@ -81,8 +87,10 @@ const ContactForm = styled.form`
 `;
 
 const FormTitle = styled.h3`
-  font-size: 24px;
-  color: #0a3d2a;
+ color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+
   margin-bottom: 20px;
 `;
 
@@ -92,7 +100,7 @@ const Input = styled.input`
   margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const TextArea = styled.textarea`
@@ -102,17 +110,17 @@ const TextArea = styled.textarea`
   border: 1px solid #ddd;
   border-radius: 4px;
   height: 150px;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const SubmitButton = styled.button`
   background-color: #0a3d2a;
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   transition: background-color 0.3s ease;
@@ -136,7 +144,7 @@ const BusinessHours = styled.div`
 `;
 
 const HoursTitle = styled.h4`
-  font-size: 18px;
+  font-size: 15px;
   margin-bottom: 10px;
 `;
 

@@ -38,24 +38,28 @@ const ContentContainer = styled.div`
 
 const Subtitle = styled.p`
   color: #FF4D4D;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  margin: 0 0 10px 0;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+
 `;
 
 const Title = styled.h2`
-  color: #0A2540;
-  font-size: 40px;
+    color: #0A2540;
+  font-size: 28px;
   font-weight: 700;
+  margin-bottom: 15px;
   line-height: 1.2;
-  margin: 0 0 20px 0;
+
 `;
 
 const Description = styled.p`
   color: #4A5568;
-  font-size: 16px;
-  line-height: 1.6;
   margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+
 `;
 
 const FeatureList = styled.ul`
@@ -160,7 +164,7 @@ const AboutUsSection = () => {
           <FeatureItem>Magna cubilia sapien vivamus vestibulum iner consectetuer.</FeatureItem>
           <FeatureItem>Urna faucibus netus Inceptos qu hac sem iaculis lectus.</FeatureItem>
         </FeatureList>
-        <ReadMoreButton>READ MORE</ReadMoreButton>
+
       </ContentContainer>
     </Section>
   );

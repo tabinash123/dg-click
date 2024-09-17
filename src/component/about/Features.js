@@ -1,60 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { X } from 'lucide-react';
 
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
+// Import images
+import canvas2 from '../../assets/gallary/canvas2.jpg';
+import cap1 from '../../assets/gallary/cap1.jpg';
+import frame3 from '../../assets/gallary/frame3.jpg';
+import id from '../../assets/gallary/id.jpg';
+import trophy3 from '../../assets/gallary/trophy3.jpg';
+import tshirt3 from '../../assets/gallary/tshirt3.jpg';
 
 const GallerySection = styled.section`
-  padding: 2rem;
-  background-color: transparent;
+  padding: 60px 20px;
   max-width: 1200px;
   margin: 0 auto;
+  font-family: 'Arial', sans-serif;
 `;
 
 const Subtitle = styled.h3`
-  font-size: 1.2rem;
-  color: #ff4500;
+  color: #FF4D4D;
+  font-size: 16px;
+  font-weight: 600;
   text-align: center;
-  margin-bottom: 0.5rem;
-  font-weight: normal;
+  margin: 0 0 15px 0;
 `;
 
 const Title = styled.h2`
-  font-size: 2.5rem;
-  color: #0a2f1d;
+  color: #0A2540;
+  font-size: 32px;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 2rem;
-  font-weight: bold;
+  margin: 0 0 40px 0;
 `;
 
-const ProjectGrid = styled.div`
+const ProjectContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  justify-content: center;
+  gap: 10px;
 `;
 
 const ProjectCard = styled.div`
-  flex: 0 0 33.333%;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   overflow: hidden;
   cursor: pointer;
   position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
   
-  &:hover::after {
-    content: 'View Project';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-  }
 `;
 
 const ProjectImage = styled.img`
@@ -63,98 +58,21 @@ const ProjectImage = styled.img`
   object-fit: cover;
   transition: transform 0.3s ease;
 
-  ${ProjectCard}:hover & {
-    transform: scale(1.1);
-  }
 `;
 
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  position: relative;
-  max-width: 80%;
-  max-height: 80%;
-`;
-
-const ModalImage = styled.img`
-  max-width: 100%;
-  max-height: 70vh;
-  object-fit: contain;
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const LoadingMessage = styled.p`
-  text-align: center;
-  font-size: 1.2rem;
-  color: #0a2f1d;
-`;
-
-const ErrorMessage = styled.p`
-  text-align: center;
-  font-size: 1.2rem;
-  color: #ff0000;
-`;
-
-const Gallary = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const PrintingPressGallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get('https://api.pexels.com/v1/search', {
-          params: {
-            query: 'printing press,design,typography',
-            per_page: 6,
-            orientation: 'landscape'
-          },
-          headers: {
-            Authorization: PEXELS_API_KEY
-          }
-        });
+  const projects = [
+    { id: 1, image: canvas2, alt: 'Canvas 2' },
 
-        const fetchedProjects = response.data.photos.map(photo => ({
-          id: photo.id,
-          image: photo.src.large,
-          alt: photo.alt
-        }));
+    { id: 5, image: cap1, alt: 'Cap 1' },
+    { id: 9, image: frame3, alt: 'Frame 3' },
 
-        setProjects(fetchedProjects);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching images:', error);
-        setError('Failed to load images. Please try again later.');
-        setLoading(false);
-      }
-    };
+    { id: 12, image: id, alt: 'ID' },
+    { id: 15, image: trophy3, alt: 'Trophy 3' },
 
-    fetchImages();
-  }, []);
+  ];
 
   const handleImageClick = (project) => {
     setSelectedImage(project);
@@ -164,37 +82,19 @@ const Gallary = () => {
     setSelectedImage(null);
   };
 
-  if (loading) {
-    return <LoadingMessage>Loading projects...</LoadingMessage>;
-  }
-
-  if (error) {
-    return <ErrorMessage>{error}</ErrorMessage>;
-  }
-
   return (
     <GallerySection>
       <Subtitle>Case studies</Subtitle>
       <Title>Explore our Recent Projects</Title>
-      <ProjectGrid>
+      <ProjectContainer>
         {projects.map((project) => (
           <ProjectCard key={project.id} onClick={() => handleImageClick(project)}>
             <ProjectImage src={project.image} alt={project.alt} />
           </ProjectCard>
         ))}
-      </ProjectGrid>
-      {/* {selectedImage && (
-        <Modal onClick={handleCloseModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <CloseButton onClick={handleCloseModal}>
-              <X size={24} />
-            </CloseButton>
-            <ModalImage src={selectedImage.image} alt={selectedImage.alt} />
-          </ModalContent>
-        </Modal>
-      )} */}
+      </ProjectContainer>
     </GallerySection>
   );
 };
 
-export default Gallary;
+export default PrintingPressGallery;

@@ -6,8 +6,8 @@ const FeaturesContainer = styled.div`
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
 `;
 
 const FeatureItem = styled.div`
@@ -30,18 +30,23 @@ const IconContainer = styled.div`
 
 const FeatureTitle = styled.h3`
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0 0 10px 0;
-  color: #333;
+  color: #0A2540;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+
 `;
 
 const FeatureDescription = styled.p`
+ color: #4A5568;
+  margin-bottom: 20px;
   font-size: 14px;
-  color: #666;
-  margin: 0;
-  line-height: 1.4;
-`;
+  line-height: 1.5;
 
+`;
 const Features = () => {
   return (
     <FeaturesContainer>

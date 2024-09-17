@@ -10,8 +10,8 @@ const Section = styled.section`
   align-items: center;
   max-width: 1200px;
   margin: 0px auto;
-  margin-top:40px;
-  padding: 40px 20px;
+  // margin-top:40px;
+  padding: 20px 20px;
   font-family: 'Arial', sans-serif;
 `;
 
@@ -38,48 +38,30 @@ const ContentContainer = styled.div`
 `;
 
 const Subtitle = styled.p`
-  color: #FF4D4D;
-  font-size: 16px;
+ color: #FF4D4D;
+  font-size: 14px;
   font-weight: 600;
-  margin: 0 0 10px 0;
+  // margin-bottom: 5px;
+  text-transform: uppercase;
+
 `;
 
 const Title = styled.h2`
-  color: #0A2540;
-  font-size: 40px;
+   color: #0A2540;
+  font-size: 28px;
   font-weight: 700;
+  margin-bottom: 15px;
   line-height: 1.2;
-  margin: 0 0 20px 0;
+
 `;
 
 const Description = styled.p`
-  color: #4A5568;
-  font-size: 16px;
-  line-height: 1.6;
+   color: #4A5568;
   margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+
 `;
-
-const FeatureList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0 0 30px 0;
-`;
-
-const FeatureItem = styled.li`
-  color: #4A5568;
-  font-size: 16px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-
-  &:before {
-    content: '✓';
-    color: #FF4D4D;
-    margin-right: 10px;
-    font-weight: bold;
-  }
-`;
-
 
 
 const LoadingPlaceholder = styled.div`
@@ -136,10 +118,7 @@ const AboutUsSection = () => {
           interdum orc torristique aenean at dictumst velit fames molestie tristique
           magna sociosqu ine rhoncuis in cubilia magno senectus sociis tortor enim.
         </Description>
-        <FeatureList>
-          <FeatureItem>Magna cubilia sapien vivamus vestibulum iner consectetuer.</FeatureItem>
-          <FeatureItem>Urna faucibus netus Inceptos qu hac sem iaculis lectus.</FeatureItem>
-        </FeatureList>
+        
       </ContentContainer>
     </Section>
   );

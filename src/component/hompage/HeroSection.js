@@ -1,89 +1,99 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import hero1 from '../../assets/hero/hero1.png';
-import hero2 from '../../assets/hero/hero2.png';
-import hero3 from '../../assets/hero/hero3.png';
+import img1 from '../../assets/bannerimages/banner1.jpg';
+import img2 from '../../assets/bannerimages/banner2.jpg';
+import img3 from '../../assets/bannerimages/banner3.jpg';
+import img4 from '../../assets/bannerimages/banner4.jpg';
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const slideInLeft = keyframes`
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+`;
+
+const slideInRight = keyframes`
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+`;
+
+const scaleIn = keyframes`
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+`;
 
 const HeroContainer = styled.div`
+  height: 400px;
   position: relative;
-  width: 100%;  // Subtracting 60px to account for 30px margin on each side
-  height: 500px;
   overflow: hidden;
- // Adding 30px margin on left and right
+  font-family: Arial, sans-serif;
 `;
 
-const HeroSlide = styled.div`
+const BackgroundImage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: ${props => props.active ? 1 : 0};
-  transition: opacity 0.5s ease-in-out;
-`;
-
-const HeroImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-image: url(${props => props.image});
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.5s ease-in-out, transform 5s ease-in-out;
+  opacity: ${props => (props.active ? 1 : 0)};
 `;
 
 const ContentWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  position: relative;
+  z-index: 1;
+  max-width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  padding: 0 20px;
+  padding-left: 50px;
+  background: ${props => props.overlay};
+  color: ${props => props.textColor};
+  animation: ${fadeIn} 0.5s ease-out;
 `;
 
-const Headline = styled.h1`
-  font-size: 2rem;
+const Subtitle = styled.p`
+  font-size: 16px;
+  margin-bottom: 10px;
+  animation: ${slideInLeft} 0.5s ease-out 0.2s both;
+`;
+
+const Title = styled.h1`
+  font-size: 36px;
+  margin-bottom: 10px;
   font-weight: bold;
-  margin-bottom: 0.5rem;
-
-  @media (min-width: 768px) {
-    font-size: 2.5rem;
-  }
+  animation: ${slideInRight} 0.5s ease-out 0.4s both;
 `;
 
-const Subheadline = styled.p`
-  font-size: 1rem;
-  margin-bottom: 1rem;
-
-  @media (min-width: 768px) {
-    font-size: 1.25rem;
-  }
-`;
-
-const CTAButton = styled.button`
-  background-color: #007bff;
-  color: white;
+const Price = styled.p`
+  font-size: 24px;
+  margin-bottom: 20px;
   font-weight: bold;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
+  animation: ${slideInLeft} 0.5s ease-out 0.6s both;
+`;
+
+const OrderButton = styled.button`
+  background-color: ${props => props.buttonColor};
+  color: ${props => props.buttonTextColor};
   border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  animation: ${scaleIn} 0.5s ease-out 0.8s both;
 
   &:hover {
-    background-color: #0056b3;
+    opacity: 0.9;
+    transform: scale(1.05);
   }
 `;
 
@@ -91,114 +101,153 @@ const NavButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 24px;
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  z-index: 2;
+  transition: all 0.3s ease;
+  color: white;
+  opacity: 0.7;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
   }
 
   ${props => props.left ? 'left: 10px;' : 'right: 10px;'}
 `;
 
-const IndicatorWrapper = styled.div`
+const IndicatorContainer = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 5px;
+  gap: 10px;
+  z-index: 2;
 `;
 
-const Indicator = styled.button`
+const Indicator = styled.div`
   width: 10px;
   height: 10px;
-  border-radius: 80%;
+  border-radius: 50%;
   background-color: ${props => props.active ? 'white' : 'rgba(255, 255, 255, 0.5)'};
-  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  transform: ${props => props.active ? 'scale(1.2)' : 'scale(1)'};
 `;
 
-const heroContent = [
+// Dummy data for each banner
+const bannerData = [
   {
-    image: hero1,
-    alt: 'Hero Image 1',
-    headline: 'Welcome to Our Amazing Product',
-    subheadline: 'Revolutionize your workflow with cutting-edge technology',
-    ctaText: 'Get Started'
+    image: img1,
+    subtitle: "Pen down your thoughts in style with",
+    title: "Personalized Notebook",
+    price: "Starting From ₹136",
+    textColor: "white",
+    overlay: "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+    buttonColor: "#ff3e3e",
+    buttonTextColor: "white"
   },
   {
-    image: hero2,
-    alt: 'Hero Image 2',
-    headline: 'Boost Your Productivity',
-    subheadline: 'Streamline your tasks and achieve more in less time',
-    ctaText: 'Learn More'
+    image: img2,
+    subtitle: "Unleash your creativity with our",
+    title: "Premium Sketchbooks",
+    price: "From ₹199 onwards",
+    textColor: "black",
+    overlay: "linear-gradient(to right, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%)",
+     buttonColor: "#ff3e3e",
+    buttonTextColor: "white"
   },
   {
-    image: hero3,
-    alt: 'Hero Image 3',
-    headline: 'Join Our Community',
-    subheadline: 'Connect with like-minded professionals and grow together',
-    ctaText: 'Sign Up Now'
+    image: img3,
+    subtitle: "Stay organized with our",
+    title: "Customized Planners",
+    price: "Starting at ₹249",
+    textColor: "white",
+    overlay: "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+     buttonColor: "#ff3e3e",
+    buttonTextColor: "white"
   },
+  {
+    image: img4,
+    subtitle: "Express yourself through our",
+    title: "Artistic Journals",
+    price: "Priced from ₹179",
+    textColor: "black",
+    overlay: "linear-gradient(to right, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%)",
+    buttonColor: "#ff3e3e",
+    buttonTextColor: "white"
+  }
 ];
 
 const HeroSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % heroContent.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + heroContent.length) % heroContent.length);
-  };
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(() => {
+      changeSlide((prevIndex) => (prevIndex + 1) % bannerData.length);
+    }, 5000);
+
     return () => clearInterval(interval);
   }, []);
 
+  const changeSlide = (newIndex) => {
+    setIsChanging(true);
+    setTimeout(() => {
+      setCurrentImageIndex(newIndex);
+      setIsChanging(false);
+    }, 300);
+  };
+
+  const goToPrevious = () => {
+    changeSlide((prevIndex) => (prevIndex - 1 + bannerData.length) % bannerData.length);
+  };
+
+  const goToNext = () => {
+    changeSlide((prevIndex) => (prevIndex + 1) % bannerData.length);
+  };
+
+  const currentBanner = bannerData[currentImageIndex];
+
   return (
     <HeroContainer>
-      {heroContent.map((content, index) => (
-        <HeroSlide key={index} active={index === currentIndex}>
-          <HeroImage src={content.image} alt={content.alt} />
-          <Overlay />
-          <ContentWrapper>
-            <Headline>{content.headline}</Headline>
-            <Subheadline>{content.subheadline}</Subheadline>
-            <CTAButton>{content.ctaText}</CTAButton>
-          </ContentWrapper>
-        </HeroSlide>
+      {bannerData.map((banner, index) => (
+        <BackgroundImage
+          key={index}
+          image={banner.image}
+          active={index === currentImageIndex}
+        />
       ))}
-      
-      {/* <NavButton left onClick={prevSlide}>
-        <ChevronLeft size={20} />
-      </NavButton> */}
-      
-      {/* <NavButton onClick={nextSlide}>
-        <ChevronRight size={20} />
-      </NavButton> */}
-      
-      <IndicatorWrapper>
-        {heroContent.map((_, index) => (
-          <Indicator
-            key={index}
-            active={index === currentIndex}
-            onClick={() => setCurrentIndex(index)}
+      <ContentWrapper 
+        textColor={currentBanner.textColor}
+        overlay={currentBanner.overlay}
+        style={{ opacity: isChanging ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
+      >
+        <Subtitle>{currentBanner.subtitle}</Subtitle>
+        <Title>{currentBanner.title}</Title>
+        <Price>{currentBanner.price}</Price>
+        <OrderButton 
+          buttonColor={currentBanner.buttonColor}
+          buttonTextColor={currentBanner.buttonTextColor}
+        >
+          ORDER NOW
+        </OrderButton>
+      </ContentWrapper>
+      <NavButton left onClick={goToPrevious}><ChevronLeft size={24} /></NavButton>
+      <NavButton onClick={goToNext}><ChevronRight size={24} /></NavButton>
+      <IndicatorContainer>
+        {bannerData.map((_, index) => (
+          <Indicator 
+            key={index} 
+            active={index === currentImageIndex} 
+            onClick={() => changeSlide(index)}
           />
         ))}
-      </IndicatorWrapper>
+      </IndicatorContainer>
     </HeroContainer>
   );
 };

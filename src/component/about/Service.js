@@ -3,31 +3,43 @@ import styled from 'styled-components';
 import { Printer, PenTool, Box, Layers } from 'lucide-react';
 
 const Container = styled.div`
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  padding: 40px 20px;
 `;
 
 const CompanyFeature = styled.p`
-  color: #ff6b6b;
-  font-size: 14px;
-  font-weight: bold;
+  color: #FF4D4D;
+  font-size: 16px;
+  font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.h2`
-  color: #1e3a8a;
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
+  color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.2;
+
+
 `;
 
 const FeaturesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const FeatureCard = styled.div`
@@ -48,16 +60,21 @@ const IconWrapper = styled.div`
 `;
 
 const FeatureTitle = styled.h3`
-  color: #1e3a8a;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 12px;
+ color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+
 `;
 
 const FeatureDescription = styled.p`
-  color: #64748b;
+  color: #4A5568;
+  margin-bottom: 20px;
   font-size: 14px;
   line-height: 1.5;
+
+
 `;
 
 const Service = () => {

@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Plus, Minus, X } from 'lucide-react';
-import img1 from '../../assets/whyus.jpg'
+import img1 from '../../assets/office.jpg'
 
 const Container = styled.div`
   max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  // background-color: #FFF5EE;
   position: relative;
 
   @media (min-width: 768px) {
     flex-direction: row;
-    padding: 40px;
   }
 `;
 
@@ -25,24 +23,19 @@ const FAQSection = styled.div`
 `;
 
 const SmallTitle = styled.h3`
-  color: #FF6347;
-  font-size: 16px;
-  margin-bottom: 10px;
+  color: #FF4D4D;
+  font-size: 14px;
+  font-weight: 600;
 
-  @media (min-width: 768px) {
-    font-size: 18px;
-  }
+  margin: 0 0 10px 0;
 `;
 
 const Title = styled.h2`
-  color: #004d40;
+      color: #0A2540;
   font-size: 28px;
-  margin-bottom: 20px;
-  font-weight: bold;
+  font-weight: 700;
 
-  @media (min-width: 768px) {
-    font-size: 36px;
-  }
+  margin: 0 0 20px 0;
 `;
 
 const FAQItem = styled.div`
@@ -50,33 +43,29 @@ const FAQItem = styled.div`
 `;
 
 const FAQQuestion = styled.div`
-  background-color: ${props => props.isOpen ? '#FF4500' : 'white'};
-  color: ${props => props.isOpen ? 'white' : 'black'};
+  background-color: ${props => props.isOpen ? '#FF4D4D' : 'white'};
+  color: ${props => props.isOpen ? 'black' : '#000'};
   padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   border-radius: 5px;
-  font-weight: ${props => props.isOpen ? 'bold' : 'normal'};
+  font-weight: ${props => props.isOpen ? '600' : 'normal'};
+ color: #000;
+  margin-bottom: 20px;
   font-size: 14px;
+  line-height: 1.5;
 
-  @media (min-width: 768px) {
-    font-size: 16px;
-  }
 `;
 
 const FAQAnswer = styled.div`
   background-color: white;
   padding: 15px;
   margin-top: 2px;
-  color: #666;
+  color: #000;
   line-height: 1.6;
   font-size: 14px;
-
-  @media (min-width: 768px) {
-    font-size: 16px;
-  }
 `;
 
 const ToggleIcon = styled.div`
@@ -85,8 +74,8 @@ const ToggleIcon = styled.div`
   justify-content: center;
   width: 24px;
   height: 24px;
-  background-color: ${props => props.isOpen ? 'white' : '#004d40'};
-  color: ${props => props.isOpen ? '#FF4500' : 'white'};
+  background-color: ${props => props.isOpen ? 'white' : '#0A2540'};
+  color: ${props => props.isOpen ? '#FF4D4D' : 'white'};
 `;
 
 const ImageSection = styled.div`
@@ -98,20 +87,14 @@ const ImageSection = styled.div`
   margin-top: 20px;
 
   @media (max-width: 768px) {
-  display:none;
-    margin-top: 0;
+    display: none;
   }
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 300px;
+  height: 400px;
   object-fit: cover;
-
-  @media (min-width: 768px) {
-    width: 400px;
-    height: 400px;
-  }
 
   @media (min-width: 1024px) {
     width: 450px;

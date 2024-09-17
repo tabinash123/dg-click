@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Search, ShoppingCart, Printer } from 'lucide-react';
+import { Search, ShoppingCart, Printer, ChevronLeft, ChevronRight } from 'lucide-react';
 import ShopSidebar from './ShopSidebar';
-import axios from 'axios';
 
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';  // Replace with your Pexels API Key
+// Import images
+import canvas2 from '../../assets/gallary/canvas2.jpg';
+import canvas3 from '../../assets/gallary/canvas3.jpg';
+import canvas4 from '../../assets/gallary/canvas4.jpg';
+import canvas5 from '../../assets/gallary/canvas5.jpg';
+import cap1 from '../../assets/gallary/cap1.jpg';
+import cap2 from '../../assets/gallary/cap2.jpg';
+import cap3 from '../../assets/gallary/cap3 (2).jpg';
+import cap4 from '../../assets/gallary/cap4.jpg';
+import frame3 from '../../assets/gallary/frame3.jpg';
+import frame4 from '../../assets/gallary/frame4.jpg';
+import frame5 from '../../assets/gallary/frame5.jpg';
+import id from '../../assets/gallary/id.jpg';
+import id2 from '../../assets/gallary/id2.jpg';
+import id4 from '../../assets/gallary/id4.jpg';
+import trophy3 from '../../assets/gallary/trophy3.jpg';
+import trophy4 from '../../assets/gallary/trophy4.jpg';
+import tshirt1 from '../../assets/gallary/tshirt1.jpg';
+import tshirt3 from '../../assets/gallary/tshirt3.jpg';
+import tshirt4 from '../../assets/gallary/tshirt4.jpg';
+
+// ... (keep all the existing styled components)
 
 const PageContainer = styled.div`
   display: flex;
@@ -170,63 +190,78 @@ const OrderButton = styled.button`
     background-color: #c0392b;
   }
 `;
+// New styled components for pagination
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const PageButton = styled.button`
+  background-color: ${props => props.active ? '#e74c3c' : 'white'};
+  color: ${props => props.active ? 'white' : '#333'};
+  border: 1px solid #e74c3c;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: ${props => props.active ? '#c0392b' : '#f8d7da'};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
 
 const allProducts = [
-  { id: 1, name: 'Custom Printed Cup', price: 19.99, category: 'Cup' },
-  { id: 2, name: 'Decorative Plate', price: 29.99, category: 'Plate' },
-  { id: 3, name: 'Customized Cap', price: 24.99, category: 'Cap' },
-  { id: 4, name: 'Printed T-shirt', price: 34.99, category: 'T-shirt' },
-  { id: 5, name: 'Custom CD/DVD Print', price: 9.99, category: 'CD/DVD' },
-  { id: 6, name: 'PVC Card Printing', price: 4.99, category: 'PVC Card' },
-  { id: 7, name: 'Custom Tile Print', price: 39.99, category: 'Tiles' },
-  { id: 8, name: 'Personalized Calendar', price: 14.99, category: 'Calendar' },
-  { id: 9, name: 'Custom Photo Frame', price: 24.99, category: 'Frame' },
+  { id: 1, name: 'Canvas Print 1', price: 59.99, category: 'Canvas', image: canvas2 },
+  { id: 2, name: 'Canvas Print 2', price: 64.99, category: 'Canvas', image: canvas3 },
+  { id: 3, name: 'Canvas Print 3', price: 69.99, category: 'Canvas', image: canvas4 },
+  { id: 4, name: 'Canvas Print 4', price: 74.99, category: 'Canvas', image: canvas5 },
+  { id: 5, name: 'Cap Design 1', price: 24.99, category: 'Cap', image: cap1 },
+  { id: 6, name: 'Cap Design 2', price: 26.99, category: 'Cap', image: cap2 },
+  { id: 7, name: 'Cap Design 3', price: 28.99, category: 'Cap', image: cap3 },
+  { id: 8, name: 'Cap Design 4', price: 29.99, category: 'Cap', image: cap4 },
+  { id: 9, name: 'Photo Frame 1', price: 34.99, category: 'Frame', image: frame3 },
+  { id: 10, name: 'Photo Frame 2', price: 39.99, category: 'Frame', image: frame4 },
+  { id: 11, name: 'Photo Frame 3', price: 44.99, category: 'Frame', image: frame5 },
+  { id: 12, name: 'ID Card 1', price: 9.99, category: 'ID Card', image: id },
+  { id: 13, name: 'ID Card 2', price: 10.99, category: 'ID Card', image: id2 },
+  { id: 14, name: 'ID Card 3', price: 11.99, category: 'ID Card', image: id4 },
+  { id: 15, name: 'Trophy Design 1', price: 49.99, category: 'Trophy', image: trophy3 },
+  { id: 16, name: 'Trophy Design 2', price: 54.99, category: 'Trophy', image: trophy4 },
+  { id: 17, name: 'T-Shirt Print 1', price: 19.99, category: 'T-shirt', image: tshirt1 },
+  { id: 18, name: 'T-Shirt Print 2', price: 21.99, category: 'T-shirt', image: tshirt3 },
+  { id: 19, name: 'T-Shirt Print 3', price: 23.99, category: 'T-shirt', image: tshirt4 },
 ];
+
+const ITEMS_PER_PAGE = 6;
 
 const ShopPage = () => {
   const [products, setProducts] = useState(allProducts);
-  const [displayedProducts, setDisplayedProducts] = useState(allProducts);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      const updatedProducts = await Promise.all(
-        allProducts.map(async (product) => {
-          try {
-            const response = await axios.get('https://api.pexels.com/v1/search', {
-              headers: {
-                Authorization: PEXELS_API_KEY,
-              },
-              params: {
-                query: product.category,
-                per_page: 1,
-              },
-            });
-            const imageUrl = response.data.photos[0]?.src?.medium || 'https://via.placeholder.com/200x200.png?text=No+Image';
-            return { ...product, image: imageUrl };
-          } catch (error) {
-            console.error(`Error fetching image for ${product.name}:`, error);
-            return { ...product, image: 'https://via.placeholder.com/200x200.png?text=Error' };
-          }
-        })
-      );
-      setProducts(updatedProducts);
-      setDisplayedProducts(updatedProducts);
-    };
-    fetchImages();
-  }, []);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     filterProducts();
-  }, [selectedCategory, searchTerm, products]);
+  }, [selectedCategory, searchTerm, currentPage]);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
 
   const handleSearchSubmit = (e) => {
@@ -247,7 +282,11 @@ const ShopPage = () => {
       );
     }
 
-    setDisplayedProducts(filtered);
+    setTotalPages(Math.ceil(filtered.length / ITEMS_PER_PAGE));
+    
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    setDisplayedProducts(filtered.slice(startIndex, endIndex));
   };
 
   const handleAddToCart = (product) => {
@@ -260,11 +299,15 @@ const ShopPage = () => {
     // Implement your order logic here
   };
 
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <PageContainer>
       <ShopSidebar onCategorySelect={handleCategorySelect} />
       <ProductSection>
-        {/* <form onSubmit={handleSearchSubmit}>
+        <form onSubmit={handleSearchSubmit}>
           <SearchBar>
             <SearchInput 
               type="text" 
@@ -276,7 +319,7 @@ const ShopPage = () => {
               <Search size={20} />
             </SearchButton>
           </SearchBar>
-        </form> */}
+        </form>
         <ProductGrid>
           {displayedProducts.map((product) => (
             <ProductCard key={product.id}>
@@ -300,6 +343,29 @@ const ShopPage = () => {
             </ProductCard>
           ))}
         </ProductGrid>
+        <PaginationContainer>
+          <PageButton 
+            onClick={() => handlePageChange(currentPage - 1)} 
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft size={20} />
+          </PageButton>
+          {[...Array(totalPages).keys()].map((page) => (
+            <PageButton 
+              key={page + 1} 
+              onClick={() => handlePageChange(page + 1)}
+              active={currentPage === page + 1}
+            >
+              {page + 1}
+            </PageButton>
+          ))}
+          <PageButton 
+            onClick={() => handlePageChange(currentPage + 1)} 
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight size={20} />
+          </PageButton>
+        </PaginationContainer>
       </ProductSection>
     </PageContainer>
   );

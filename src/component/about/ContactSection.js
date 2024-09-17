@@ -2,27 +2,31 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  max-width: 800px;
-  margin: 30px auto;
+  max-width: 1200px;
+  margin: 40px auto;
   text-align: center;
-  font-family: Arial, sans-serif;
-  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  padding: 40px 20px;
 `;
 
 const Title = styled.h2`
-  font-size: 3rem;
-  color: #0a3d2a;
-  margin-bottom: 1rem;
-  font-weight: bold;
+  font-size: 40px;
+  color: #0A2540;
+  margin-bottom: 20px;
+  font-weight: 700;color: #0A2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.2;
+
 `;
 
 const Description = styled.p`
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+   color: #4A5568;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+
 `;
 
 const Form = styled.form`
@@ -34,24 +38,31 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 1px solid #E2E8F0;
+  border-radius: 25px;
   flex-grow: 1;
   width: 100%;
 `;
 
 const Button = styled.button`
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  background-color: #ff4500;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #FF4D4D;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
   white-space: nowrap;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #E63939;
+  }
 `;
+
 
 const NewsletterSubscription = () => {
   const [email, setEmail] = useState('');

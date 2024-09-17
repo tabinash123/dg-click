@@ -51,15 +51,13 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  // width: 60px;
+  // height: 60px;
   // background-color: #e0e0e0;
-  border-radius: 50%;
+  border-radius: 80%;
   transition: all 0.3s ease;
 
-  ${FeatureItem}:hover & {
-    background-color: #d0d0d0;
-  }
+
 `;
 
 const TextWrapper = styled.div`
@@ -69,12 +67,12 @@ const TextWrapper = styled.div`
 
 const Title = styled.span`
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #333;
 `;
 
 const Description = styled.span`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #666;
 `;
 
@@ -93,7 +91,7 @@ const FeatureBar = ({ customFeatures }) => {
       {featuresToRender.map((feature, index) => (
         <FeatureItem key={index} index={index}>
           <IconWrapper>
-            <feature.icon size={24} color="#4a4a4a" />
+            <feature.icon size={20} color="#4a4a4a" />
           </IconWrapper>
           <TextWrapper>
             <Title>{feature.title}</Title>
