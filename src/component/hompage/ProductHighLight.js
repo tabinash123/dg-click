@@ -2,60 +2,48 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import canvas2 from '../../assets/gallary/canvas2.jpg';
 import canvas3 from '../../assets/gallary/canvas3.jpg';
-import canvas4 from '../../assets/gallary/canvas4.jpg';
-import canvas5 from '../../assets/gallary/canvas5.jpg';
 import cap1 from '../../assets/gallary/cap1.jpg';
 import cap2 from '../../assets/gallary/cap2.jpg';
-import cap3 from '../../assets/gallary/cap3 (2).jpg';
-import cap4 from '../../assets/gallary/cap4.jpg';
 import frame3 from '../../assets/gallary/frame3.jpg';
-import frame4 from '../../assets/gallary/frame4.jpg';
-import frame5 from '../../assets/gallary/frame5.jpg';
 import id from '../../assets/gallary/id.jpg';
-import id2 from '../../assets/gallary/id2.jpg';
-import id4 from '../../assets/gallary/id4.jpg';
 import trophy3 from '../../assets/gallary/trophy3.jpg';
-import trophy4 from '../../assets/gallary/trophy4.jpg';
 import tshirt1 from '../../assets/gallary/tshirt1.jpg';
-import tshirt3 from '../../assets/gallary/tshirt3.jpg';
-import tshirt4 from '../../assets/gallary/tshirt4.jpg';
 
 const Section = styled.section`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 60px 20px;  // Increased top and bottom padding
   font-family: 'Arial', sans-serif;
 `;
 
 const Subtitle = styled.h3`
   color: #FF4D4D;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   text-align: center;
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;  // Increased bottom margin
 `;
 
 const Title = styled.h2`
   color: #0A2540;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 15px;
   text-align: center;
-  margin: 0 0 30px 0;
+  margin: 0 0 40px 0;  // Increased bottom margin
 `;
 
 const CategoryFilter = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;  // Increased margin
 `;
 
 const FilterButton = styled.button`
   background: none;
   border: none;
-  font-size: 14px;
+  font-size: 16px;
   color: ${props => props.active ? '#FF4D4D' : '#4A5568'};
-  margin: 0 15px;
+  margin: 0 20px;  // Increased horizontal margin
   cursor: pointer;
   padding: 5px 0;
   position: relative;
@@ -76,7 +64,7 @@ const FilterButton = styled.button`
 const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 30px;  // Increased gap
 `;
 
 const ProductCard = styled.div`
@@ -84,6 +72,7 @@ const ProductCard = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  // Added subtle shadow
 `;
 
 const ProductImageWrapper = styled.div`
@@ -104,19 +93,19 @@ const DiscountTag = styled.div`
   left: 10px;
   background-color: #0A2540;
   color: white;
-  padding: 2px 8px;
+  padding: 4px 10px;  // Increased padding
   border-radius: 3px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 const ProductInfo = styled.div`
-  padding: 15px;
+  padding: 20px;  // Increased padding
 `;
 
 const ProductName = styled.h4`
-  margin: 10px 0;
-  font-size: 15px;
+  margin: 0 0 15px 0;  // Adjusted margin
+  font-size: 17px;
   font-weight: 600;
   color: #0A2540;
 `;
@@ -124,15 +113,15 @@ const ProductName = styled.h4`
 const Price = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 10px;
 `;
 
 const NewPrice = styled.span`
   font-weight: 600;
   color: #FF4D4D;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
+// ... (products array remains unchanged)
 const products = [
   { id: 1, name: 'Canvas Print', oldPrice: 270.50, newPrice: 230.50, discount: 60, image: canvas2, category: 'Canvas' },
   { id: 2, name: 'Promo Cap', oldPrice: 270.50, newPrice: 230.50, discount: 70, image: cap1, category: 'Caps' },
@@ -143,7 +132,6 @@ const products = [
   { id: 7, name: 'Canvas Art', oldPrice: 270.50, newPrice: 230.50, discount: 60, image: canvas3, category: 'Canvas' },
   { id: 8, name: 'Stylish Cap', oldPrice: 270.50, newPrice: 230.50, discount: 70, image: cap2, category: 'Caps' },
 ];
-
 const FeaturedProducts = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 

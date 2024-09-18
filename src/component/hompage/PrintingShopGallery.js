@@ -137,16 +137,6 @@ const PrintingPressGallery = () => {
     { id: 7, image: cap3, alt: 'Cap 3' },
     { id: 8, image: cap4, alt: 'Cap 4' },
     { id: 9, image: frame3, alt: 'Frame 3' },
-    { id: 10, image: frame4, alt: 'Frame 4' },
-    { id: 11, image: frame5, alt: 'Frame 5' },
-    { id: 12, image: id, alt: 'ID' },
-    { id: 13, image: id2, alt: 'ID 2' },
-    { id: 14, image: id4, alt: 'ID 4' },
-    { id: 15, image: trophy3, alt: 'Trophy 3' },
-    { id: 16, image: trophy4, alt: 'Trophy 4' },
-    { id: 17, image: tshirt1, alt: 'T-Shirt 1' },
-    { id: 18, image: tshirt3, alt: 'T-Shirt 3' },
-    { id: 19, image: tshirt4, alt: 'T-Shirt 4' },
   ];
 
   const handleImageClick = (project) => {

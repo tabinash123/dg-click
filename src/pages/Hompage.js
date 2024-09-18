@@ -14,6 +14,8 @@ import ProductShowcase from '../component/hompage/ProductShowcase';
 import ProductOffers from '../component/hompage/ProductOffers';
 import PrintingShopGallery from '../component/hompage/PrintingShopGallery';
 import ProductBanner from '../component/hompage/ProductBanner';
+import PrintPasalHowItWorks from '../component/hompage/PrintPasalHowItWorks';
+import PartnerLogos from '../component/hompage/PartnerLogos';
 
 const Homepage = () => {
   return (
@@ -21,10 +23,12 @@ const Homepage = () => {
       <HeroSection />
       <FeatureBar />
       <IntroductionSection />
-      <Features />
+      <PrintPasalHowItWorks />
+      {/* <Features /> */}
       <Services />
       <ProductOffers />
       <ProductHighLight />
+      <PartnerLogos />
       {/* <ProductBanner /> */}
       {/* <ProductShowcase /> */}
       {/* <FAQComponent /> */}

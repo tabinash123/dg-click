@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { Search, ShoppingCart, User, ChevronDown, Bell } from 'lucide-react';
+import { Search, ShoppingCart, User, Bell } from 'lucide-react';
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -118,7 +118,7 @@ const CartCount = styled.span`
 
 const MainNav = styled.nav`
   background-color: #ffffff;
-  padding: 10px 5%;
+  padding: 20px 5%;
   border-top: 1px solid #eaeaea;
 `;
 
@@ -131,35 +131,6 @@ const NavItems = styled.div`
 const AccountDropdown = styled.div`
   position: relative;
   cursor: pointer;
-`;
-
-const DropdownContent = styled.div`
-  display: ${props => props.isOpen ? 'block' : 'none'};
-  position: absolute;
-  background-color: #ffffff;
-  min-width: 200px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  border-radius: 8px;
-  top: 120%;
-  right: 0;
-  padding: 10px 0;
-  animation: ${fadeIn} 0.3s ease;
-  z-index: 10;
-`;
-
-const DropdownItem = styled(Link)`
-  color: #333333;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #f1f1f1;
-    color: #ff6347;
-  }
 `;
 
 const NotificationBadge = styled.div`
@@ -179,10 +150,27 @@ const Badge = styled.span`
   font-weight: bold;
 `;
 
+const StyledNavLink = styled(NavLink)`
+  color: #333333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ff6347;
+    transform: translateY(-2px);
+  }
+
+  &.active {
+    color: #ff6347;
+    border-bottom: 2px solid #ff6347;
+  }
+`;
+
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e) => {
@@ -197,7 +185,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <TopBar>
-        <Logo to="/">PIXEN</Logo>
+        <Logo to="/">DG-Click</Logo>
         <SearchBar onSubmit={handleSearchSubmit}>
           <SearchInput 
             type="text" 
@@ -213,18 +201,10 @@ const Header = () => {
           <AccountDropdown onClick={toggleAccountDropdown}>
             <NavItem as="div">
               <User size={20} />
-             
-              {/* <ChevronDown size={16} /> */}
             </NavItem>
-            {/* <DropdownContent isOpen={isAccountDropdownOpen}>
-              <DropdownItem to="/account/profile"><User size={16} /> Your Profile</DropdownItem>
-              <DropdownItem to="/account/orders"><ShoppingCart size={16} /> Your Orders</DropdownItem>
-              <DropdownItem to="/logout">Sign Out</DropdownItem>
-            </DropdownContent> */}
           </AccountDropdown>
           <NavItem to="/orders">
-            {/* <Package size={20} /> */}
-           
+            Orders
           </NavItem>
           <CartButton to="/cart">
             <ShoppingCart size={24} />
@@ -238,15 +218,13 @@ const Header = () => {
       </TopBar>
       <MainNav>
         <NavItems>
-          {['Home', 'About', 'Shop', 'Services', 'Projects', 'Articles', 'Contact'].map((item) => (
-            <NavItem 
-              key={item} 
-              to={`/${item.toLowerCase()}`} 
-              className={location.pathname === `/${item.toLowerCase()}` ? 'active' : ''}
-            >
-              {item}
-            </NavItem>
-          ))}
+          <StyledNavLink to="/" end>Home</StyledNavLink>
+          <StyledNavLink to="/about">About</StyledNavLink>
+          <StyledNavLink to="/shop">Shop</StyledNavLink>
+          <StyledNavLink to="/services">Services</StyledNavLink>
+          <StyledNavLink to="/projects">Projects</StyledNavLink>
+          <StyledNavLink to="/articles">Articles</StyledNavLink>
+          <StyledNavLink to="/contact">Contact</StyledNavLink>
         </NavItems>
       </MainNav>
     </HeaderWrapper>
