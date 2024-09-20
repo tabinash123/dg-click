@@ -7,6 +7,14 @@ const Section = styled.section`
   padding: 60px 0;
   font-family: 'Arial', sans-serif;
   background-color: #f8f8f8;
+
+  @media (max-width: 1023px) {
+    padding: 50px 0;
+  }
+
+  @media (max-width: 767px) {
+    padding: 40px 0;
+  }
 `;
 
 const TrustedBy = styled.div`
@@ -19,6 +27,14 @@ const Title = styled.h2`
   color: #333;
   margin: 0;
   text-transform: uppercase;
+
+  @media (max-width: 1023px) {
+    font-size: 22px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -26,6 +42,16 @@ const Subtitle = styled.p`
   color: #666;
   margin: 5px 0 40px 0;
   text-transform: uppercase;
+
+  @media (max-width: 1023px) {
+    font-size: 18px;
+    margin: 5px 0 30px 0;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+    margin: 5px 0 25px 0;
+  }
 `;
 
 const slide = keyframes`
@@ -41,6 +67,14 @@ const LogoContainer = styled.div`
   display: flex;
   width: 200%; // Double the width to allow for seamless looping
   animation: ${slide} 30s linear infinite;
+
+  @media (max-width: 1023px) {
+    animation: ${slide} 25s linear infinite;
+  }
+
+  @media (max-width: 767px) {
+    animation: ${slide} 20s linear infinite;
+  }
 `;
 
 const LogoWrapper = styled.div`
@@ -62,6 +96,16 @@ const LogoText = styled.span`
   &:hover {
     transform: scale(1.1);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  @media (max-width: 1023px) {
+    font-size: 20px;
+    padding: 0 25px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+    padding: 0 20px;
   }
 `;
 
@@ -90,9 +134,9 @@ const TrustedPartners = () => {
   return (
     <Section>
       <TrustedBy>
-      <Title>Trusted By</Title>
+        <Title>Trusted By</Title>
         <Subtitle>100,000+ Businesses</Subtitle>
-         <LogoContainer>
+        <LogoContainer>
           <LogoWrapper>
             {partners.map((partner, index) => (
               <LogoText key={index} style={{ color: getLogoColor(partner) }}>

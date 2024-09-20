@@ -12,8 +12,16 @@ import tshirt1 from '../../assets/gallary/tshirt1.jpg';
 const Section = styled.section`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;  // Increased top and bottom padding
+  padding: 60px 20px;
   font-family: 'Arial', sans-serif;
+
+  @media (max-width: 1023px) {
+    padding: 50px 15px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 40px 10px;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -21,7 +29,12 @@ const Subtitle = styled.h3`
   font-size: 16px;
   font-weight: 600;
   text-align: center;
-  margin: 0 0 20px 0;  // Increased bottom margin
+  margin: 0 0 20px 0;
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+    margin: 0 0 15px 0;
+  }
 `;
 
 const Title = styled.h2`
@@ -29,13 +42,32 @@ const Title = styled.h2`
   font-size: 32px;
   font-weight: 700;
   text-align: center;
-  margin: 0 0 40px 0;  // Increased bottom margin
+  margin: 0 0 40px 0;
+
+  @media (max-width: 1023px) {
+    font-size: 28px;
+    margin: 0 0 30px 0;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+    margin: 0 0 25px 0;
+  }
 `;
 
 const CategoryFilter = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;  // Increased margin
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+
+  @media (max-width: 1023px) {
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 25px;
+  }
 `;
 
 const FilterButton = styled.button`
@@ -43,10 +75,20 @@ const FilterButton = styled.button`
   border: none;
   font-size: 16px;
   color: ${props => props.active ? '#FF4D4D' : '#4A5568'};
-  margin: 0 20px;  // Increased horizontal margin
+  margin: 0 20px 10px;
   cursor: pointer;
   padding: 5px 0;
   position: relative;
+
+  @media (max-width: 1023px) {
+    font-size: 14px;
+    margin: 0 15px 8px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+    margin: 0 10px 6px;
+  }
 
   &:after {
     content: '';
@@ -64,7 +106,17 @@ const FilterButton = styled.button`
 const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 30px;  // Increased gap
+  gap: 30px;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
 `;
 
 const ProductCard = styled.div`
@@ -72,13 +124,21 @@ const ProductCard = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  // Added subtle shadow
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const ProductImageWrapper = styled.div`
   position: relative;
   height: 200px;
   background-color: #e0e0e0;
+
+  @media (max-width: 1023px) {
+    height: 180px;
+  }
+
+  @media (max-width: 767px) {
+    height: 150px;
+  }
 `;
 
 const ProductImage = styled.img`
@@ -93,21 +153,49 @@ const DiscountTag = styled.div`
   left: 10px;
   background-color: #0A2540;
   color: white;
-  padding: 4px 10px;  // Increased padding
+  padding: 4px 10px;
   border-radius: 3px;
   font-weight: 600;
   font-size: 16px;
+
+  @media (max-width: 1023px) {
+    font-size: 14px;
+    padding: 3px 8px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+    padding: 2px 6px;
+  }
 `;
 
 const ProductInfo = styled.div`
-  padding: 20px;  // Increased padding
+  padding: 20px;
+
+  @media (max-width: 1023px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 10px;
+  }
 `;
 
 const ProductName = styled.h4`
-  margin: 0 0 15px 0;  // Adjusted margin
+  margin: 0 0 15px 0;
   font-size: 17px;
   font-weight: 600;
   color: #0A2540;
+
+  @media (max-width: 1023px) {
+    font-size: 16px;
+    margin: 0 0 12px 0;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+    margin: 0 0 10px 0;
+  }
 `;
 
 const Price = styled.div`
@@ -119,9 +207,16 @@ const NewPrice = styled.span`
   font-weight: 600;
   color: #FF4D4D;
   font-size: 16px;
+
+  @media (max-width: 1023px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+  }
 `;
 
-// ... (products array remains unchanged)
 const products = [
   { id: 1, name: 'Canvas Print', oldPrice: 270.50, newPrice: 230.50, discount: 60, image: canvas2, category: 'Canvas' },
   { id: 2, name: 'Promo Cap', oldPrice: 270.50, newPrice: 230.50, discount: 70, image: cap1, category: 'Caps' },
@@ -132,6 +227,7 @@ const products = [
   { id: 7, name: 'Canvas Art', oldPrice: 270.50, newPrice: 230.50, discount: 60, image: canvas3, category: 'Canvas' },
   { id: 8, name: 'Stylish Cap', oldPrice: 270.50, newPrice: 230.50, discount: 70, image: cap2, category: 'Caps' },
 ];
+
 const FeaturedProducts = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -161,6 +257,7 @@ const FeaturedProducts = () => {
           <ProductCard key={product.id}>
             <ProductImageWrapper>
               <ProductImage src={product.image} alt={product.name} />
+              {/* <DiscountTag>{product.discount}% Off</DiscountTag> */}
             </ProductImageWrapper>
             <ProductInfo>
               <ProductName>{product.name}</ProductName>

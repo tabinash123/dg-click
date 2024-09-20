@@ -10,18 +10,34 @@ const Section = styled.section`
   align-items: center;
   max-width: 1200px;
   margin: 0px auto;
-  // margin-top:40px;
-  padding: 20px 20px;
+  padding: 20px;
   font-family: 'Arial', sans-serif;
+
+  @media (max-width: 1023px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 `;
 
 const IllustrationContainer = styled.div`
   flex: 1;
   max-width: 50%;
-  height: 400px; // Fixed height
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1023px) {
+    height: 300px;
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const Image = styled.img`
@@ -35,34 +51,54 @@ const ContentContainer = styled.div`
   flex: 1;
   max-width: 50%;
   padding-left: 40px;
+
+  @media (max-width: 1023px) {
+    padding-left: 20px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 100%;
+    padding-left: 0;
+  }
 `;
 
 const Subtitle = styled.p`
- color: #FF4D4D;
+  color: #FF4D4D;
   font-size: 14px;
   font-weight: 600;
-  // margin-bottom: 5px;
   text-transform: uppercase;
 
+  @media (max-width: 1023px) {
+    font-size: 13px;
+  }
 `;
 
 const Title = styled.h2`
-   color: #0A2540;
+  color: #0A2540;
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 15px;
   line-height: 1.2;
 
+  @media (max-width: 1023px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 22px;
+  }
 `;
 
 const Description = styled.p`
-   color: #4A5568;
+  color: #4A5568;
   margin-bottom: 20px;
   font-size: 14px;
   line-height: 1.5;
 
+  @media (max-width: 1023px) {
+    font-size: 13px;
+  }
 `;
-
 
 const LoadingPlaceholder = styled.div`
   width: 100%;
@@ -74,6 +110,10 @@ const LoadingPlaceholder = styled.div`
   border-radius: 8px;
   color: #666;
   font-size: 16px;
+
+  @media (max-width: 1023px) {
+    font-size: 14px;
+  }
 `;
 
 const AboutUsSection = () => {
@@ -118,7 +158,6 @@ const AboutUsSection = () => {
           interdum orc torristique aenean at dictumst velit fames molestie tristique
           magna sociosqu ine rhoncuis in cubilia magno senectus sociis tortor enim.
         </Description>
-        
       </ContentContainer>
     </Section>
   );

@@ -45,6 +45,7 @@ const StepsContainer = styled.div`
   justify-content: space-around;
   flex-wrap: nowrap;
   margin-top: 2rem;
+  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -60,11 +61,11 @@ const Step = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     max-width: 300px;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
   }
 
   @media (max-width: 480px) {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -127,6 +128,18 @@ const StepDescription = styled.p`
   }
 `;
 
+const Arrow = styled.div`
+  font-size: 2rem;
+  color: red;
+  margin: 0 1rem;
+  align-self: center;
+
+  @media (max-width: 768px) {
+    transform: rotate(90deg);
+    margin: 1rem 0;
+  }
+`;
+
 const HowItWorks = () => {
   return (
     <Container>
@@ -139,12 +152,14 @@ const HowItWorks = () => {
           <StepTitle>Create Account</StepTitle>
           <StepDescription>Sign up, verify, and dive into a world of possibilities!</StepDescription>
         </Step>
+        <Arrow>→</Arrow>
         <Step>
           <StepImage src={placeOrderImage} alt="Place Order" />
           <StepNumber>Step 2</StepNumber>
           <StepTitle>Place Order</StepTitle>
           <StepDescription>Select your item or upload your design, and let the magic begin!</StepDescription>
         </Step>
+        <Arrow>→</Arrow>
         <Step>
           <StepImage src={deliveryImage} alt="Delivery" />
           <StepNumber>Step 3</StepNumber>

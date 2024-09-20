@@ -14,7 +14,7 @@ const Card = styled.div`
   background-color: ${({ $bgColor }) => $bgColor};
   border-radius: 12px;
   padding: 24px;
-  width: calc(33.33% - 14px);
+  width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;

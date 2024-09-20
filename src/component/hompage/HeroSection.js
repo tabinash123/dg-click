@@ -31,6 +31,14 @@ const HeroContainer = styled.div`
   position: relative;
   overflow: hidden;
   font-family: Arial, sans-serif;
+
+  @media (max-width: 1023px) {
+    height: 350px;
+  }
+
+  @media (max-width: 767px) {
+    height: 300px;
+  }
 `;
 
 const BackgroundImage = styled.div`
@@ -58,12 +66,30 @@ const ContentWrapper = styled.div`
   background: ${props => props.overlay};
   color: ${props => props.textColor};
   animation: ${fadeIn} 0.5s ease-out;
+
+  @media (max-width: 1023px) {
+    max-width: 60%;
+    padding-left: 30px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 80%;
+    padding-left: 20px;
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 16px;
   margin-bottom: 10px;
   animation: ${slideInLeft} 0.5s ease-out 0.2s both;
+
+  @media (max-width: 1023px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
 `;
 
 const Title = styled.h1`
@@ -71,6 +97,14 @@ const Title = styled.h1`
   margin-bottom: 10px;
   font-weight: bold;
   animation: ${slideInRight} 0.5s ease-out 0.4s both;
+
+  @media (max-width: 1023px) {
+    font-size: 30px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 
 const Price = styled.p`
@@ -78,6 +112,14 @@ const Price = styled.p`
   margin-bottom: 20px;
   font-weight: bold;
   animation: ${slideInLeft} 0.5s ease-out 0.6s both;
+
+  @media (max-width: 1023px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 18px;
+  }
 `;
 
 const OrderButton = styled.button`
@@ -94,6 +136,16 @@ const OrderButton = styled.button`
   &:hover {
     opacity: 0.9;
     transform: scale(1.05);
+  }
+
+  @media (max-width: 1023px) {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 `;
 
@@ -117,6 +169,11 @@ const NavButton = styled.button`
   }
 
   ${props => props.left ? 'left: 10px;' : 'right: 10px;'}
+
+  @media (max-width: 767px) {
+    font-size: 20px;
+    padding: 8px;
+  }
 `;
 
 const IndicatorContainer = styled.div`
@@ -127,6 +184,11 @@ const IndicatorContainer = styled.div`
   display: flex;
   gap: 10px;
   z-index: 2;
+
+  @media (max-width: 767px) {
+    bottom: 10px;
+    gap: 8px;
+  }
 `;
 
 const Indicator = styled.div`
@@ -137,6 +199,11 @@ const Indicator = styled.div`
   cursor: pointer;
   transition: all 0.3s ease;
   transform: ${props => props.active ? 'scale(1.2)' : 'scale(1)'};
+
+  @media (max-width: 767px) {
+    width: 8px;
+    height: 8px;
+  }
 `;
 
 // Dummy data for each banner

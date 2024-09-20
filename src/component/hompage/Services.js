@@ -16,11 +16,23 @@ const Section = styled.section`
   margin: 0 auto;
   padding: 40px 20px;
   font-family: 'Arial', sans-serif;
+
+  @media (max-width: 1024px) {
+    padding: 30px 15px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 10px;
+  }
 `;
 
 const Header = styled.div`
   text-align: center;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 30px;
+  }
 `;
 
 const Title = styled.h2`
@@ -28,6 +40,16 @@ const Title = styled.h2`
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 55px;
+
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -35,6 +57,11 @@ const Subtitle = styled.h3`
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `;
 
 const ServicesGrid = styled.div`
@@ -45,11 +72,12 @@ const ServicesGrid = styled.div`
   margin-bottom: 40px;
 
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
 `;
 
@@ -57,21 +85,40 @@ const ServiceCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
+
+  @media (max-width: 1024px) {
+    max-width: 220px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 160px;
+  }
 `;
 
 const CircleContainer = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
 
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  // &:hover {
+  //   transform: translateY(-10px);
+  //   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  // }
+
+  @media (max-width: 1024px) {
+    width: 150px;
+    height: 150px;
+  }
+
+  @media (max-width: 768px) {
+    width: 140px;
+    height: 140px;
   }
 `;
 
@@ -81,9 +128,9 @@ const ServiceImage = styled.img`
   object-fit: cover;
   transition: transform 0.3s ease;
 
-  ${CircleContainer}:hover & {
-    transform: scale(1.1);
-  }
+  // ${CircleContainer}:hover & {
+  //   transform: scale(1.1);
+  // }
 `;
 
 const ServiceOverlay = styled.div`
@@ -109,6 +156,16 @@ const ServiceDescription = styled.p`
   font-size: 14px;
   text-align: center;
   padding: 0 20px;
+
+  @media (max-width: 1024px) {
+    font-size: 13px;
+    padding: 0 15px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 0 10px;
+  }
 `;
 
 const ServiceName = styled.h4`
@@ -120,20 +177,27 @@ const ServiceName = styled.h4`
   position: relative;
   padding-bottom: 10px;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 3px;
-    background-color: #FF4D4D;
-    transition: width 0.3s ease;
-  }
 
   ${ServiceCard}:hover &::after {
     width: 75px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin: 15px 0 0;
+    padding-bottom: 8px;
+
+    &::after {
+      width: 40px;
+    }
+
+    ${ServiceCard}:hover &::after {
+      width: 60px;
+    }
   }
 `;
 
@@ -158,9 +222,9 @@ const PrintingServices = () => {
           <ServiceCard key={index}>
             <CircleContainer>
               <ServiceImage src={service.image} alt={`${service.name} service`} />
-              <ServiceOverlay>
+              {/* <ServiceOverlay>
                 <ServiceDescription>{service.description}</ServiceDescription>
-              </ServiceOverlay>
+              </ServiceOverlay> */}
             </CircleContainer>
             <ServiceName>{service.name}</ServiceName>
           </ServiceCard>

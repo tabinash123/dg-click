@@ -12,15 +12,31 @@ const Section = styled.section`
   margin: 0 auto;
   padding: 40px 20px;
   font-family: 'Arial', sans-serif;
+  gap:30px;
+
+  @media (max-width: 1024px) {
+    flex-direction: row;
+    align-items: stretch;
+  }
 `;
 
 const IllustrationContainer = styled.div`
   flex: 1;
   max-width: 50%;
-  height: 400px; // Fixed height
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1024px) {
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 768px) {
+  display:none;
+    height: 300px;
+  }
 `;
 
 const Image = styled.img`
@@ -34,6 +50,11 @@ const ContentContainer = styled.div`
   flex: 1;
   max-width: 50%;
   padding-left: 40px;
+
+  @media (max-width: 1024px) {
+    max-width: 100%;
+    padding-left: 0;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -42,16 +63,18 @@ const Subtitle = styled.p`
   font-weight: 600;
   margin-bottom: 5px;
   text-transform: uppercase;
-
 `;
 
 const Title = styled.h2`
-    color: #0A2540;
+  color: #0A2540;
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 15px;
   line-height: 1.2;
 
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
 `;
 
 const Description = styled.p`
@@ -59,7 +82,6 @@ const Description = styled.p`
   margin-bottom: 20px;
   font-size: 14px;
   line-height: 1.5;
-
 `;
 
 const FeatureList = styled.ul`
@@ -74,12 +96,15 @@ const FeatureItem = styled.li`
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-
   &:before {
     content: '✓';
     color: #FF4D4D;
     margin-right: 10px;
     font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
   }
 `;
 
@@ -95,14 +120,17 @@ const ReadMoreButton = styled.button`
   display: flex;
   align-items: center;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #E63939;
   }
-
   &:after {
     content: '→';
     margin-left: 10px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 10px 20px;
   }
 `;
 
@@ -139,7 +167,6 @@ const AboutUsSection = () => {
         setLoading(false);
       }
     };
-
     fetchImage();
   }, []);
 
@@ -164,7 +191,7 @@ const AboutUsSection = () => {
           <FeatureItem>Magna cubilia sapien vivamus vestibulum iner consectetuer.</FeatureItem>
           <FeatureItem>Urna faucibus netus Inceptos qu hac sem iaculis lectus.</FeatureItem>
         </FeatureList>
-
+        <ReadMoreButton>Read More</ReadMoreButton>
       </ContentContainer>
     </Section>
   );

@@ -1,150 +1,173 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import { Pen, FileText, CheckSquare, Printer } from 'lucide-react';
+import styled from 'styled-components';
+import createAccountImage from '../../assets/icon1.png';
+import placeOrderImage from '../../assets/icon2.png';
+import deliveryImage from '../../assets/icon3.png';
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
-
-const Section = styled.section`
-  max-width: 1000px;
+const Container = styled.div`
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f8f9fa;
-`;
-
-const Header = styled.div`
   text-align: center;
-  margin-bottom: 30px;
+  font-family: Arial, sans-serif;
+  padding: 2rem 1rem;
 `;
 
-const Subtitle = styled.h3`
-  color: #FF4D4D;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 10px;
-
+const Title = styled.h1`
+  color: red;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-`;
-
-const Title = styled.h2`
-    color: #0A2540;
-  font-size: 28px;
-  font-weight: 700;
-
-  margin-bottom:12px;
-  position: relative;
-  display: inline-block;
-
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
   }
 `;
 
-const Item = styled.div`
+const Subtitle = styled.p`
+  font-size: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const StepsContainer = styled.div`
   display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  margin-top: 2rem;
   align-items: center;
-  background-color: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  animation: ${fadeIn} 0.5s ease-out forwards;
-  opacity: 0;
-  animation-delay: ${props => props.delay}s;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
-const IconWrapper = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-
-  ${Item}:hover & {
-    transform: scale(1.1);
-  }
-`;
-
-const Content = styled.div`
+const Step = styled.div`
   flex: 1;
+  min-width: 200px;
+  margin: 0 1rem 2rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 1rem;
+  }
 `;
 
-const ItemTitle = styled.h3`
-   color: #0A2540;
-  font-size: 16px;
-  font-weight: 600;
+const StepImage = styled.img`
+  width: 100px;
+  height: 170px;
+  margin-bottom: 1rem;
 
-  margin: 0 0 5px 0;
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+
+  @media (max-width: 480px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
-const ItemDescription = styled.p`
-  color: #666;
-  font-size: 12px;
+const StepNumber = styled.h2`
+  color: red;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const StepTitle = styled.h3`
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
+const StepDescription = styled.p`
+  font-size: 0.9rem;
+  max-width: 200px;
+  margin: 0 auto;
   line-height: 1.4;
-  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    max-width: 250px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
-const StepNumber = styled.span`
-  font-size: 36px;
-  font-weight: 700;
-  color: #f0f0f0;
-  position: absolute;
-  top: -15px;
-  right: 10px;
-  z-index: 0;
+const Arrow = styled.div`
+  font-size: 2rem;
+  color: red;
+  margin: 0 1rem;
+  align-self: center;
+
+  @media (max-width: 768px) {
+    transform: rotate(90deg);
+    margin: 1rem 0;
+  }
 `;
 
 const HowItWorks = () => {
-  const items = [
-    { icon: Pen, title: "Booking Online", color: "#ff6347" },
-    { icon: FileText, title: "Received Work", color: "#ffd700" },
-    { icon: CheckSquare, title: "Satisfied Design", color: "#00008b" },
-    { icon: Printer, title: "Start Printing", color: "#ff6347" }
-  ];
-
   return (
-    <Section>
-      <Header>
-        <Subtitle>Working Process</Subtitle>
-        <Title>HOW IT WORKS</Title>
-      </Header>
-      <Grid>
-        {items.map((item, index) => (
-          <Item key={index} delay={index * 0.1}>
-            <IconWrapper style={{ backgroundColor: item.color }}>
-              <item.icon size={24} color="white" />
-            </IconWrapper>
-            <Content>
-              <ItemTitle>{item.title}</ItemTitle>
-              <ItemDescription>
-                God They moving an firmament seed over herb gathering multis ply morning fruitful
-              </ItemDescription>
-            </Content>
-            <StepNumber>{index + 1}</StepNumber>
-          </Item>
-        ))}
-      </Grid>
-    </Section>
+    <Container>
+      <Title>HOW PRINTPASAL WORKS ?</Title>
+      <Subtitle>Print Pasal awaits in just 3 steps. Start Ordering now!</Subtitle>
+      <StepsContainer>
+        <Step>
+          <StepImage src={createAccountImage} alt="Create Account" />
+          <StepNumber>Step 1</StepNumber>
+          <StepTitle>Create Account</StepTitle>
+          <StepDescription>Sign up, verify, and dive into a world of possibilities!</StepDescription>
+        </Step>
+        <Arrow>→</Arrow>
+        <Step>
+          <StepImage src={placeOrderImage} alt="Place Order" />
+          <StepNumber>Step 2</StepNumber>
+          <StepTitle>Place Order</StepTitle>
+          <StepDescription>Select your item or upload your design, and let the magic begin!</StepDescription>
+        </Step>
+        <Arrow>→</Arrow>
+        <Step>
+          <StepImage src={deliveryImage} alt="Delivery" />
+          <StepNumber>Step 3</StepNumber>
+          <StepTitle>Delivery</StepTitle>
+          <StepDescription>Confirm your order and get items to your location - it's that simple!</StepDescription>
+        </Step>
+      </StepsContainer>
+    </Container>
   );
 };
 
