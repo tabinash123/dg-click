@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import { Search, ShoppingCart, User, Bell, Menu, X, Home, Info, ShoppingBag, Briefcase, FileText, Mail, Image, Package, Coffee, Award, Shirt } from 'lucide-react';
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -355,6 +357,9 @@ const Header = () => {
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const items = useSelector(state => state.cart.items);
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -395,7 +400,7 @@ const Header = () => {
           </NavItem>
           <CartButton to="/cart">
             <ShoppingCart size={24} />
-            <CartCount>3</CartCount>
+            <CartCount>{totalItems}</CartCount>
           </CartButton>
           <NotificationBadge>
             <Bell size={24} />

@@ -8,6 +8,7 @@ const CardContainer = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  margin:0px 40px;
 `;
 
 const Card = styled.div`

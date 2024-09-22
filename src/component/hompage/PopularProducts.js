@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 // Import the images
-import canvas2 from '../../assets/gallary/canvas2.jpg';
-import canvas3 from '../../assets/gallary/canvas3.jpg';
 import cap1 from '../../assets/gallary/cap1.jpg';
 import cap2 from '../../assets/gallary/cap2.jpg';
+import frame3 from '../../assets/gallary/frame3.jpg';
+import id from '../../assets/gallary/id.jpg';
+import trophy3 from '../../assets/gallary/trophy3.jpg';
+import tshirt1 from '../../assets/gallary/tshirt1.jpg';
 
 const Section = styled.section`
   padding: 2rem;
@@ -27,11 +29,11 @@ const ProductGrid = styled.div`
 `;
 
 const ProductCard = styled.div`
-  // background-color: #fff;
+//   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
   width: 200px;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const ProductImage = styled.img`
@@ -42,7 +44,7 @@ const ProductImage = styled.img`
 
 const ProductInfo = styled.div`
   padding: 0.5rem;
-  text-align: left;
+  text-align: center;
 `;
 
 const ProductName = styled.h3`
@@ -59,17 +61,17 @@ const ProductPrice = styled.p`
 `;
 
 const products = [
-  { id: 1, name: "Welcome Kit", price: 796, image: canvas2 },
-  { id: 2, name: "Coffee Mugs", price: 153, image: canvas3 },
-  { id: 3, name: "Water Bottles", price: 353, image: cap1 },
-  { id: 4, name: "Acrylic Photo Frames", price: 531, image: cap2 },
-  { id: 5, name: "Diaries", price: 443, image: canvas2 },
+  { id: 1, name: "Caps", price: 153, image: cap1 },
+  { id: 2, name: "Photo Frames", price: 531, image: frame3 },
+  { id: 3, name: "ID Cards", price: 142, image: id },
+  { id: 4, name: "Trophies", price: 236, image: trophy3 },
+  { id: 5, name: "T-Shirts", price: 299, image: tshirt1 },
 ];
 
-const MostPopularProducts = () => {
+const PopularGiftItems = () => {
   return (
     <Section>
-      <Title>Most Popular Products</Title>
+      <Title>Popular Gift Items</Title>
       <ProductGrid>
         {products.map((product) => (
           <ProductCard key={product.id}>
@@ -85,4 +87,4 @@ const MostPopularProducts = () => {
   );
 };
 
-export default MostPopularProducts;
+export default PopularGiftItems;

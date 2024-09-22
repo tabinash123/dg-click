@@ -10,6 +10,7 @@ import ProductOffers from '../component/hompage/ProductOffers';
 import PrintingShopGallery from '../component/hompage/PrintingShopGallery';
 import PrintPasalHowItWorks from '../component/hompage/PrintPasalHowItWorks';
 import PartnerLogos from '../component/hompage/PartnerLogos';
+import PopularGiftItems from '../component/hompage/PopularProducts';
 
 const Homepage = () => {
   return (
@@ -21,6 +22,7 @@ const Homepage = () => {
       <Services />
       <ProductOffers />
       <ProductHighLight />
+      <PopularGiftItems />
       <PartnerLogos />
       <FAQComponent />
       <PrintingShopGallery />
