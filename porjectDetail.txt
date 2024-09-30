@@ -1,0 +1,3 @@
+we are making a website for a printing shop . the shop is located in nepal. 
+we are using react with styled component and lucid react for making website.
+

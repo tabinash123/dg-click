@@ -17,15 +17,15 @@ const Homepage = () => {
     <div>
       <HeroSection />
       <FeatureBar />
-      <IntroductionSection />
-      <PrintPasalHowItWorks />
+      {/* <IntroductionSection /> */}
       <Services />
       <ProductOffers />
       <ProductHighLight />
       <PopularGiftItems />
       <PartnerLogos />
-      <FAQComponent />
-      <PrintingShopGallery />
+      {/* <FAQComponent /> */}
+      <PrintPasalHowItWorks />
+      {/* <PrintingShopGallery /> */}
     </div>
   );
 };

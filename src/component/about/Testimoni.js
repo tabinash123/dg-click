@@ -1,89 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import axios from 'axios';
 
 const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
 
-// ... (all styled components remain the same)
-
 const TestimonialContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
-  padding: 60px 20px;
+  padding: 64px 24px;
   font-family: 'Arial', sans-serif;
+`;
+
+const InnerContainer = styled.div`
+  background-color: #ffffff;
+  padding: 48px;
 `;
 
 const SmallTitle = styled.h3`
   color: #FF4D4D;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   text-transform: uppercase;
-
+  text-align: center;
 `;
 
 const LargeTitle = styled.h2`
-   color: #0A2540;
-  font-size: 28px;
+  color: #0A2540;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 32px;
   line-height: 1.2;
-
+  text-align: center;
 `;
 
 const TestimonialContent = styled.div`
   position: relative;
-  padding: 0 60px;
+  padding: 0 48px;
 `;
 
 const TestimonialText = styled.p`
   color: #4A5568;
-  margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 1.5;
-
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 24px;
+  font-style: italic;
 `;
 
 const ClientInfo = styled.div`
-  margin-top: 20px;
+  text-align: center;
+  margin-top: 24px;
 `;
 
 const ClientName = styled.h4`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
-  color: #0a3d2a;
-  margin-bottom: 5px;
+  color: #0A2540;
+  margin-bottom: 4px;
 `;
 
 const ClientPosition = styled.p`
   font-size: 16px;
-  color: #666;
+  color: #4A5568;
 `;
 
 const AvatarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 `;
 
 const Avatar = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background-color: #e0e0e0;
-  margin: 0 5px;
+  margin: 0 8px;
   opacity: 0.5;
   overflow: hidden;
   transition: all 0.3s ease;
+  cursor: pointer;
 
   &.active {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     opacity: 1;
-    // border: 3px solid #ff6347;
+    border: 3px solid #FF4D4D;
   }
 `;
 
@@ -97,10 +102,23 @@ const NavigationButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  background: #ffffff;
   border: none;
   cursor: pointer;
-  color: #0a3d2a;
+  color: #0A2540;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #FF4D4D;
+    color: #ffffff;
+  }
 `;
 
 const PrevButton = styled(NavigationButton)`
@@ -111,25 +129,46 @@ const NextButton = styled(NavigationButton)`
   right: 0;
 `;
 
-const Testimoni = () => {
+const RatingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+`;
+
+const StarIcon = styled(Star)`
+  color: #FFD700;
+  margin: 0 2px;
+`;
+
+const Testimonial = () => {
   const [testimonials, setTestimonials] = useState([
     {
-      text: "You could even ask influencers to write a blog post for their own website that reviews your product or services, plus the tips they learned through working with you. This gets your business in front of even more readers and prospective target clients.",
-      name: "Glean Philips",
-      position: "Product Manager",
-      avatar: ""
+      text: "DG-Click transformed our wedding memories into stunning prints. The quality of their photo albums and canvas prints exceeded our expectations. Their attention to detail and professionalism made our special day even more memorable.",
+      name: "Priya and Rahul Sharma",
+      position: "Newlyweds, Kathmandu",
+      avatar: "",
+      rating: 5
     },
     {
-      text: "The printing quality exceeded our expectations. The team was professional and delivered on time. Highly recommended for all your printing needs!",
-      name: "Sarah Johnson",
-      position: "Marketing Director",
-      avatar: ""
+      text: "As a local business owner, I've been using DG-Click for all my promotional materials. From business cards to large format posters, their printing quality is consistently excellent. Their quick turnaround time has saved me on numerous occasions!",
+      name: "Bijay Thapa",
+      position: "Owner, Himalayan Cafe",
+      avatar: "",
+      rating: 5
     },
     {
-      text: "Outstanding service! They helped us design and print materials for our company rebrand. The results were fantastic and our clients love the new look.",
-      name: "Michael Chen",
-      position: "CEO",
-      avatar: ""
+      text: "I'm amazed by DG-Click's custom framing service. They helped me create a beautiful display for my traditional Nepali artwork. The craftsmanship of their frames, especially the Nepali Handicraft Antique style, is truly remarkable.",
+      name: "Samjhana Gurung",
+      position: "Art Collector, Pokhara",
+      avatar: "",
+      rating: 5
+    },
+    {
+      text: "DG-Click's t-shirt printing service is top-notch! We ordered custom tees for our trekking group, and the designs came out vibrant and durable. Even after multiple washes, the prints look as good as new. Highly recommended!",
+      name: "Mark Johnson",
+      position: "Tourist and Trekking Enthusiast",
+      avatar: "",
+      rating: 5
     }
   ]);
 
@@ -140,7 +179,7 @@ const Testimoni = () => {
       try {
         const response = await axios.get('https://api.pexels.com/v1/search', {
           params: {
-            query: 'business portrait',
+            query: 'professional headshot',
             per_page: testimonials.length,
             size: 'small'
           },
@@ -173,34 +212,42 @@ const Testimoni = () => {
 
   return (
     <TestimonialContainer>
-      <SmallTitle>Testimonial</SmallTitle>
-      <LargeTitle>What Our Client Says</LargeTitle>
-      <TestimonialContent>
-        <AvatarContainer>
-          {testimonials.map((testimonial, index) => (
-            <Avatar 
-              key={index} 
-              className={index === activeIndex ? 'active' : ''}
-            >
-              <AvatarImage 
-                src={testimonial.avatar || `/api/placeholder/${index === activeIndex ? '70' : '50'}/${index === activeIndex ? '70' : '50'}`} 
-                alt={`Client ${index + 1}`} 
-              />
-            </Avatar>
-          ))}
-        </AvatarContainer>
-        <TestimonialText>
-          {testimonials[activeIndex].text}
-        </TestimonialText>
-        <ClientInfo>
-          <ClientName>{testimonials[activeIndex].name}</ClientName>
-          <ClientPosition>{testimonials[activeIndex].position}</ClientPosition>
-        </ClientInfo>
-        <PrevButton onClick={handlePrev}><ChevronLeft size={32} /></PrevButton>
-        <NextButton onClick={handleNext}><ChevronRight size={32} /></NextButton>
-      </TestimonialContent>
+      <InnerContainer>
+        <SmallTitle>Testimonials</SmallTitle>
+        <LargeTitle>What Our Clients Say</LargeTitle>
+        <TestimonialContent>
+          <AvatarContainer>
+            {testimonials.map((testimonial, index) => (
+              <Avatar 
+                key={index} 
+                className={index === activeIndex ? 'active' : ''}
+                onClick={() => setActiveIndex(index)}
+              >
+                <AvatarImage 
+                  src={testimonial.avatar || `/api/placeholder/${index === activeIndex ? '80' : '64'}/${index === activeIndex ? '80' : '64'}`} 
+                  alt={`Client ${index + 1}`} 
+                />
+              </Avatar>
+            ))}
+          </AvatarContainer>
+          <RatingContainer>
+            {[...Array(testimonials[activeIndex].rating)].map((_, i) => (
+              <StarIcon key={i} size={20} fill="#FFD700" />
+            ))}
+          </RatingContainer>
+          <TestimonialText>
+            "{testimonials[activeIndex].text}"
+          </TestimonialText>
+          <ClientInfo>
+            <ClientName>{testimonials[activeIndex].name}</ClientName>
+            <ClientPosition>{testimonials[activeIndex].position}</ClientPosition>
+          </ClientInfo>
+          <PrevButton onClick={handlePrev}><ChevronLeft size={24} /></PrevButton>
+          <NextButton onClick={handleNext}><ChevronRight size={24} /></NextButton>
+        </TestimonialContent>
+      </InnerContainer>
     </TestimonialContainer>
   );
 };
 
-export default Testimoni;
+export default Testimonial;

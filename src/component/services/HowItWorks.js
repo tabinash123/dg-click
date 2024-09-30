@@ -143,8 +143,8 @@ const Arrow = styled.div`
 const HowItWorks = () => {
   return (
     <Container>
-      <Title>HOW PRINTPASAL WORKS ?</Title>
-      <Subtitle>Print Pasal awaits in just 3 steps. Start Ordering now!</Subtitle>
+      <Title>HOW It WORKS ?</Title>
+      <Subtitle>Dg-Click awaits in just 3 steps. Start Ordering now!</Subtitle>
       <StepsContainer>
         <Step>
           <StepImage src={createAccountImage} alt="Create Account" />

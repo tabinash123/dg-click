@@ -115,7 +115,7 @@ const categories = [
   { category: "Photo Gifts", image: idCardPrinting },
 ];
 
-const PrintingServices = () => {
+const Services = () => {
   const scrollRef = useRef(null);
 
   const scroll = (scrollOffset) => {
@@ -149,4 +149,4 @@ const PrintingServices = () => {
   );
 };
 
-export default PrintingServices;
+export default Services;

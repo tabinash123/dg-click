@@ -132,7 +132,7 @@ const NavItem = styled(Link)`
   font-weight: 600;
   transition: all 0.3s ease;
   display: flex;
-  align-items: center;
+  // align-items: center;
   gap: 5px;
 
   &:hover {
@@ -172,7 +172,7 @@ const CartCount = styled.span`
 
 const MainNav = styled.nav`
   background-color: #ffffff;
-  padding: 20px 5%;
+  padding: 20px 3%;
   border-top: 1px solid #eaeaea;
 
   @media (max-width: 1023px) {
@@ -186,8 +186,8 @@ const MainNav = styled.nav`
 
 const NavItems = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  justify-content: space-between;
+  // gap: 30px;
   flex-wrap: wrap;
 
   @media (max-width: 1023px) {
@@ -421,6 +421,7 @@ const Header = () => {
           <StyledNavLink to="/ad-materials">Ad Materials</StyledNavLink>
           <StyledNavLink to="/trophies">Trophies</StyledNavLink>
           <StyledNavLink to="/t-shirt-printing">T-Shirt Printing</StyledNavLink>
+          <StyledNavLink to="/ourservice">Our Services</StyledNavLink>
           <StyledNavLink to="/about">About-Us</StyledNavLink>
           <StyledNavLink to="/contact">Contact</StyledNavLink>
         </NavItems>
@@ -463,6 +464,9 @@ const Header = () => {
           <DrawerDivider />
           <DrawerNavLink to="/t-shirt-printing" onClick={toggleDrawer}>
              T-Shirt Printing
+          </DrawerNavLink>
+          <DrawerNavLink to="/ourservice" onClick={toggleDrawer}>
+             Our Services
           </DrawerNavLink>
           <DrawerDivider />
           <DrawerNavLink to="/about" onClick={toggleDrawer}>

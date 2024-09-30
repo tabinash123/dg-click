@@ -10,12 +10,14 @@ const Container = styled.div`
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  gap: 40px;
+  padding: 64px 24px;
+  gap: 48px;
   font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
 
   @media (min-width: 768px) {
     flex-direction: row;
+    align-items: flex-start;
   }
 `;
 
@@ -23,15 +25,15 @@ const ImageSection = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: 500px;
+  height: 400px;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 `;
 
 const Image = styled.img`
@@ -44,53 +46,78 @@ const ContentSection = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 `;
 
 const Title = styled.h2`
- le:
-    color: #0A2540;
-  font-size: 28px;
+  color: #0A2540;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
   line-height: 1.2;
-
 `;
 
 const TabsContainer = styled.div`
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const TabButton = styled.button`
   display: flex;
   align-items: center;
-  margin-right: 20px;
-  padding-bottom: 10px;
+  justify-content: center;
+  padding: 8px 16px;
   border: none;
-  background: none;
+  background: ${props => props.active ? '#FF4D4D' : 'transparent'};
   cursor: pointer;
-  color: ${props => props.active ? '#FF4D4D' : '#4A5568'};
-  border-bottom: ${props => props.active ? '2px solid #FF4D4D' : 'none'};
-  font-weight: ${props => props.active ? '600' : 'normal'};
-  font-size: 16px;
-  font-size: 14px;
+  color: ${props => props.active ? '#FFFFFF' : '#4A5568'};
   font-weight: 600;
-  margin-bottom: 5px;
-  text-transform: uppercase;
+  font-size: 14px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  margin-right: 8px;
 
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background: ${props => props.active ? '#FF4D4D' : '#f0f0f0'};
+  }
 `;
 
 const ContentList = styled.ul`
-  list-style-type: disc;
-  padding-left: 20px;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
 `;
 
 const ListItem = styled.li`
-   color: #4A5568;
-  margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 1.5;
+  color: #4A5568;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
 
+  &:before {
+    content: '';
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    background-color: #FF4D4D;
+    border-radius: 50%;
+    margin-right: 16px;
+    margin-top: 8px;
+  }
+`;
+
+const TabIcon = styled.span`
+  margin-right: 8px;
 `;
 
 const VisionMissionPhilosophy = () => {
@@ -98,29 +125,23 @@ const VisionMissionPhilosophy = () => {
   const [imageUrl, setImageUrl] = useState('');
 
   const tabs = [
-    { key: 'VISION', icon: Eye },
-    { key: 'MISSION', icon: Target },
-    { key: 'PHILOSOPHY', icon: Lightbulb }
+    { key: 'VISION', icon: Eye, label: 'Our Vision' },
+    { key: 'MISSION', icon: Target, label: 'Our Mission' },
   ];
 
   const content = {
     VISION: [
-      "To be a globally recognized leader in consumer products and services.",
-      "To inspire and improve the lives of people through innovative solutions.",
-      "To set new standards of excellence in every industry we operate in."
+      "Become Nepal's leading innovator in printing and photography solutions.",
+      "Empower creativity through cutting-edge visual technologies.",
+      "Set new standards for eco-friendly practices in our industry."
     ],
     MISSION: [
-      "Understand consumer insights and meet their needs with safe, effective and world-class products.",
-      "Integrate our dealers, distributors, retailers, suppliers and JV partners into the Chaudhary Group Family.",
-      "Recruit, develop, motivate and retain the best talent within the country, recruit if needed from abroad and provide them a challenging and demanding environment.",
-      "Foster a strong emotive feeling of oneness and ownership with the Chaudhary Group."
+      "Deliver unparalleled quality in every print and photograph.",
+      "Invest continuously in advanced technology and staff development.",
+      "Create a collaborative environment that brings customer ideas to life.",
+      "Champion sustainable printing and photography practices."
     ],
-    PHILOSOPHY: [
-      "Customer-centric approach in all our endeavors.",
-      "Commitment to quality and continuous improvement.",
-      "Ethical business practices and corporate social responsibility.",
-      "Empowerment of employees and fostering a culture of innovation."
-    ]
+
   };
 
   useEffect(() => {
@@ -128,18 +149,18 @@ const VisionMissionPhilosophy = () => {
       try {
         const response = await axios.get('https://api.pexels.com/v1/search', {
           params: {
-            query: 'business team',
+            query: 'printing studio photography',
             per_page: 1,
-            size: 'medium'
+            size: 'large'
           },
           headers: {
             Authorization: PEXELS_API_KEY
           }
         });
-        setImageUrl(response.data.photos[0].src.medium);
+        setImageUrl(response.data.photos[0].src.large);
       } catch (error) {
         console.error('Error fetching image:', error);
-        setImageUrl('/api/placeholder/400/300'); // Fallback to placeholder if API call fails
+        setImageUrl('/api/placeholder/600/400');
       }
     };
 
@@ -154,15 +175,11 @@ const VisionMissionPhilosophy = () => {
     <Container>
       <ImageSection>
         <ImageContainer>
-          <Image src={imageUrl} alt="Company leaders" />
+          <Image src={imageUrl} alt="DG-Click Printing and Photography Studio" />
         </ImageContainer>
       </ImageSection>
       <ContentSection>
-        <Title>
-          Vision
-          Mission
-          Philosophy
-        </Title>
+        <Title>Shaping the Future of Printing and Photography Service</Title>
         <TabsContainer>
           {tabs.map((tab) => (
             <TabButton
@@ -170,8 +187,10 @@ const VisionMissionPhilosophy = () => {
               active={activeTab === tab.key}
               onClick={() => handleTabClick(tab.key)}
             >
-              <tab.icon size={20} />
-              <span style={{ marginLeft: '4px' }}>{tab.key}</span>
+              <TabIcon>
+                <tab.icon size={16} />
+              </TabIcon>
+              {tab.label}
             </TabButton>
           ))}
         </TabsContainer>

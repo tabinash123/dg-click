@@ -7,7 +7,7 @@ import WhyChooseUs from '../component/about/WhyChooseUs';
 import Testimoni from '../component/about/Testimoni';
 import Features from '../component/about/Features';
 import Service from '../component/about/Service';
-import HeroSection from '../component/hompage/HeroSection';
+import HeroSection from '../component/about/HeroSection';
 
 const AboutUs = () => {
   return (
@@ -16,7 +16,7 @@ const AboutUs = () => {
       <Introduction />
       <Service />
       <MissionVision />
-      <Features />
+      {/* <Features /> */}
       <Testimoni />
       <WhyChooseUs />
       <ContactSection />

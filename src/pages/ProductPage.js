@@ -130,7 +130,7 @@ const AddToCartButton = styled.button`
   }
 `;
 
-const ServicePage = ({ serviceName }) => {
+const ProductPage = ({ serviceName }) => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.products.filteredItems);
   const loading = useSelector(state => state.products.loading);
@@ -213,4 +213,4 @@ const ServicePage = ({ serviceName }) => {
   );
 };
 
-export default ServicePage;
+export default ProductPage;

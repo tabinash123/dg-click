@@ -7,8 +7,11 @@ import Homepage from './pages/Hompage';
 import About from './pages/About';
 import Contact from './pages/Contact';
 
-import ServicePage from './pages/ServicePage'; // New import
+import ProductPage from './pages/ProductPage'; // New import
+
 import CartPage from './pages/CartPage';  // New import
+import OurService from './pages/OurService';
+import ServiceDetail from './component/services/ServiceDetail';
 
 const App = () => {
   return (
@@ -16,17 +19,21 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/ourservice" element={<OurService />} />
+          <Route path="/service/:serviceId" element={<ServiceDetail />} />
+
+
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
         
           {/* New routes for each Category */}
 
           <Route path="/cart" element={<CartPage />} />  {/* New route */}
-          <Route path="/frames" element={<ServicePage serviceName="Frames" />} />
-          <Route path="/cushions" element={<ServicePage serviceName="Cushions" />} />
-          <Route path="/canvas" element={<ServicePage serviceName="Canvas" />} />
-          <Route path="/cups" element={<ServicePage serviceName="Cups" />} />
-          <Route path="/t-shirt-printing" element={<ServicePage serviceName="T-Shirt Printing" />} />
+          <Route path="/frames" element={<ProductPage serviceName="Frames" />} />
+          <Route path="/cushions" element={<ProductPage serviceName="Cushions" />} />
+          <Route path="/canvas" element={<ProductPage serviceName="Canvas" />} />
+          <Route path="/cups" element={<ProductPage serviceName="Cups" />} />
+          <Route path="/t-shirt-printing" element={<ProductPage serviceName="T-Shirt Printing" />} />
         </Routes>
         <Footer />
       </Router>
