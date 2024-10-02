@@ -11,7 +11,7 @@ const Section = styled.section`
   align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
-  padding:40px;
+  padding:32px;
   font-family: 'Arial', sans-serif;
   gap: 40px;
 

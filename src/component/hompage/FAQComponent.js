@@ -1,174 +1,76 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Plus, Minus, X } from 'lucide-react';
-import img1 from '../../assets/office.jpg'
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  font-family: 'Arial', sans-serif;
+const Section = styled.section`
   display: flex;
-  flex-direction: column;
-  gap: 40px;
-  position: relative;
+  max-width: 1200px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-  @media (min-width: 768px) {
-    flex-direction: row;
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
-const FAQSection = styled.div`
-  flex: 1;
+const ContentColumn = styled.div`
+  flex: 3;
+  background-color: #2c2c2c;
+  color: white;
+  padding: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
-const SmallTitle = styled.h3`
-  color: #FF4D4D;
-  font-size: 14px;
-  font-weight: 600;
-
-  margin: 0 0 10px 0;
+const ImageColumn = styled.div`
+  flex: 2;
+  background-color: #d32f2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
 `;
 
 const Title = styled.h2`
-      color: #0A2540;
-  font-size: 28px;
+  font-size: 2.8rem;
   font-weight: 700;
-
-  margin: 0 0 20px 0;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
 `;
 
-const FAQItem = styled.div`
-  margin-bottom: 15px;
-`;
-
-const FAQQuestion = styled.div`
-  background-color: ${props => props.isOpen ? '#FF4D4D' : 'white'};
-  color: ${props => props.isOpen ? 'black' : '#000'};
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 5px;
-  font-weight: ${props => props.isOpen ? '600' : 'normal'};
- color: #000;
-  margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 1.5;
-
-`;
-
-const FAQAnswer = styled.div`
-  background-color: white;
-  padding: 15px;
-  margin-top: 2px;
-  color: #000;
-  line-height: 1.6;
-  font-size: 14px;
-`;
-
-const ToggleIcon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background-color: ${props => props.isOpen ? 'white' : '#0A2540'};
-  color: ${props => props.isOpen ? '#FF4D4D' : 'white'};
-`;
-
-const ImageSection = styled.div`
-  flex: 1;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
+const Description = styled.p`
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-
-  @media (min-width: 1024px) {
-    width: 450px;
-    height: 450px;
-  }
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
 `;
 
-const Dots = styled.div`
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-`;
-
-const Dot = styled.div`
-  width: 8px;
-  height: 8px;
-  background-color: #FF4500;
-  border-radius: 50%;
-`;
-
-const FAQComponent = () => {
-  const [openQuestion, setOpenQuestion] = useState(0);
-
-  const questions = [
-    {
-      question: "What types of items can you print on?",
-      answer: "At DG CLICK@ CHABAHIL PVT. LTD, we offer a wide range of printing services. We can print on cups, plates, caps, t-shirts, CDs/DVDs, PVC cards, tiles, calendars, and even create custom photo frames. Our versatile printing capabilities allow us to accommodate various personal and business needs."
-    },
-    {
-      question: "How long does it take to complete an order?",
-      answer: "The turnaround time depends on the specific item and quantity ordered. Simple items like PVC cards or cups may be ready within 1-2 business days, while more complex orders like custom calendars or large quantities of t-shirts might take 3-5 business days. We always strive to deliver your orders as quickly as possible without compromising on quality."
-    },
-    {
-      question: "Do you offer design services?",
-      answer: "Yes, we do! Our full digital lab and studio is equipped to help you with design services. Whether you need help creating a logo for your custom caps, designing a layout for your calendar, or preparing artwork for t-shirt printing, our experienced design team can assist you in bringing your ideas to life."
-    },
-    {
-      question: "What file formats do you accept for printing?",
-      answer: "We accept a variety of file formats to ensure we can work with your designs. Common formats include PDF, AI, PSD, JPEG, and PNG. For best results, we recommend using high-resolution files. If you're unsure about your file format or resolution, feel free to contact us, and we'll be happy to guide you."
-    }
-  ];
-
-  const toggleQuestion = (index) => {
-    setOpenQuestion(openQuestion === index ? null : index);
-  };
-
+const FAQSection = () => {
   return (
-    <Container>
-      <FAQSection>
-        <SmallTitle>Have Any Questions?</SmallTitle>
+    <Section>
+      <ContentColumn>
         <Title>Frequently Asked Questions</Title>
-        {questions.map((q, index) => (
-          <FAQItem key={index}>
-            <FAQQuestion isOpen={openQuestion === index} onClick={() => toggleQuestion(index)}>
-              {q.question}
-              <ToggleIcon isOpen={openQuestion === index}>
-                {openQuestion === index ? <Minus size={16} /> : <Plus size={16} />}
-              </ToggleIcon>
-            </FAQQuestion>
-            {openQuestion === index && <FAQAnswer>{q.answer}</FAQAnswer>}
-          </FAQItem>
-        ))}
-      </FAQSection>
-      <ImageSection>
-        <Image src={img1} alt="DG CLICK Digital Lab & Studio" />
-        {/* <Dots>
-          {[...Array(9)].map((_, i) => <Dot key={i} />)}
-        </Dots> */}
-      </ImageSection>
-    </Container>
+        <Description>
+          At our Nepalese e-commerce site, we strive to provide a seamless and enjoyable shopping
+          experience for our customers. If you have any questions or concerns, please don't hesitate to
+          reach out to our dedicated support team. We're here to assist you every step of the way,
+          ensuring you find the perfect custom-printed products that reflect your personal style and
+          preferences.
+        </Description>
+      </ContentColumn>
+      <ImageColumn>
+        <Image src="/api/placeholder/400/400" alt="Saksham product box" />
+      </ImageColumn>
+    </Section>
   );
 };
 
-export default FAQComponent;
+export default FAQSection;

@@ -1,90 +1,124 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// Import the images
 import cap1 from '../../assets/gallary/cap1.jpg';
 import cap2 from '../../assets/gallary/cap2.jpg';
-import frame3 from '../../assets/gallary/frame3.jpg';
-import id from '../../assets/gallary/id.jpg';
-import trophy3 from '../../assets/gallary/trophy3.jpg';
+import cap3 from '../../assets/gallary/cap3 (2).jpg';
+import cap4 from '../../assets/gallary/cap4.jpg';
 import tshirt1 from '../../assets/gallary/tshirt1.jpg';
+import tshirt3 from '../../assets/gallary/tshirt3.jpg';
+import tshirt4 from '../../assets/gallary/tshirt4.jpg';
+import frame3 from '../../assets/gallary/frame3.jpg';
+import frame4 from '../../assets/gallary/frame4.jpg';
+import frame5 from '../../assets/gallary/frame5.jpg';
+import trophy3 from '../../assets/gallary/trophy3.jpg';
+import trophy4 from '../../assets/gallary/trophy4.jpg';
 
 const Section = styled.section`
-  padding: 2rem;
-  background-color: #f5f5f5;
+  max-width: 1200px;
+  margin: 5rem auto;
+  padding: 0 20px;
+  font-family: 'Arial', sans-serif;
 `;
 
-const Title = styled.h2`
-  font-size: 2rem;
-  margin-bottom: 2rem;
+const ContentWrapper = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 50px;
+  text-align: center;
   color: #333;
-  text-align: left;
 `;
 
 const ProductGrid = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  justify-content: center;
 `;
 
 const ProductCard = styled.div`
-//   background-color: #fff;
-  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
   overflow: hidden;
-  width: 200px;
-//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: #fff;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
 `;
 
 const ProductImage = styled.img`
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius: 6px 6px 0 0;
 `;
 
 const ProductInfo = styled.div`
-  padding: 0.5rem;
-  text-align: center;
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const ProductName = styled.h3`
-  font-size: 1rem;
-  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
   color: #333;
+  margin-bottom: 0.5rem;
 `;
 
 const ProductPrice = styled.p`
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0.25rem 0 0;
-  color: #666;
+  font-weight: 700;
+  color: #ff4d4d;
+  font-size: 18px;
 `;
 
-const products = [
-  { id: 1, name: "Caps", price: 153, image: cap1 },
-  { id: 2, name: "Photo Frames", price: 531, image: frame3 },
-  { id: 3, name: "ID Cards", price: 142, image: id },
-  { id: 4, name: "Trophies", price: 236, image: trophy3 },
-  { id: 5, name: "T-Shirts", price: 299, image: tshirt1 },
-];
+const OtherProductsSection = () => {
+  const products = [
+    { name: "Stylish Cap 1", price: "$29.99", image: cap1 },
+    { name: "Stylish Cap 2", price: "$34.99", image: cap2 },
+    { name: "Stylish Cap 3", price: "$31.99", image: cap3 },
+    { name: "Stylish Cap 4", price: "$27.99", image: cap4 },
+    { name: "Comfortable T-Shirt 1", price: "$19.99", image: tshirt1 },
+    { name: "Comfortable T-Shirt 2", price: "$24.99", image: tshirt3 },
+    { name: "Comfortable T-Shirt 3", price: "$22.99", image: tshirt4 },
+    { name: "Elegant Frame 1", price: "$39.99", image: frame3 },
+    { name: "Elegant Frame 2", price: "$44.99", image: frame4 },
+    { name: "Elegant Frame 3", price: "$41.99", image: frame5 },
+    { name: "Trophy 1", price: "$49.99", image: trophy3 },
+    { name: "Trophy 2", price: "$54.99", image: trophy4 },
+  ];
 
-const PopularGiftItems = () => {
+
+
   return (
     <Section>
-      <Title>Popular Gift Items</Title>
-      <ProductGrid>
-        {products.map((product) => (
-          <ProductCard key={product.id}>
-            <ProductImage src={product.image} alt={product.name} />
-            <ProductInfo>
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>₹{product.price}</ProductPrice>
-            </ProductInfo>
-          </ProductCard>
-        ))}
-      </ProductGrid>
+      <ContentWrapper>
+        <SectionTitle>Other Products</SectionTitle>
+        <ProductGrid>
+          {products.map((product, index) => (
+            <ProductCard key={index}>
+              <ProductImage src={product.image} alt={product.name} />
+              <ProductInfo>
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}</ProductPrice>
+              </ProductInfo>
+            </ProductCard>
+          ))}
+        </ProductGrid>
+      </ContentWrapper>
     </Section>
   );
 };
 
-export default PopularGiftItems;
+export default OtherProductsSection;

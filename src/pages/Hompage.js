@@ -17,14 +17,14 @@ const Homepage = () => {
     <div>
       <HeroSection />
       <FeatureBar />
-      {/* <IntroductionSection /> */}
-      <Services />
       <ProductOffers />
+      <Services />
       <ProductHighLight />
       <PopularGiftItems />
-      <PartnerLogos />
-      {/* <FAQComponent /> */}
+      {/* <PartnerLogos /> */}
+      <IntroductionSection />
       <PrintPasalHowItWorks />
+      <FAQComponent />
       {/* <PrintingShopGallery /> */}
     </div>
   );

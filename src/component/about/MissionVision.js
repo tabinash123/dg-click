@@ -11,6 +11,7 @@ const SectionContainer = styled.section`
   grid-template-columns: 3fr 2fr;
   gap: 30px;
   align-items: start;
+    background-color: #f8f9fa;
 
   @media (max-width: 968px) {
     grid-template-columns: 1fr;
@@ -61,7 +62,6 @@ const MissionTitle = styled.h4`
   margin-bottom: 4px;
   display: flex;
   align-items: center;
-
   svg {
     margin-right: 6px;
     color: #e74c3c;
@@ -78,9 +78,7 @@ const ImageContainer = styled(motion.div)`
   width: 100%;
   height: 100%;
   min-height: 400px;
-  background-image: url('/path/to/your/image.jpg');
-  background-size: cover;
-  background-position: center;
+  background-color: #3498db; // Replace image with a background color
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 `;

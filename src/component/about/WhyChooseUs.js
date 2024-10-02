@@ -6,11 +6,21 @@ const Section = styled.section`
   align-items: center;
   padding: 32px;
   background-color: #ffffff;
+  
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    padding: 24px;
+  }
 `;
 
 const ContentWrapper = styled.div`
   flex: 1;
   padding-right: 2rem;
+  
+  @media (max-width: 768px) {
+    padding-right: 0;
+    padding-top: 1.5rem;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -23,6 +33,10 @@ const Title = styled.h2`
   color: #1e2a3a;
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const Description = styled.p`
@@ -41,7 +55,7 @@ const ExploreButton = styled.button`
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
-
+  
   &:hover {
     background-color: #2c3e50;
   }
@@ -49,25 +63,20 @@ const ExploreButton = styled.button`
 
 const ImageWrapper = styled.div`
   flex: 1;
+  background-color: #f0f0f0; // Light gray background color
+  min-height: 400px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const TabletImage = styled.img`
-  max-width: 100%;
-  height: auto;
-`;
-
 const ExperienceOurHistory = () => {
   return (
     <Section>
-      <ImageWrapper>
-        <TabletImage src="/api/placeholder/500/400" alt="Tablet showing company website" />
-      </ImageWrapper>
       <ContentWrapper>
         <Subtitle>Experience Our History</Subtitle>
-        <Title>Pioneering the Photography and</Title>
+        <Title>Pioneering Photography and Printing</Title>
         <Description>
           Founded in 2010, our company has been at the forefront of the
           photography and printing industry in Kathmandu, continuously
@@ -77,7 +86,9 @@ const ExperienceOurHistory = () => {
           helping them capture and preserve their most cherished moments
           and memories.
         </Description>
+        <ExploreButton>Explore Our Journey</ExploreButton>
       </ContentWrapper>
+      <ImageWrapper />
     </Section>
   );
 };

@@ -1,37 +1,62 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// Import the images
+import { Star } from 'lucide-react';
+import canvas1 from '../../assets/gallary/canvas1.jpg';
 import canvas2 from '../../assets/gallary/canvas2.jpg';
 import canvas3 from '../../assets/gallary/canvas3.jpg';
-import cap1 from '../../assets/gallary/cap1.jpg';
-import cap2 from '../../assets/gallary/cap2.jpg';
 
 const Section = styled.section`
-  padding: 2rem;
-  background-color: #f5f5f5;
+  max-width: 1200px;
+  margin: 5rem auto;
+  padding: 0 20px;
+  font-family: 'Arial', sans-serif;
 `;
 
-const Title = styled.h2`
-  font-size: 2rem;
-  margin-bottom: 2rem;
+const ContentWrapper = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 50px;
+  text-align: center;
   color: #333;
-  text-align: left;
 `;
 
-const ProductGrid = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
-  flex-wrap: wrap;
+const ShoeGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  justify-content: center;
 `;
 
-const ProductCard = styled.div`
-  // background-color: #fff;
-  border-radius: 8px;
+const ShoeCard = styled.div`
+  border-radius: 6px;
   overflow: hidden;
-  width: 200px;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: ${props => props.bgColor || '#f0f0f0'};
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const NewTag = styled.span`
+  background-color: #ff4d4d;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-weight: bold;
 `;
 
 const ProductImage = styled.img`
@@ -41,48 +66,58 @@ const ProductImage = styled.img`
 `;
 
 const ProductInfo = styled.div`
-  padding: 0.5rem;
-  text-align: left;
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const ProductName = styled.h3`
-  font-size: 1rem;
-  margin: 0;
-  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: white;
 `;
 
-const ProductPrice = styled.p`
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0.25rem 0 0;
-  color: #666;
+const ProductRating = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 `;
 
-const products = [
-  { id: 1, name: "Welcome Kit", price: 796, image: canvas2 },
-  { id: 2, name: "Coffee Mugs", price: 153, image: canvas3 },
-  { id: 3, name: "Water Bottles", price: 353, image: cap1 },
-  { id: 4, name: "Acrylic Photo Frames", price: 531, image: cap2 },
-  { id: 5, name: "Diaries", price: 443, image: canvas2 },
-];
+const FeaturedShoesSection = () => {
+  const shoes = [
+    { name: "Red Canvas Shoes", bgColor: "#ff4d4d", image: canvas1 },
+    { name: "Black Canvas Sneakers", bgColor: "#333", image: canvas2 },
+    { name: "Orange Canvas Shoes", bgColor: "#ff8c00", image: canvas3 },
+   { name: "Yellow Canvas Sneakers", bgColor: "#f1c40f", image: canvas2 },
+  ];
 
-const MostPopularProducts = () => {
+
   return (
     <Section>
-      <Title>Most Popular Products</Title>
-      <ProductGrid>
-        {products.map((product) => (
-          <ProductCard key={product.id}>
-            <ProductImage src={product.image} alt={product.name} />
-            <ProductInfo>
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>₹{product.price}</ProductPrice>
-            </ProductInfo>
-          </ProductCard>
-        ))}
-      </ProductGrid>
+      <ContentWrapper>
+        <SectionTitle>Featured Shoes</SectionTitle>
+        <ShoeGrid>
+          {shoes.map((shoe, index) => (
+            <ShoeCard key={index} bgColor={shoe.bgColor}>
+              <NewTag>New</NewTag>
+              <ProductImage src={shoe.image} alt={shoe.name} />
+              <ProductInfo>
+                <ProductName>{shoe.name}</ProductName>
+                <ProductRating>
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} fill="white" stroke="white" />
+                  ))}
+                </ProductRating>
+              </ProductInfo>
+            </ShoeCard>
+          ))}
+        </ShoeGrid>
+      </ContentWrapper>
     </Section>
   );
 };
 
-export default MostPopularProducts;
+export default FeaturedShoesSection;

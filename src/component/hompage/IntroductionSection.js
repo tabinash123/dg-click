@@ -1,200 +1,127 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+`;
 
 const Section = styled.section`
   display: flex;
-  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4rem;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  font-family: 'Arial', sans-serif;
-  gap:30px;
 
-  @media (max-width: 1024px) {
-    flex-direction: row;
-    align-items: stretch;
+  &:nth-child(even) {
+    flex-direction: row-reverse;
   }
 `;
 
-const IllustrationContainer = styled.div`
+const Column = styled.div`
   flex: 1;
-  max-width: 50%;
-  height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-    margin-bottom: 30px;
-  }
-
-  @media (max-width: 768px) {
-  display:none;
-    height: 300px;
-  }
 `;
 
-const Image = styled.img`
+const ColorBlock = styled.div`
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 400px;
+  background-color: ${props => props.color};
   border-radius: 8px;
 `;
 
-const ContentContainer = styled.div`
-  flex: 1;
-  max-width: 50%;
-  padding-left: 40px;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-    padding-left: 0;
-  }
-`;
-
 const Subtitle = styled.p`
-  color: #FF4D4D;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 5px;
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
 `;
 
 const Title = styled.h2`
-  color: #0A2540;
-  font-size: 28px;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 15px;
-  line-height: 1.2;
-
-  @media (max-width: 768px) {
-    font-size: 24px;
-  }
+  margin-bottom: 1rem;
+  color: #333;
 `;
 
 const Description = styled.p`
-  color: #4A5568;
-  margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 1.5;
-`;
-
-const FeatureList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0 0 30px 0;
-`;
-
-const FeatureItem = styled.li`
-  color: #4A5568;
-  font-size: 16px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  &:before {
-    content: '✓';
-    color: #FF4D4D;
-    margin-right: 10px;
-    font-weight: bold;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
-`;
-
-const ReadMoreButton = styled.button`
-  background-color: #FF4D4D;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #E63939;
-  }
-  &:after {
-    content: '→';
-    margin-left: 10px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
-`;
-
-const LoadingPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
+  margin-bottom: 1.5rem;
   color: #666;
-  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.6;
 `;
 
-const AboutUsSection = () => {
-  const [imageUrl, setImageUrl] = useState('');
-  const [loading, setLoading] = useState(true);
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.pexels.com/v1/search?query=office+worker&per_page=1',
-          {
-            headers: { Authorization: PEXELS_API_KEY },
-          }
-        );
-        setImageUrl(response.data.photos[0].src.large);
-      } catch (error) {
-        console.error('Error fetching image:', error);
-        setImageUrl('/api/placeholder/600/400'); // Fallback to placeholder if API fails
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchImage();
-  }, []);
+const Button = styled.button`
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+`;
 
+const PrimaryButton = styled(Button)`
+  background-color: #ff4d4d;
+  color: white;
+
+  &:hover {
+    background-color: #ff3333;
+  }
+`;
+
+const SecondaryButton = styled(Button)`
+  background-color: #ffe6e6;
+  color: #ff4d4d;
+
+  &:hover {
+    background-color: #ffd6d6;
+  }
+`;
+
+const AboutAndTestimonialSections = () => {
   return (
-    <Section>
-      <IllustrationContainer>
-        {loading ? (
-          <LoadingPlaceholder>Loading image...</LoadingPlaceholder>
-        ) : (
-          <Image src={imageUrl} alt="Woman working at computer" />
-        )}
-      </IllustrationContainer>
-      <ContentContainer>
-        <Subtitle>About Us</Subtitle>
-        <Title>From Structure To Conveyance</Title>
-        <Description>
-          Libero aliquam eiget rhoncus elit quis mattis tos neque ullco qua praesent
-          interdum orc torristique aenean at dictumst velit fames molestie tristique
-          magna sociosqu ine rhoncuis in cubilia magno senectus sociis tortor enim.
-        </Description>
-        <FeatureList>
-          <FeatureItem>Magna cubilia sapien vivamus vestibulum iner consectetuer.</FeatureItem>
-          <FeatureItem>Urna faucibus netus Inceptos qu hac sem iaculis lectus.</FeatureItem>
-        </FeatureList>
-        <ReadMoreButton>Read More</ReadMoreButton>
-      </ContentContainer>
-    </Section>
+    <Container>
+      <Section>
+        <Column>
+          <ColorBlock color="#f0f0f0" />
+        </Column>
+        <Column>
+          <Subtitle>About Us</Subtitle>
+          <Title>Who We Are</Title>
+          <Description>
+            Founded in the heart of Nepal, our e-commerce platform is dedicated to showcasing the vibrant culture, rich heritage, and skilled craftsmanship of our country.
+          </Description>
+          <ButtonContainer>
+            <PrimaryButton>Learn More</PrimaryButton>
+            <SecondaryButton>Get in Touch</SecondaryButton>
+          </ButtonContainer>
+        </Column>
+      </Section>
+      
+      <Section>
+        <Column>
+          <ColorBlock color="#e6e6e6" />
+        </Column>
+        <Column>
+          <Subtitle>Customer Testimonials</Subtitle>
+          <Title>Hear From Our Satisfied</Title>
+          <Description>
+            At our Nepalese e-commerce site, we take pride in providing a seamless shopping experience with our custom-printed products. Our customers rave about the quality, unique designs, and exceptional customer service that we deliver.
+          </Description>
+          <ButtonContainer>
+            <PrimaryButton>Explore Reviews</PrimaryButton>
+            <SecondaryButton>Share Your Story</SecondaryButton>
+          </ButtonContainer>
+        </Column>
+      </Section>
+    </Container>
   );
 };
 
-export default AboutUsSection;
+export default AboutAndTestimonialSections;
