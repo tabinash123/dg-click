@@ -1,172 +1,179 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Send, Phone, Mail, MapPin } from 'lucide-react';
+import styled, { keyframes } from 'styled-components';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const slideUp = keyframes`
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+`;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 64px auto;
-  padding: 48px 24px;
-  background-color: #f8f9fa;
-  font-family: 'Arial', sans-serif;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
+  background-color: #1e2a3a;
+  padding: 3rem 2rem;
+  text-align: center;
+  animation: ${fadeIn} 0.5s ease-out;
 `;
 
 const Title = styled.h2`
-  color: #0A2540;
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  line-height: 1.2;
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  animation: ${slideUp} 0.5s ease-out;
 `;
 
-const Description = styled.p`
-  color: #4A5568;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 32px;
+const Subtitle = styled.p`
+  color: #a0a0a0;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  animation: ${slideUp} 0.5s ease-out 0.1s backwards;
 `;
 
 const Form = styled.form`
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: ${slideUp} 0.5s ease-out 0.2s backwards;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
 `;
 
 const Input = styled.input`
   flex-grow: 1;
-  padding: 12px 16px;
-  font-size: 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  outline: none;
+  padding: 0.75rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 
   &:focus {
-    border-color: #FF4D4D;
-    box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.2);
+    outline: none;
+    border-color: #4a90e2;
   }
 `;
 
 const Button = styled.button`
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  background-color: #FF4D4D;
+  background-color: #ff6347;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 0 4px 4px 0;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  &:hover {
-    background-color: #E63939;
-  }
-`;
-
-const ContactInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const ContactItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  color: #4A5568;
-  font-size: 16px;
-`;
-
-const IconWrapper = styled.div`
+  transition: background-color 0.3s, transform 0.1s;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #FF4D4D;
-  border-radius: 50%;
-  color: white;
+
+  &:hover {
+    background-color: #ff4500;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 `;
 
-const ContactSection = () => {
-  const [email, setEmail] = useState('');
+const Message = styled.div`
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ${fadeIn} 0.3s ease-out;
 
-  const handleSubmit = (e) => {
+  ${({ $type }) => $type === 'success' && `
+    background-color: #d4edda;
+    color: #155724;
+  `}
+
+  ${({ $type }) => $type === 'error' && `
+    background-color: #f8d7da;
+    color: #721c24;
+  `}
+
+  svg {
+    margin-right: 0.5rem;
+  }
+`;
+
+const ConnectWithUs = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically handle the newsletter subscription
-    console.log('Subscribing email:', email);
-    // Reset the form
-    setEmail('');
-    // Optionally, show a success message to the user
-    alert('Thank you for subscribing to our newsletter!');
+    setIsSubmitting(true);
+    setMessage(null);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      if (email.includes('@')) {
+        setMessage({ type: 'success', text: 'Thank you! We\'ll be in touch soon.' });
+        setEmail('');
+      } else {
+        throw new Error('Invalid email address');
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message || 'An error occurred. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <Container>
-      <Grid>
-        <Section>
-          <Title>Stay Updated with DG-Click</Title>
-          <Description>
-            Subscribe to our newsletter for the latest updates on our services, special offers, and tips on printing and photography. Join our creative community today!
-          </Description>
-          <Form onSubmit={handleSubmit}>
-            <Input
-              type="email"
-              placeholder="Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <Button type="submit">
-              <Send size={18} />
-              Subscribe
-            </Button>
-          </Form>
-        </Section>
-        <Section>
-          <Title>Get in Touch</Title>
-          <Description>
-            Have questions or need a quote? Reach out to us directly. Our team is always ready to assist you with your printing and photography needs.
-          </Description>
-          <ContactInfo>
-            <ContactItem>
-              <IconWrapper>
-                <Phone size={20} />
-              </IconWrapper>
-              +977 1234567890
-            </ContactItem>
-            <ContactItem>
-              <IconWrapper>
-                <Mail size={20} />
-              </IconWrapper>
-              info@dgclick.com
-            </ContactItem>
-            <ContactItem>
-              <IconWrapper>
-                <MapPin size={20} />
-              </IconWrapper>
-              Chabahil, Kathmandu, Nepal
-            </ContactItem>
-          </ContactInfo>
-        </Section>
-      </Grid>
+      <Title>Connect with Us</Title>
+      <Subtitle>Reach Out to Discuss Your Photography and Printing Needs</Subtitle>
+      <Form onSubmit={handleSubmit}>
+        <InputWrapper>
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            aria-label="Email address"
+          />
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending...' : (
+              <>
+                Get in Touch
+                <Send size={18} style={{ marginLeft: '0.5rem' }} />
+              </>
+            )}
+          </Button>
+        </InputWrapper>
+        {message && (
+          <Message $type={message.type}>
+            {message.type === 'success' ? (
+              <CheckCircle size={18} />
+            ) : (
+              <AlertCircle size={18} />
+            )}
+            {message.text}
+          </Message>
+        )}
+      </Form>
     </Container>
   );
 };
 
-export default ContactSection;
+export default ConnectWithUs;

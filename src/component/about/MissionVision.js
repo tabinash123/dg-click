@@ -1,207 +1,132 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Eye, Target, Lightbulb } from 'lucide-react';
-import axios from 'axios';
+import { motion } from 'framer-motion';
+import { Camera } from 'lucide-react';
 
-const PEXELS_API_KEY = 'E6KGz4qmpfLtUbCY2aVIS7KZvL3ZBQjsQlBUDqVHr2HjOsp0Gc4ruPkp';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const SectionContainer = styled.section`
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 64px 24px;
-  gap: 48px;
-  font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
+  margin: 40px auto;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 30px;
+  align-items: start;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: flex-start;
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 `;
 
-const ImageSection = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-`;
-
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 400px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const ContentSection = styled.div`
-  flex: 1;
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 `;
 
-const Title = styled.h2`
-  color: #0A2540;
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 24px;
+const SectionTitle = styled.h3`
+  font-size: 0.9rem;
+  color: #e74c3c;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+`;
+
+const MainTitle = styled.h2`
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
   line-height: 1.2;
 `;
 
-const TabsContainer = styled.div`
-  display: flex;
-  margin-bottom: 24px;
-  background-color: #FFFFFF;
-  border-radius: 24px;
-  padding: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+const Description = styled.p`
+  font-size: 0.95rem;
+  color: #7f8c8d;
+  margin-bottom: 15px;
+  line-height: 1.4;
 `;
 
-const TabButton = styled.button`
+const MissionGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+`;
+
+const MissionItem = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MissionTitle = styled.h4`
+  font-size: 0.95rem;
+  color: #2c3e50;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border: none;
-  background: ${props => props.active ? '#FF4D4D' : 'transparent'};
-  cursor: pointer;
-  color: ${props => props.active ? '#FFFFFF' : '#4A5568'};
-  font-weight: 600;
-  font-size: 14px;
-  border-radius: 16px;
-  transition: all 0.3s ease;
-  margin-right: 8px;
 
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &:hover {
-    background: ${props => props.active ? '#FF4D4D' : '#f0f0f0'};
+  svg {
+    margin-right: 6px;
+    color: #e74c3c;
   }
 `;
 
-const ContentList = styled.ul`
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0;
+const MissionDescription = styled.p`
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  line-height: 1.3;
 `;
 
-const ListItem = styled.li`
-  color: #4A5568;
-  margin-bottom: 16px;
-  font-size: 16px;
-  line-height: 1.6;
-  display: flex;
-  align-items: flex-start;
-
-  &:before {
-    content: '';
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    background-color: #FF4D4D;
-    border-radius: 50%;
-    margin-right: 16px;
-    margin-top: 8px;
-  }
+const ImageContainer = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background-image: url('/path/to/your/image.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 `;
 
-const TabIcon = styled.span`
-  margin-right: 8px;
-`;
+const missionItems = [
+  { title: 'Expert', description: 'Our team of professionals are skilled and passionate about delivering excellence.' },
+  { title: 'Uncompromising', description: 'Quality is at the heart of everything we do at DG-Click.' },
+  { title: 'Cutting-Edge', description: 'We constantly invest in the latest photographic and printing technologies.' },
+  { title: 'Exceptional', description: 'We provide more than just a service; we create an experience.' },
+  { title: 'Personalized', description: 'Every client is unique and deserves a tailored approach.' },
+  { title: 'Boundless', description: 'We believe that creativity knows no bounds, and neither do we.' },
+];
 
-const VisionMissionPhilosophy = () => {
-  const [activeTab, setActiveTab] = useState('VISION');
-  const [imageUrl, setImageUrl] = useState('');
-
-  const tabs = [
-    { key: 'VISION', icon: Eye, label: 'Our Vision' },
-    { key: 'MISSION', icon: Target, label: 'Our Mission' },
-  ];
-
-  const content = {
-    VISION: [
-      "Become Nepal's leading innovator in printing and photography solutions.",
-      "Empower creativity through cutting-edge visual technologies.",
-      "Set new standards for eco-friendly practices in our industry."
-    ],
-    MISSION: [
-      "Deliver unparalleled quality in every print and photograph.",
-      "Invest continuously in advanced technology and staff development.",
-      "Create a collaborative environment that brings customer ideas to life.",
-      "Champion sustainable printing and photography practices."
-    ],
-
-  };
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await axios.get('https://api.pexels.com/v1/search', {
-          params: {
-            query: 'printing studio photography',
-            per_page: 1,
-            size: 'large'
-          },
-          headers: {
-            Authorization: PEXELS_API_KEY
-          }
-        });
-        setImageUrl(response.data.photos[0].src.large);
-      } catch (error) {
-        console.error('Error fetching image:', error);
-        setImageUrl('/api/placeholder/600/400');
-      }
-    };
-
-    fetchImage();
-  }, []);
-
-  const handleTabClick = (tabKey) => {
-    setActiveTab(tabKey);
-  };
-
+const OurMission = () => {
   return (
-    <Container>
-      <ImageSection>
-        <ImageContainer>
-          <Image src={imageUrl} alt="DG-Click Printing and Photography Studio" />
-        </ImageContainer>
-      </ImageSection>
-      <ContentSection>
-        <Title>Shaping the Future of Printing and Photography Service</Title>
-        <TabsContainer>
-          {tabs.map((tab) => (
-            <TabButton
-              key={tab.key}
-              active={activeTab === tab.key}
-              onClick={() => handleTabClick(tab.key)}
+    <SectionContainer>
+      <ContentContainer>
+        <SectionTitle>Our Mission</SectionTitle>
+        <MainTitle>Passion for Excellence</MainTitle>
+        <Description>
+          At DG-Click, we are driven by a deep passion for photography and a commitment to exceptional printing services.
+        </Description>
+        <MissionGrid>
+          {missionItems.map((item, index) => (
+            <MissionItem
+              key={index}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
             >
-              <TabIcon>
-                <tab.icon size={16} />
-              </TabIcon>
-              {tab.label}
-            </TabButton>
+              <MissionTitle>
+                <Camera size={14} />
+                {item.title}
+              </MissionTitle>
+              <MissionDescription>{item.description}</MissionDescription>
+            </MissionItem>
           ))}
-        </TabsContainer>
-        <ContentList>
-          {content[activeTab].map((item, index) => (
-            <ListItem key={index}>{item}</ListItem>
-          ))}
-        </ContentList>
-      </ContentSection>
-    </Container>
+        </MissionGrid>
+      </ContentContainer>
+      <ImageContainer
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+      />
+    </SectionContainer>
   );
 };
 
-export default VisionMissionPhilosophy;
+export default OurMission;

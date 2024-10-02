@@ -14,11 +14,11 @@ const AboutUs = () => {
     <div>
       <HeroSection />
       <Introduction />
+      <WhyChooseUs />
       <Service />
       <MissionVision />
       {/* <Features /> */}
       <Testimoni />
-      <WhyChooseUs />
       <ContactSection />
     </div>
   );
