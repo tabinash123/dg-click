@@ -15,8 +15,8 @@ import trophy4 from '../../assets/gallary/trophy4.jpg';
 
 const Section = styled.section`
   max-width: 1200px;
-  margin: 5rem auto;
-  padding: 0 20px;
+  margin: 3rem auto;
+  padding: 0;
   font-family: 'Arial', sans-serif;
 `;
 
@@ -28,30 +28,48 @@ const ContentWrapper = styled.div`
 const SectionTitle = styled.h2`
   font-size: 26px;
   font-weight: 600;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   text-align: center;
   color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
-  justify-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background-color: #e0e0e0;
+  border: 1px solid #e0e0e0;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const ProductCard = styled.div`
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  overflow: hidden;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  background-color: #fff;
+  transition: transform 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    transform: scale(1.02);
+    z-index: 1;
   }
 `;
 
@@ -59,11 +77,14 @@ const ProductImage = styled.img`
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 6px 6px 0 0;
+
+  @media (max-width: 480px) {
+    height: 180px;
+  }
 `;
 
 const ProductInfo = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -71,16 +92,24 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.h3`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #333;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
 `;
 
 const ProductPrice = styled.p`
   font-weight: 700;
   color: #ff4d4d;
-  font-size: 18px;
+  font-size: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const OtherProductsSection = () => {
@@ -98,8 +127,6 @@ const OtherProductsSection = () => {
     { name: "Trophy 1", price: "$49.99", image: trophy3 },
     { name: "Trophy 2", price: "$54.99", image: trophy4 },
   ];
-
-
 
   return (
     <Section>

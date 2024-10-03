@@ -1,7 +1,16 @@
 import { combineReducers } from 'redux';
-import {  FETCH_PRODUCTS,FILTER_PRODUCTS_BY_CATEGORY,ADD_TO_CART,REMOVE_FROM_CART,UPDATE_QUANTITY} from './actions';
+import {
+  FETCH_PRODUCTS,
+  FILTER_PRODUCTS_BY_CATEGORY,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_QUANTITY,
+  CREATE_ORDER,
+  UPDATE_ORDER_STATUS,
+  FETCH_ORDER_HISTORY,
+  CLEAR_CART
+} from './actions';
 import productData from '../data/productData';
-
 
 const initialProductState = {
   items: productData,
@@ -11,26 +20,26 @@ const initialProductState = {
 };
 
 const productReducer = (state = initialProductState, action) => {
-    switch (action.type) {
-      case FETCH_PRODUCTS:
-        return {
-          ...state,
-          items: action.payload || [],  // Ensure we always have an array
-          filteredItems: action.payload || [],
-          loading: false
-        };
-      case FILTER_PRODUCTS_BY_CATEGORY:
-        return {
-          ...state,
-          filteredItems: state.items.filter(item => 
-            item && item.category && item.category.toLowerCase() === action.payload.toLowerCase()
-          )
-        };
-      default:
-        return state;
-    }
-  };
-  
+  switch (action.type) {
+    case FETCH_PRODUCTS:
+      return {
+        ...state,
+        items: action.payload || [],
+        filteredItems: action.payload || [],
+        loading: false
+      };
+    case FILTER_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+        filteredItems: state.items.filter(item => 
+          item && item.category && item.category.toLowerCase() === action.payload.toLowerCase()
+        )
+      };
+    default:
+      return state;
+  }
+};
+
 const initialCartState = {
   items: [],
   total: 0
@@ -75,6 +84,41 @@ const cartReducer = (state = initialCartState, action) => {
             : total + (item.basePrice * item.quantity)
         , 0)
       };
+    case CLEAR_CART:
+      return initialCartState;
+    default:
+      return state;
+  }
+};
+
+const initialOrderState = {
+  orders: [],
+  loading: false,
+  error: null
+};
+
+const orderReducer = (state = initialOrderState, action) => {
+  switch (action.type) {
+    case CREATE_ORDER:
+      return {
+        ...state,
+        orders: [...state.orders, action.payload]
+      };
+    case UPDATE_ORDER_STATUS:
+      return {
+        ...state,
+        orders: state.orders.map(order =>
+          order.id === action.payload.orderId
+            ? { ...order, status: action.payload.status }
+            : order
+        )
+      };
+    case FETCH_ORDER_HISTORY:
+      return {
+        ...state,
+        orders: action.payload,
+        loading: false
+      };
     default:
       return state;
   }
@@ -83,6 +127,7 @@ const cartReducer = (state = initialCartState, action) => {
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
+  orders: orderReducer
 });
 
 export default rootReducer;

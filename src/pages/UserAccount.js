@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { User, ShoppingBag, CreditCard, MapPin, Bell, Heart, LogOut, Package, Percent, UserCheck } from 'lucide-react';
+
 
 const Container = styled.div`
   display: flex;
@@ -118,6 +120,18 @@ const Button = styled.button`
 
 const UserAccount = () => {
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+      setUserName(currentUser.name);
+    } else {
+      // Redirect to login if no user is found
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const tabs = [
     { name: 'Dashboard', icon: User },
@@ -128,12 +142,21 @@ const UserAccount = () => {
     { name: 'Wishlist', icon: Heart },
   ];
 
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+
+    // Redirect to home page or login page
+    navigate('/');
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'Dashboard':
         return (
           <>
-            <ContentHeader>Welcome back, John!</ContentHeader>
+            <ContentHeader>Welcome back, {userName}!</ContentHeader>
             <InfoCard bgColor="#e6f2ff">
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <IconWrapper><Package size={24} /></IconWrapper>
@@ -202,7 +225,7 @@ const UserAccount = () => {
           ))}
         </NavList>
         <div style={{ marginTop: 'auto' }}>
-          <LogoutButton>
+          <LogoutButton onClick={handleLogout}>
             <IconWrapper>
               <LogOut size={20} />
             </IconWrapper>

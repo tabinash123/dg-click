@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, updateQuantity } from '../store/actions';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { removeFromCart, updateQuantity } from '../store/actions';
 import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 
 const PageContainer = styled.div`
@@ -127,6 +128,7 @@ const EmptyCartMessage = styled.p`
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector(state => state.cart.items);
   const total = useSelector(state => state.cart.total);
 
@@ -140,9 +142,13 @@ const CartPage = () => {
     dispatch(updateQuantity(productId, newQuantity));
   };
 
+  const handleCheckout = () => {
+    navigate('/checkout');
+  };
+
   const subtotal = total;
-  const shipping = 10; // Example shipping cost
-  const tax = subtotal * 0.1; // Example tax calculation (10%)
+  const shipping = 10;
+  const tax = subtotal * 0.1;
   const orderTotal = subtotal + shipping + tax;
 
   if (cartItems.length === 0) {
@@ -193,7 +199,7 @@ const CartPage = () => {
             <span>Order Total</span>
             <span>${orderTotal.toFixed(2)}</span>
           </SummaryItem>
-          <CheckoutButton>
+          <CheckoutButton onClick={handleCheckout}>
             <ShoppingBag size={20} style={{ marginRight: '10px' }} />
             Proceed to Checkout
           </CheckoutButton>

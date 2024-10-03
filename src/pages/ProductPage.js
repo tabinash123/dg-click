@@ -1,14 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, filterProductsByCategory, addToCart } from '../store/actions';
+import { fetchProducts } from '../store/actions';
 import styled from 'styled-components';
-import { ShoppingCart, Star, Grid, List } from 'lucide-react';
+import { Star, Grid, List } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+const breakpoints = {
+  xs: '480px',
+  sm: '768px',
+  md: '992px',
+  lg: '1200px',
+  xl: '1400px'
+};
 
 const PageContainer = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
+
+  @media (max-width: ${breakpoints.xl}) {
+    max-width: 1200px;
+  }
+
+  @media (max-width: ${breakpoints.lg}) {
+    max-width: 992px;
+  }
+
+  @media (max-width: ${breakpoints.md}) {
+    max-width: 768px;
+  }
+
+  @media (max-width: ${breakpoints.sm}) {
+    max-width: 100%;
+    padding: 15px;
+  }
 `;
 
 const Header = styled.header`
@@ -16,24 +42,25 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+
+  @media (max-width: ${breakpoints.sm}) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
   color: #2c3e50;
-`;
 
-const FilterContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-`;
+  @media (max-width: ${breakpoints.md}) {
+    font-size: 2rem;
+  }
 
-const FilterSelect = styled.select`
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-size: 1rem;
+  @media (max-width: ${breakpoints.sm}) {
+    font-size: 1.8rem;
+  }
 `;
 
 const ViewToggle = styled.div`
@@ -51,37 +78,69 @@ const ViewButton = styled.button`
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(6, 1fr);
+  
+  @media (max-width: ${breakpoints.xl}) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (max-width: ${breakpoints.lg}) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: ${breakpoints.md}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: ${breakpoints.sm}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: ${breakpoints.xs}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const ProductList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
 `;
 
 const ProductCard = styled.div`
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.3s ease;
-  width: 200px;
-  height: 300px;
+  border: 1px solid #e0e0e0;
   display: flex;
-  flex-direction: column;
-
+  flex-direction: ${props => props.viewMode === 'list' ? 'row' : 'column'};
+cursor: pointer;
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  @media (max-width: ${breakpoints.sm}) {
+    flex-direction: column;
   }
 `;
 
 const ProductImage = styled.img`
   width: 100%;
-  height: 170px;
-  // object-fit: cover;
+  height: ${props => props.viewMode === 'list' ? '150px' : '200px'};
+  object-fit: cover;
+
+  @media (max-width: ${breakpoints.md}) {
+    height: ${props => props.viewMode === 'list' ? '135px' : '180px'};
+  }
+
+  @media (max-width: ${breakpoints.sm}) {
+    height: 150px;
+  }
+
+  @media (max-width: ${breakpoints.xs}) {
+    height: 120px;
+  }
 `;
 
 const ProductInfo = styled.div`
@@ -89,12 +148,17 @@ const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  background-color: #f8f9fa;
 `;
 
 const ProductName = styled.h3`
   font-size: 1rem;
   margin: 0 0 5px 0;
   color: #2c3e50;
+
+  @media (max-width: ${breakpoints.xs}) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ProductPrice = styled.p`
@@ -102,6 +166,10 @@ const ProductPrice = styled.p`
   font-weight: bold;
   color: #e74c3c;
   margin: 0 0 5px 0;
+
+  @media (max-width: ${breakpoints.xs}) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ProductRating = styled.div`
@@ -110,59 +178,20 @@ const ProductRating = styled.div`
   margin-bottom: 5px;
 `;
 
-const AddToCartButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 8px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 0.9rem;
-  margin-top: auto;
-
-  &:hover {
-    background-color: #2980b9;
-  }
-`;
-
 const ProductPage = ({ serviceName }) => {
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products.filteredItems);
+  const navigate = useNavigate();
+  const products = useSelector(state => state.products.items);
   const loading = useSelector(state => state.products.loading);
   const [viewMode, setViewMode] = useState('grid');
-  const [sortBy, setSortBy] = useState('');
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (serviceName) {
-      dispatch(filterProductsByCategory(serviceName));
-    }
-  }, [dispatch, serviceName]);
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
   };
-
-  const handleSort = (e) => {
-    setSortBy(e.target.value);
-    // Implement sorting logic here
-  };
-
-  const sortedProducts = [...products].sort((a, b) => {
-    if (sortBy === 'price-asc') return a.basePrice - b.basePrice;
-    if (sortBy === 'price-desc') return b.basePrice - a.basePrice;
-    if (sortBy === 'name-asc') return a.name.localeCompare(b.name);
-    if (sortBy === 'name-desc') return b.name.localeCompare(a.name);
-    return 0;
-  });
 
   if (loading) {
     return <PageContainer>Loading...</PageContainer>;
@@ -179,20 +208,10 @@ const ProductPage = ({ serviceName }) => {
           <ViewButton active={viewMode === 'list'} onClick={() => setViewMode('list')}><List /></ViewButton>
         </ViewToggle>
       </Header>
-      <FilterContainer>
-        <FilterSelect onChange={handleSort} value={sortBy}>
-          <option value="">Sort By</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name-asc">Name: A to Z</option>
-          <option value="name-desc">Name: Z to A</option>
-        </FilterSelect>
-        {/* Add more filters here */}
-      </FilterContainer>
       <ProductDisplay>
-        {sortedProducts.map(product => (
-          <ProductCard key={product.id}>
-            <ProductImage src={product.imageUrl || 'https://via.placeholder.com/200x150'} alt={product.name} />
+        {products.map(product => (
+          <ProductCard key={product.id} viewMode={viewMode} onClick={() => handleProductClick(product.id)}>
+            <ProductImage src={product.imageUrl || 'https://via.placeholder.com/200x200'} alt={product.name} viewMode={viewMode} />
             <ProductInfo>
               <ProductName>{product.name}</ProductName>
               <ProductPrice>${product.basePrice.toFixed(2)}</ProductPrice>
@@ -201,10 +220,6 @@ const ProductPage = ({ serviceName }) => {
                   <Star key={i} size={12} fill={i < product.rating ? "#f1c40f" : "none"} stroke="#f1c40f" />
                 ))}
               </ProductRating>
-              <AddToCartButton onClick={() => handleAddToCart(product)}>
-                <ShoppingCart size={16} style={{ marginRight: '5px' }} />
-                Add to Cart
-              </AddToCartButton>
             </ProductInfo>
           </ProductCard>
         ))}
