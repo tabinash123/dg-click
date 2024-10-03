@@ -1,14 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star } from 'lucide-react';
 import id from '../../assets/gallary/id.jpg';
 import id2 from '../../assets/gallary/id2.jpg';
 import id4 from '../../assets/gallary/id4.jpg';
 import tshirt1 from '../../assets/gallary/tshirt1.jpg';
-import tshirt3 from '../../assets/gallary/tshirt3.jpg';
-import tshirt4 from '../../assets/gallary/tshirt4.jpg';
-import cap1 from '../../assets/gallary/cap1.jpg';
-import cap2 from '../../assets/gallary/cap2.jpg';
 
 const Section = styled.section`
   max-width: 1200px;
@@ -44,7 +40,6 @@ const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
@@ -94,39 +89,18 @@ const ProductRating = styled.div`
   margin-bottom: 0.75rem;
 `;
 
-const BuyButton = styled.button`
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 0.6rem 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-  
-  &:hover {
-    background-color: #ff3333;
-  }
-`;
-
-const FeaturedProductsSection = () => {
+const FlashSale = () => {
   const products = [
     { name: "Premium ID Card Holder", price: "$19.99", oldPrice: "$29.99", image: id },
     { name: "Exclusive ID Badge", price: "$14.99", oldPrice: "$24.99", image: id2 },
     { name: "Deluxe ID Lanyard", price: "$9.99", oldPrice: "$19.99", image: id4 },
     { name: "Classic White Tee", price: "$24.99", oldPrice: "$34.99", image: tshirt1 },
   ];
-
-
-  
+ 
   return (
     <Section>
       <ContentWrapper>
-        <SectionTitle>Featured Products</SectionTitle>
+        <SectionTitle>Flash Sale</SectionTitle>
         <ProductGrid>
           {products.map((product, index) => (
             <ProductCard key={index}>
@@ -143,10 +117,6 @@ const FeaturedProductsSection = () => {
                   ))}
                   <span style={{ fontSize: '14px' }}>(4.5)</span>
                 </ProductRating>
-                <BuyButton>
-                  <ShoppingCart size={16} />
-                  Add to Cart
-                </BuyButton>
               </ProductInfo>
             </ProductCard>
           ))}
@@ -156,4 +126,4 @@ const FeaturedProductsSection = () => {
   );
 };
 
-export default FeaturedProductsSection;
+export default FlashSale;

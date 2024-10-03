@@ -6,7 +6,7 @@ import HeroSection from './../component/hompage/HeroSection';
 import IntroductionSection from './../component/hompage/IntroductionSection';
 import ProductHighLight from '../component/hompage/ProductHighLight';
 import Services from './../component/hompage/Services';
-import ProductOffers from '../component/hompage/ProductOffers';
+import FlashSale from '../component/hompage/FlashSale';
 import PrintingShopGallery from '../component/hompage/PrintingShopGallery';
 import PrintPasalHowItWorks from '../component/hompage/PrintPasalHowItWorks';
 import PartnerLogos from '../component/hompage/PartnerLogos';
@@ -17,7 +17,7 @@ const Homepage = () => {
     <div>
       <HeroSection />
       <FeatureBar />
-      <ProductOffers />
+      <FlashSale />
       <Services />
       <ProductHighLight />
       <PopularGiftItems />

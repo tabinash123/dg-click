@@ -391,7 +391,7 @@ const Header = () => {
         </SearchBar>
         <RightSection>
           <AccountDropdown onClick={toggleAccountDropdown}>
-            <NavItem as="div">
+            <NavItem  to="/useraccount">
               <User size={20} />
             </NavItem>
           </AccountDropdown>

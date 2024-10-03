@@ -6,12 +6,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Hompage';
 import About from './pages/About';
 import Contact from './pages/Contact';
-
 import ProductPage from './pages/ProductPage'; // New import
-
 import CartPage from './pages/CartPage';  // New import
 import OurService from './pages/OurService';
 import ServiceDetail from './component/services/ServiceDetail';
+import UserAccount from './pages/UserAccount';
 
 const App = () => {
   return (
@@ -25,6 +24,7 @@ const App = () => {
 
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/useraccount" element={<UserAccount />} />
         
           {/* New routes for each Category */}
 
