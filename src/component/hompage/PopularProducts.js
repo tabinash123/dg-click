@@ -14,72 +14,77 @@ import trophy3 from '../../assets/gallary/trophy3.jpg';
 import trophy4 from '../../assets/gallary/trophy4.jpg';
 
 const Section = styled.section`
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 0;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 15px;
   font-family: 'Arial', sans-serif;
 `;
 
 const ContentWrapper = styled.div`
-  max-width: 1100px;
+  max-width: 100%;
   margin: 0 auto;
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-align: center;
   color: #333;
 
   @media (max-width: 768px) {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   @media (max-width: 480px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background-color: #e0e0e0;
-  border: 1px solid #e0e0e0;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  background-color: #fff;
 
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
 const ProductCard = styled.div`
   background-color: #fff;
+  border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: scale(1.02);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1;
   }
 `;
 
 const ProductImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: 140px;
   object-fit: cover;
 
+  @media (max-width: 768px) {
+    height: 130px;
+  }
+
   @media (max-width: 480px) {
-    height: 180px;
+    height: 120px;
   }
 `;
 
@@ -92,23 +97,23 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.h3`
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #333;
   margin-bottom: 0.25rem;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-size: 12px;
   }
 `;
 
 const ProductPrice = styled.p`
   font-weight: 700;
   color: #ff4d4d;
-  font-size: 16px;
+  font-size: 14px;
 
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 13px;
   }
 `;
 

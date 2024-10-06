@@ -28,13 +28,13 @@ const productReducer = (state = initialProductState, action) => {
         filteredItems: action.payload || [],
         loading: false
       };
-    case FILTER_PRODUCTS_BY_CATEGORY:
-      return {
-        ...state,
-        filteredItems: state.items.filter(item => 
-          item && item.category && item.category.toLowerCase() === action.payload.toLowerCase()
-        )
-      };
+      case FILTER_PRODUCTS_BY_CATEGORY:
+        return {
+          ...state,
+          filteredItems: state.items.filter(item => 
+            item && item.category && item.category.toLowerCase() === action.payload.toLowerCase()
+          )
+        };
     default:
       return state;
   }

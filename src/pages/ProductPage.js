@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts } from '../store/actions';
+import { fetchProducts, filterProductsByCategory } from '../store/actions';
 import styled from 'styled-components';
 import { Star, Grid, List } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -78,32 +78,19 @@ const ViewButton = styled.button`
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  
-  @media (max-width: ${breakpoints.xl}) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  @media (max-width: ${breakpoints.lg}) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: ${breakpoints.md}) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
 
   @media (max-width: ${breakpoints.sm}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: ${breakpoints.xs}) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
   }
 `;
 
 const ProductList = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 20px;
 `;
 
 const ProductCard = styled.div`
@@ -113,11 +100,11 @@ const ProductCard = styled.div`
   border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: ${props => props.viewMode === 'list' ? 'row' : 'column'};
-cursor: pointer;
+  cursor: pointer;
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    z-index: 1;
   }
 
   @media (max-width: ${breakpoints.sm}) {
@@ -137,14 +124,10 @@ const ProductImage = styled.img`
   @media (max-width: ${breakpoints.sm}) {
     height: 150px;
   }
-
-  @media (max-width: ${breakpoints.xs}) {
-    height: 120px;
-  }
 `;
 
 const ProductInfo = styled.div`
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -153,7 +136,7 @@ const ProductInfo = styled.div`
 
 const ProductName = styled.h3`
   font-size: 1rem;
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
   color: #2c3e50;
 
   @media (max-width: ${breakpoints.xs}) {
@@ -162,32 +145,32 @@ const ProductName = styled.h3`
 `;
 
 const ProductPrice = styled.p`
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #e74c3c;
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
 
   @media (max-width: ${breakpoints.xs}) {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `;
 
 const ProductRating = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
 `;
 
-const ProductPage = ({ serviceName }) => {
+const ProductPage = ({ category }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const products = useSelector(state => state.products.items);
+  const products = useSelector(state => state.products.filteredItems);
   const loading = useSelector(state => state.products.loading);
   const [viewMode, setViewMode] = useState('grid');
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(filterProductsByCategory(category));
+  }, [dispatch, category]);
 
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`);
@@ -202,7 +185,7 @@ const ProductPage = ({ serviceName }) => {
   return (
     <PageContainer>
       <Header>
-        <Title>{serviceName}</Title>
+        <Title>{category}</Title>
         <ViewToggle>
           <ViewButton active={viewMode === 'grid'} onClick={() => setViewMode('grid')}><Grid /></ViewButton>
           <ViewButton active={viewMode === 'list'} onClick={() => setViewMode('list')}><List /></ViewButton>
@@ -217,7 +200,7 @@ const ProductPage = ({ serviceName }) => {
               <ProductPrice>${product.basePrice.toFixed(2)}</ProductPrice>
               <ProductRating>
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={12} fill={i < product.rating ? "#f1c40f" : "none"} stroke="#f1c40f" />
+                  <Star key={i} size={14} fill={i < (product.rating || 4) ? "#f1c40f" : "none"} stroke="#f1c40f" />
                 ))}
               </ProductRating>
             </ProductInfo>

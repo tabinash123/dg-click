@@ -14,7 +14,7 @@ const PageContainer = styled.div`
 
 const SignupForm = styled.form`
   background-color: white;
-  padding: 2rem;
+  padding: 4rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -58,11 +58,16 @@ const Input = styled.input`
 
 const InputIcon = styled.span`
   position: absolute;
-  top: 50%;
-  right: 0.75rem;
+  margin-top: -6%;
+  right: 0rem;
   transform: translateY(-50%);
   color: #9ca3af;
   cursor: ${props => props.clickable ? 'pointer' : 'default'};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  pointer-events: ${props => props.clickable ? 'auto' : 'none'};
 `;
 
 const Button = styled.button`
@@ -113,7 +118,6 @@ const SignupPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -126,7 +130,6 @@ const SignupPage = () => {
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
     if (!password) newErrors.password = 'Password is required';
     else if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
-    if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -149,17 +152,12 @@ const SignupPage = () => {
         return;
       }
 
-      // Create new user
-      const newUser = { name, email, password };
-      users.push(newUser);
-      localStorage.setItem('users', JSON.stringify(users));
+      // Store partial user data in localStorage
+      const partialUser = { name, email, password };
+      localStorage.setItem('partialUser', JSON.stringify(partialUser));
 
-      // Set login status
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('currentUser', JSON.stringify(newUser));
-
-      // Redirect to home page or dashboard
-      navigate('/');
+      // Navigate to OTP page
+      navigate('/otp');
     } catch (error) {
       setErrors({ form: 'An error occurred. Please try again.' });
     } finally {
@@ -167,6 +165,7 @@ const SignupPage = () => {
     }
   };
 
+ 
   return (
     <PageContainer>
       <SignupForm onSubmit={handleSubmit}>
@@ -181,7 +180,6 @@ const SignupPage = () => {
             placeholder="Enter your full name"
             error={errors.name}
           />
-          <InputIcon><User size={20} /></InputIcon>
           {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
         </InputGroup>
         <InputGroup>
@@ -194,7 +192,6 @@ const SignupPage = () => {
             placeholder="Enter your email"
             error={errors.email}
           />
-          <InputIcon><Mail size={20} /></InputIcon>
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </InputGroup>
         <InputGroup>
@@ -211,19 +208,6 @@ const SignupPage = () => {
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </InputIcon>
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-        </InputGroup>
-        <InputGroup>
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm your password"
-            error={errors.confirmPassword}
-          />
-          <InputIcon><Lock size={20} /></InputIcon>
-          {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
         </InputGroup>
         {errors.form && <ErrorMessage>{errors.form}</ErrorMessage>}
         <Button type="submit" disabled={isLoading}>

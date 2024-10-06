@@ -19,12 +19,12 @@ const Homepage = () => {
       <FeatureBar />
       <FlashSale />
       <Services />
-      <ProductHighLight />
+      {/* <ProductHighLight /> */}
       <PopularGiftItems />
       {/* <PartnerLogos /> */}
       <IntroductionSection />
       <PrintPasalHowItWorks />
-      <FAQComponent />
+      {/* <FAQComponent /> */}
       {/* <PrintingShopGallery /> */}
     </div>
   );

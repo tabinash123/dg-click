@@ -70,7 +70,7 @@ const OptionTitle = styled.h3`
 `;
 
 const OptionSelect = styled.select`
-  width: 100%;
+  width: ;
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #bdc3c7;

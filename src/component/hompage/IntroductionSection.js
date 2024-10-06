@@ -95,7 +95,7 @@ const AboutAndTestimonialSections = () => {
           <Subtitle>About Us</Subtitle>
           <Title>Who We Are</Title>
           <Description>
-            Founded in the heart of Nepal, our e-commerce platform is dedicated to showcasing the vibrant culture, rich heritage, and skilled craftsmanship of our country.
+            Founded in the heart of Nepal, our e-commerce platform is dedicated to showcasing the vibrant culture, rich heritage, and skilled craftsmanship of our We're DG Click, a passion project born from our love for Nepal's vibrant culture and stunning landscapes. Our mission is to bring the beauty of this Himalayan paradise to you through our unique collection of printed apparel and accessories.
           </Description>
           <ButtonContainer>
             <PrimaryButton>Learn More</PrimaryButton>
@@ -103,23 +103,7 @@ const AboutAndTestimonialSections = () => {
           </ButtonContainer>
         </Column>
       </Section>
-      
-      <Section>
-        <Column>
-          <ColorBlock color="#e6e6e6" />
-        </Column>
-        <Column>
-          <Subtitle>Customer Testimonials</Subtitle>
-          <Title>Hear From Our Satisfied</Title>
-          <Description>
-            At our Nepalese e-commerce site, we take pride in providing a seamless shopping experience with our custom-printed products. Our customers rave about the quality, unique designs, and exceptional customer service that we deliver.
-          </Description>
-          <ButtonContainer>
-            <PrimaryButton>Explore Reviews</PrimaryButton>
-            <SecondaryButton>Share Your Story</SecondaryButton>
-          </ButtonContainer>
-        </Column>
-      </Section>
+
     </Container>
   );
 };

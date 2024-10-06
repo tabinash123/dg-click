@@ -41,6 +41,9 @@ const Section = styled.section`
 const ContentWrapper = styled.div`
   max-width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const SectionTitle = styled.h2`
@@ -59,6 +62,8 @@ const SectionTitle = styled.h2`
 const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  justify-content: center;
   
   @media (max-width: ${breakpoints.xl}) {
     grid-template-columns: repeat(5, 1fr);
@@ -96,24 +101,24 @@ const ProductCard = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: 150px;
   object-fit: cover;
 
   @media (max-width: ${breakpoints.md}) {
-    height: 180px;
+    height: 140px;
   }
 
   @media (max-width: ${breakpoints.sm}) {
-    height: 160px;
+    height: 130px;
   }
 
   @media (max-width: ${breakpoints.xs}) {
-    height: 140px;
+    height: 120px;
   }
 `;
 
 const ProductInfo = styled.div`
-  padding: 1rem;
+  padding: 0.75rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -122,24 +127,24 @@ const ProductInfo = styled.div`
 `;
 
 const ProductName = styled.h3`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   color: #333;
 
   @media (max-width: ${breakpoints.sm}) {
-    font-size: 14px;
+    font-size: 13px;
   }
 `;
 
 const ProductPrice = styled.p`
   font-weight: 700;
   color: #ff4d4d;
-  font-size: 18px;
-  margin-bottom: 0.5rem;
+  font-size: 16px;
+  margin-bottom: 0.25rem;
 
   @media (max-width: ${breakpoints.sm}) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 
@@ -147,7 +152,7 @@ const OldPrice = styled.span`
   text-decoration: line-through;
   color: #999;
   margin-right: 0.5rem;
-  font-size: 14px;
+  font-size: 13px;
 
   @media (max-width: ${breakpoints.sm}) {
     font-size: 12px;
@@ -158,7 +163,7 @@ const ProductRating = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
 `;
 
 const FlashSale = () => {
@@ -185,9 +190,9 @@ const FlashSale = () => {
                 </ProductPrice>
                 <ProductRating>
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} fill="#ffc107" stroke="#ffc107" />
+                    <Star key={i} size={14} fill="#ffc107" stroke="#ffc107" />
                   ))}
-                  <span style={{ fontSize: '14px' }}>(4.5)</span>
+                  <span style={{ fontSize: '12px' }}>(4.5)</span>
                 </ProductRating>
               </ProductInfo>
             </ProductCard>

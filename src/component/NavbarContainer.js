@@ -418,9 +418,9 @@ const Header = () => {
           <StyledNavLink to="/cushions">Cushions</StyledNavLink>
           <StyledNavLink to="/canvas">Canvas</StyledNavLink>
           <StyledNavLink to="/cups">Cups</StyledNavLink>
-          <StyledNavLink to="/ad-materials">Ad Materials</StyledNavLink>
+          <StyledNavLink to="/caps">Cap</StyledNavLink>
           <StyledNavLink to="/trophies">Trophies</StyledNavLink>
-          <StyledNavLink to="/t-shirt-printing">T-Shirt Printing</StyledNavLink>
+          <StyledNavLink to="/t-shirts">T-Shirt </StyledNavLink>
           <StyledNavLink to="/ourservice">Our Services</StyledNavLink>
           <StyledNavLink to="/about">About-Us</StyledNavLink>
           <StyledNavLink to="/contact">Contact</StyledNavLink>

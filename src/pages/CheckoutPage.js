@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { createOrder } from '../store/actions';
+import { Edit, Check } from 'lucide-react';
 
 const PageContainer = styled.div`
   max-width: 800px;
@@ -38,6 +39,7 @@ const Input = styled.input`
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+  background-color: ${props => props.readOnly ? '#f3f4f6' : 'white'};
 `;
 
 const Select = styled.select`
@@ -59,6 +61,21 @@ const Button = styled.button`
 
   &:hover {
     background-color: #2980b9;
+  }
+`;
+
+const EditButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 10px;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -93,8 +110,27 @@ const CheckoutPage = () => {
     address: '',
     city: '',
     country: '',
+    phoneNumber: '',
     paymentMethod: 'credit_card'
   });
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    // Retrieve user data from localStorage
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
+    if (userData) {
+      setFormData(prevState => ({
+        ...prevState,
+        name: userData.name || '',
+        email: userData.email || '',
+        address: userData.address || '',
+        city: userData.city || '',
+        country: userData.country || '',
+        phoneNumber: userData.phoneNumber || ''
+      }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -114,6 +150,10 @@ const CheckoutPage = () => {
     navigate('/order-confirmation');
   };
 
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
     <PageContainer>
       <Title>Checkout</Title>
@@ -126,6 +166,7 @@ const CheckoutPage = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            readOnly={!isEditing}
             required
           />
         </FormGroup>
@@ -137,6 +178,7 @@ const CheckoutPage = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            readOnly={!isEditing}
             required
           />
         </FormGroup>
@@ -148,6 +190,7 @@ const CheckoutPage = () => {
             name="address"
             value={formData.address}
             onChange={handleChange}
+            readOnly={!isEditing}
             required
           />
         </FormGroup>
@@ -159,6 +202,7 @@ const CheckoutPage = () => {
             name="city"
             value={formData.city}
             onChange={handleChange}
+            readOnly={!isEditing}
             required
           />
         </FormGroup>
@@ -170,9 +214,35 @@ const CheckoutPage = () => {
             name="country"
             value={formData.country}
             onChange={handleChange}
+            readOnly={!isEditing}
             required
           />
         </FormGroup>
+        <FormGroup>
+          <Label htmlFor="phoneNumber">Phone Number</Label>
+          <Input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            readOnly={!isEditing}
+            required
+          />
+        </FormGroup>
+        <EditButton type="button" onClick={toggleEdit}>
+          {isEditing ? (
+            <>
+              <Check size={18} style={{ marginRight: '5px' }} />
+              Confirm Changes
+            </>
+          ) : (
+            <>
+              <Edit size={18} style={{ marginRight: '5px' }} />
+              Edit Information
+            </>
+          )}
+        </EditButton>
         <FormGroup>
           <Label htmlFor="paymentMethod">Payment Method</Label>
           <Select
