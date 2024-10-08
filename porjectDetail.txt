@@ -1,3 +1,1 @@
-we are making a website for a printing shop . the shop is located in nepal. 
-we are using react with styled component and lucid react for making website.
-
+i am making a coming soon page for an ecommerce site which sell printed products like cap,cup,cushion,t-shirt,etc. the company is locate in nepal.so now we have to make a coming soon page for it
