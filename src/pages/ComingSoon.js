@@ -4,6 +4,7 @@ import IntroductionSection from '../component/coming soon/IntroductionSection'
 import ComingSoonSection from '../component/coming soon/ComingSoonSection'
 import CustomPrintingSection from '../component/coming soon/CustomPrintingSection'
 import CustomProductProcess from '../component/coming soon/CustomProductProcess'
+import Footer from '../component/coming soon/Footer'
 
 const ComingSoon = () => {
   return (
@@ -13,6 +14,7 @@ const ComingSoon = () => {
         {/* <ComingSoonSection /> */}
         <CustomPrintingSection />
         <CustomProductProcess />
+        <Footer />
     </div>
   )
 }

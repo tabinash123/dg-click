@@ -1,8 +1,8 @@
 // src/App.js
 import React from 'react';
-import Footer from './component/Footer';
-import Navbar from './component/NavbarContainer';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import Footer from './component/Footer';
+// import Navbar from './component/NavbarContainer';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Homepage from './pages/Hompage';
 // import About from './pages/About';
 // import Contact from './pages/Contact';
@@ -18,7 +18,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import SignupPage from './userAuth/SignupPage';
 // import OtpPage from './userAuth/OtpPage';
 // import UserInfoPage from './userAuth/UserInfoPage';
-import ComingSoon from './pages/ComingSoon';
+ import ComingSoon from './pages/ComingSoon';
 
 const App = () => {
   return (
